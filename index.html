@@ -68,8 +68,8 @@
 .today .tt span{font-size:11px;color:var(--muted)}
 .qotd{margin:0 12px 14px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;padding:12px 14px}
 .qotd .qh{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
-.qotd .qbody{background:none;border:0;padding:4px 0 0;text-align:left;width:100%}
-.qotd blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;white-space:pre-wrap;max-height:9.5em;overflow-y:auto;overscroll-behavior:contain;padding-right:6px}
+.qotd .qbody{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;text-align:left;width:100%;display:block;white-space:normal}
+.qotd blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;text-align:left;max-height:9.5em;overflow-y:auto;overscroll-behavior:contain;padding-right:6px}
 .qotd blockquote.more{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent)}
 .qotd .mhint{font-size:11px;color:var(--muted);margin-top:4px}
 .qotd .meta{margin-top:6px;font-size:12px;color:var(--muted)}
@@ -144,7 +144,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;min-height:100%;background-color:var(--bg);background-image:var(--bg-img,none);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,textarea,select{font:inherit;color:inherit}
-button{cursor:pointer}
+button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal;text-align:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .app{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:88px}
 
@@ -276,7 +276,7 @@ button{cursor:pointer}
 /* quotes */
 .search{margin:0 20px 12px;display:block;width:calc(100% - 40px);border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px}
 .qcard{background:var(--surface);margin:0 12px 10px;border-radius:14px;padding:18px 18px 14px;border:1px solid var(--line);border-left:4px solid var(--c);text-align:left;width:calc(100% - 24px);display:block}
-.qcard blockquote{margin:0;font-family:var(--serif);font-size:17px;line-height:1.75;white-space:pre-wrap}
+.qcard blockquote{margin:0;font-family:var(--serif);font-size:17px;line-height:1.75;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;text-align:left}
 .qcard .meta{margin-top:10px;font-size:12px;color:var(--muted)}
 
 /* sheet */
@@ -327,7 +327,7 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .qadd .acts{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
 .qadd input{width:76px;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:6px 8px}
 .qitem{border-left:3px solid var(--c);padding:6px 0 6px 14px;margin:0 4px 16px}
-.qitem blockquote{margin:0;font-family:var(--serif);font-size:16px;line-height:1.75;white-space:pre-wrap}
+.qitem blockquote{margin:0;font-family:var(--serif);font-size:16px;line-height:1.75;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere}
 .qitem .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px}
 .qitem .meta button{background:none;border:0;color:var(--muted);font-size:12px;padding:0}
 
@@ -421,7 +421,7 @@ const EN_RX=[
  [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
 ];
 const EN_STR={
- '내 서재':'My Shelf','책 추가':'Add book','가져오기':'Import','제목, 저자, 분류로 찾기':'Search title, author, category','전체':'All','읽는 중':'Reading','다 읽음':'Finished','읽고 싶은':'Want to read','소장':'Owned',
+ '내 서재':'My Shelf','책 추가':'Add','가져오기':'Import','제목, 저자, 분류로 찾기':'Search title, author, category','전체':'All','읽는 중':'Reading','다 읽음':'Finished','읽고 싶은':'Want to read','소장':'Owned',
  '모든 평점':'All ratings','★★★★ 이상':'★★★★ and up','★★★ 이상':'★★★ and up','★★ 이하':'★★ and below','평점 없음':'Unrated','지금 읽는 책':'Reading now','서재 입고 전':'Before the shelf','미분류':'Uncategorized',
  '리본: 읽는 중':'Ribbon: reading','내 평점(0.5점 단위)':'My rating (half stars)','이 칸은 아직 비어 있어요':'Nothing here yet','첫 책을 꽂아보세요':'Add your first book','Bookswing 백업 가져오기':'Import Bookswing backup','직접 추가':'Add manually',
  '기억하고 싶은 문구':'Quotes to remember','문구나 책 제목으로 찾기':'Search quotes or titles','찾는 문구가 없어요':'No matching quotes','아직 모은 문구가 없어요':'No quotes yet','책을 열고 문구 탭에서 마음에 남은 문장을 저장해 보세요.':'Open a book and save lines from its Quotes tab.',
