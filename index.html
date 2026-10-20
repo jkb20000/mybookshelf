@@ -10,6 +10,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MyBookShelf">
 <link rel="apple-touch-icon" href="icon-180.png">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
@@ -431,7 +435,7 @@ const EN_STR={
  '읽기 시작 (타이머)':'Start timer','읽기 시작':'Start','읽기 끝내기':'Stop reading','어디까지 읽었나요?':'Where did you stop?','세션 저장':'Save session','타이머 취소':'Cancel timer','계속 읽기':'Keep reading','다른 책 타이머가 진행 중이에요':'A timer is running for another book','다시 읽기':'Read again',
  '선택 끝':'Done selecting','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
  '데이터 내보내기':'Export data','JSON 백업':'JSON backup','CSV (엑셀용)':'CSV (for Excel)','JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.':'JSON includes covers and photos and can be imported back into this app.','이 화면에서는 파일 저장을 쓸 수 없어요.':'File saving is not available in this view.','파일을 저장했어요':'File saved','파일을 저장하지 못했어요':'Could not save the file',
- '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
+ '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
 };
 const EN_KEYS=Object.keys(EN_STR).sort((a,b)=>b.length-a.length);
 function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.replace(rx,rep);for(const k of EN_KEYS)if(t.includes(k))t=t.split(k).join(EN_STR[k]);return t}
@@ -471,8 +475,34 @@ function removeBook(id){delete S.books[id];saveLocal();if(cloud)cloud.books.doc(
 function putSettings(){saveLocal();if(cloud)cloud.settings.set({...S.settings}).catch(onWriteErr)}
 function setSync(t){S.syncMsg=t;$('#sync').textContent=trText(t)}
 
+let FB=null;
+function initFirebase(){const cfg=window.FIREBASE_CONFIG;if(!cfg||!cfg.apiKey||!window.firebase)return false;
+  try{firebase.initializeApp(cfg)}catch(e){}
+  FB={auth:firebase.auth(),db:firebase.firestore()};try{FB.db.enablePersistence({synchronizeTabs:true}).catch(()=>{})}catch(e){}
+  dl={save:async({filename,data})=>{const blob=new Blob([data],{type:filename.endsWith('.json')?'application/json':'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}};
+  FB.auth.getRedirectResult().catch(e=>{toast('로그인에 실패했어요: '+(e.code||''))});
+  FB.auth.onAuthStateChanged(u=>{S.user=u?{name:u.displayName||'',email:u.email||'',uid:u.uid}:null;
+    if(u){attachFirestore(u.uid)}else{cloud=null;setSync('로그인하면 모든 기기에서 같은 서재를 볼 수 있어요');renderSoon()}});
+  return true}
+function fbLogin(){if(!FB)return;const p=new firebase.auth.GoogleAuthProvider();const standalone=window.navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+  (standalone?FB.auth.signInWithRedirect(p):FB.auth.signInWithPopup(p)).catch(e=>{if(e.code==='auth/popup-blocked'||e.code==='auth/popup-closed-by-user')FB.auth.signInWithRedirect(p);else toast('로그인에 실패했어요: '+(e.code||''))})}
+function fbLogout(){if(FB)FB.auth.signOut()}
+function attachFirestore(uid){const base=FB.db.collection('users').doc(uid);
+  cloud={books:base.collection('books'),settings:base.collection('meta').doc('settings')};
+  setSync('내 계정에 저장 중');
+  let first=true;
+  cloud.books.onSnapshot(snap=>{
+    if(first){first=false;
+      if(snap.empty&&!S.synced&&list().length){list().forEach(b=>cloud.books.doc(b.id).set(JSON.parse(JSON.stringify(b))).catch(onWriteErr));S.synced=true;saveLocal();return}
+    }
+    if(S.importing)return;
+    S.synced=true;const nb={};snap.docs.forEach(d=>{nb[d.id]={...d.data()}});
+    for(const k in timers){if(S.books[k]&&nb[k])nb[k]=S.books[k]}
+    S.books=nb;saveLocal();migrateCats();renderSoon();
+  },e=>{cloud=null;setSync('동기화 오류: '+(e.code||''));renderSoon()});
+  cloud.settings.onSnapshot(s=>{if(s.exists){S.settings={...S.settings,...s.data()};applySkin();saveLocal();renderSoon()}},()=>{})}
 async function initCloud(){
-  if(!window.claude||!window.claude.use){setSync('이 기기에만 저장 중');return}
+  if(!window.claude||!window.claude.use){if(!initFirebase())setSync('이 기기에만 저장 중');return}
   claude.use('downloads').then(d=>{dl=d;renderSoon()});
   claude.use('sample').then(async s=>{sample=s;if(s){try{const l=await s.limits();sampleImages=!!(l&&l.images)}catch(e){}}renderAll()});
   const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
@@ -527,7 +557,8 @@ function vShelf(){
       <div class="bar"><i style="width:${pct(b)}%"></i></div>
       <div class="crow"><span>${b.current||0} / ${b.pages||'?'}쪽, ${pct(b)}%${(d=>d?` · 예상 완독 ${d.slice(5).replace('-','/')}`:'')(estimate(b))}</span>${S.timer&&S.timer.bookId===b.id?`<button class="btn small" data-action="open" data-id="${b.id}">⏱ <span data-elapsed>${elapsedText()}</span></button>`:`<span class="hbtns"><button class="btn ghost small" data-action="plus" data-id="${b.id}">+10쪽</button>${S.timer?'':`<button class="btn small" data-action="startopen" data-id="${b.id}">읽기 시작</button>`}</span>`}</div>
     </div></div>`).join('')}</div>`:'';
-  const topCards=f==='all'&&!sq&&!S.rf&&!S.selMode&&all.length?todayCardHTML()+quoteCardHTML():'';
+  const loginBar=FB&&!S.user?`<div class="sec" style="display:flex;align-items:center;gap:10px"><span style="flex:1;font-size:13px">로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요</span><button class="btn small" data-action="login">Google로 로그인</button></div>`:'';
+  const topCards=loginBar+(f==='all'&&!sq&&!S.rf&&!S.selMode&&all.length?todayCardHTML()+quoteCardHTML():'');
   let body='';
   if(!bs.length)body=`<div class="empty"><p>${all.length?'이 칸은 아직 비어 있어요':'첫 책을 꽂아보세요'}</p>${all.length?'':'<div class="hbtns" style="justify-content:center"><button class="btn" data-action="import">Bookswing 백업 가져오기</button><button class="btn ghost" data-action="add">직접 추가</button></div>'}</div>`;
   else if(f==='all'&&!sq&&!S.rf){const wish=bs.filter(b=>b.status==='want').sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
@@ -705,6 +736,7 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
   <div class="sec"><h2>분류 관리</h2>${(()=>{const m={};list().forEach(b=>{const c=b.category||'';if(c)m[c]=(m[c]||0)+1});const cs=Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0],'ko'));
     return cs.length?cs.map(([c,n])=>S.renameCat===c?`<div class="catrow"><input type="text" id="rcat" value="${esc(c)}" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="rcatok" data-c="${esc(c)}">저장</button><button class="linkbtn" data-action="rcatcancel">취소</button></div>`
       :`<div class="catrow"><span>${esc(c)}</span><small>${n}권</small><button class="linkbtn" data-action="rcat" data-c="${esc(c)}">이름 바꾸기</button></div>`).join(''):'<p class="hint">아직 분류가 없어요</p>'})()}</div>
+  ${FB?`<div class="sec"><h2>계정</h2>${S.user?`<p style="margin:0 0 8px;font-size:14px">${esc(S.user.name||S.user.email)}<br><span class="hint" style="margin:0">${esc(S.user.email)}</span></p><button class="btn ghost small" data-action="logout">로그아웃</button>`:`<p class="hint" style="margin:0 0 8px">Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.</p><button class="btn" data-action="login">Google로 로그인</button>`}</div>`:''}
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>`}
 let lastMain='';
 function renderMain(){
@@ -861,6 +893,8 @@ document.addEventListener('click',e=>{
     case 'filter':S.filter=t.dataset.f;renderMain();break;
     case 'lang':S.settings.lang=t.dataset.k;putSettings();lastMain='';renderAll();break;
     case 'tonereset':S.settings.toneB=50;S.settings.toneW=50;applySkin();putSettings();renderMain();break;
+    case 'login':fbLogin();break;
+    case 'logout':fbLogout();break;
     case 'skin':S.settings.skin=t.dataset.k;applySkin();putSettings();renderMain();break;
     case 'year':S.year=+t.dataset.y;renderMain();break;
     case 'start':startTimer(t.dataset.id);renderSheet();renderMain();break;
@@ -1261,7 +1295,7 @@ $('#imp').addEventListener('change',e=>{const t=e.target;
   if(k==='sheet'){IMP.sheet=t.value;useSheet()}if(k==='split')IMP.split=t.checked;if(k==='policy')IMP.policy=t.value;
   const st=$('#imp').scrollTop;renderImp();$('#imp').scrollTop=st});
 
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 loadLocal();loadTimer();applySkin();migrateCats();renderAll();initCloud();
 </script>
 </body>
