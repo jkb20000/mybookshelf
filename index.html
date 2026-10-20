@@ -59,6 +59,8 @@
 :root[data-skin="night"]{--dot:#6E7A87;--bg0:#12161B;--bg-img:none;--surface0:#1B2128;--surface-20:#222932;--ink:#E5E9EE;--muted:#9AA4AF;--line0:#2E3740;--accent:#93B3DB;--accent-ink:#0F1620;--chip0:#262E37;
   --plank:#5A4A39;--plank-edge:#3A2F24;--ribbon:#D6AE3A;color-scheme:dark;--shelf-bg:linear-gradient(180deg,#222932,#1B2128)}
 .today{margin:0 12px 10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:grid;grid-template-columns:48px 1fr 1fr 1fr;gap:12px;align-items:center;cursor:pointer}
+.ringwrap{position:relative;width:48px;height:48px}
+.ringwrap b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
 .ring{width:48px;height:48px;transform:rotate(-90deg)}
 .ring circle{fill:none;stroke-width:5;stroke:var(--chip)}
 .ring circle+circle{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .4s}
@@ -67,7 +69,9 @@
 .qotd{margin:0 12px 14px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;padding:12px 14px}
 .qotd .qh{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
 .qotd .qbody{background:none;border:0;padding:4px 0 0;text-align:left;width:100%}
-.qotd blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;white-space:pre-wrap;max-height:9.5em;overflow-y:auto;overscroll-behavior:contain;padding-right:6px;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 18px),transparent)}
+.qotd blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;white-space:pre-wrap;max-height:9.5em;overflow-y:auto;overscroll-behavior:contain;padding-right:6px}
+.qotd blockquote.more{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent)}
+.qotd .mhint{font-size:11px;color:var(--muted);margin-top:4px}
 .qotd .meta{margin-top:6px;font-size:12px;color:var(--muted)}
 .heat{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px}
 .heat i{aspect-ratio:1;border-radius:2px;background:var(--chip)}
@@ -145,9 +149,10 @@ button{cursor:pointer}
 .app{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:88px}
 
 /* header */
-.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:22px 20px 14px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:22px 20px 14px}
 .top h1{font-family:var(--serif);font-weight:700;font-size:28px;line-height:1.2;margin:0;letter-spacing:-.01em}
-.top .sub{color:var(--muted);font-size:13px;margin-top:4px}
+.top .sub{color:var(--muted);font-size:13px;margin-top:4px;white-space:nowrap}
+.top>div:first-child{flex:none}
 .btn{border:0;border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px;background:var(--accent);color:var(--accent-ink);white-space:nowrap}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .btn.small{padding:6px 12px;font-size:13px}
@@ -155,7 +160,9 @@ button{cursor:pointer}
 .linkbtn{background:none;border:0;padding:6px 2px;color:var(--accent);font-weight:600;font-size:14px}
 
 /* chips */
-.chips{display:flex;gap:6px;padding:0 20px 12px;overflow-x:auto;scrollbar-width:none}
+.chipwrap{position:relative}
+.chipwrap::after{content:"";position:absolute;top:0;right:0;bottom:12px;width:40px;background:linear-gradient(90deg,transparent,var(--bg));pointer-events:none}
+.chips{display:flex;gap:6px;padding:0 44px 12px 20px;overflow-x:auto;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{border:0;background:var(--chip);color:var(--ink);border-radius:999px;padding:6px 13px;font-size:13px;white-space:nowrap}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -345,7 +352,10 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
   background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;transition:all .2s;pointer-events:none;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .sync{font-size:11px;color:var(--muted);text-align:center;padding:18px 0 0}
-.hbtns{display:flex;gap:6px;flex-wrap:nowrap;flex:none}
+.hbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;flex:1;min-width:0}
+.btn.act{display:inline-flex;align-items:center;gap:5px;background:transparent;color:var(--accent);border:1.5px solid var(--accent);border-radius:10px;padding:6px 10px;font-size:13px}
+.btn.act svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.act.primary{background:var(--accent);color:var(--accent-ink)}
 .top h1{white-space:nowrap}
 .imp{position:fixed;inset:0;z-index:15;background:var(--bg);overflow-y:auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .imp[hidden]{display:none}
@@ -399,7 +409,7 @@ const CAT_RENAME={Blinkist:'BookSummary'};
 /* ---------- language ---------- */
 const lang=()=>S.settings.lang||'ko';
 const EN_RX=[
- [/올해 (\d+)권 읽음, 목표 (\d+)권/g,'$1 read this year, goal $2'],[/(\d+)권 읽었고, (\d+)권 남았어요/g,'$1 read, $2 to go'],[/목표를 채웠어요\. 지금까지 (\d+)권/g,'Goal reached. $1 so far'],
+ [/올해 (\d+)권 읽음, 목표 (\d+)권/g,'$1 read this year, goal $2'],[/올해 (\d+) \/ (\d+)권/g,'This year $1 / $2'],[/(\d+)권 읽었고, (\d+)권 남았어요/g,'$1 read, $2 to go'],[/목표를 채웠어요\. 지금까지 (\d+)권/g,'Goal reached. $1 so far'],
  [/목표 (\d+)권 중 (\d+)권 완독/g,'$2 of $1 finished'],[/(\d+)개 모음/g,'$1 saved'],[/완독 (\d{4}-\d\d-\d\d)/g,'Finished $1'],[/시작 (\d{4}-\d\d-\d\d)/g,'Started $1'],[/(\d+)번 읽음/g,'Read $1 times'],
  [/제목이 비어 있는 (\d+)줄은 제외돼요\./g,'$1 rows without a title are skipped.'],[/(\d+)권을 찾았어요\.?/g,'Found $1 books.'],[/다 읽음 (\d+)권, 읽는 중 (\d+)권, 읽고 싶은 (\d+)권/g,'Finished $1, reading $2, want to read $3'],
  [/표지 (\d+)장/g,'$1 covers'],[/리뷰·메모 (\d+)권/g,'$1 with notes'],[/문구 (\d+)개/g,'$1 quotes'],[/페이지 사진 (\d+)장/g,'$1 page photos'],
@@ -434,9 +444,9 @@ const EN_STR={
  '출판사':'Publisher','ISBN':'ISBN','읽은 쪽':'Pages read','독서 상태':'Status','평점':'Rating','소장 여부':'Owned','시작일':'Start date','완독일':'Finish date','리뷰·감상':'Review','문구 쪽':'Quote page','저자 없음':'No author','완독':'Finished','시작':'Started',
  '연간 요약':'Year in review','완독':'Finished','읽은 쪽':'Pages','독서 시간':'Reading time','독서 세션':'Sessions','가장 긴 책':'Longest book','최고 평점':'Top rated','월별 읽은 쪽':'Pages by month','분류별 완독':'Finished by category','완독한 책':'Books finished','연도':'Year',
  '읽기 시작 (타이머)':'Start timer','읽기 시작':'Start','읽기 끝내기':'Stop reading','어디까지 읽었나요?':'Where did you stop?','세션 저장':'Save session','타이머 취소':'Cancel timer','계속 읽기':'Keep reading','다른 책 타이머가 진행 중이에요':'A timer is running for another book','다시 읽기':'Read again',
- '선택 끝':'Done selecting','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
+ '선택 끝':'Done','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
  '데이터 내보내기':'Export data','JSON 백업':'JSON backup','CSV (엑셀용)':'CSV (for Excel)','JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.':'JSON includes covers and photos and can be imported back into this app.','이 화면에서는 파일 저장을 쓸 수 없어요.':'File saving is not available in this view.','파일을 저장했어요':'File saved','파일을 저장하지 못했어요':'Could not save the file',
- '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
+ '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','아래로 밀어 더 읽기':'Scroll for more','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
 };
 const EN_KEYS=Object.keys(EN_STR).sort((a,b)=>b.length-a.length);
 function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.replace(rx,rep);for(const k of EN_KEYS)if(t.includes(k))t=t.split(k).join(EN_STR[k]);return t}
@@ -567,7 +577,7 @@ function vShelf(){
   const reading=all.filter(b=>b.status==='reading');
   const chips=[['all','전체'],['reading','읽는 중'],['want','Wishlist'],['done','다 읽음'],['owned','소장']]
     .map(([k,l])=>`<button class="chip" data-action="filter" data-f="${k}" aria-pressed="${f===k}">${l} ${k==='all'?all.length:all.filter(b=>k==='owned'?b.owned:b.status===k).length}</button>`).join('');
-  const cont=reading.length&&f==='all'&&!sq&&!S.rf?`<div class="cath"><h2>읽는 중</h2><span>${reading.length}권</span><em>지금 읽는 책</em></div><div class="cont">${reading.map(b=>`
+  const cont=reading.length&&f==='all'&&!sq&&!S.rf?`<div class="cath"><h2>읽는 중</h2><span>${reading.length}권</span></div><div class="cont">${reading.map(b=>`
     <div class="ccard" style="--c:${b.color}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:'<div class="mini"></div>'}<div>
       <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a">${esc(b.author||'')}</div>
       <div class="bar"><i style="width:${pct(b)}%"></i></div>
@@ -582,9 +592,9 @@ function vShelf(){
     body=(wish.length?sectionHTML('__wish','Wishlist',wish,false,true):'')+(summ.length?sectionHTML('BookSummary','BookSummary',summ,false,true):'')
       +groupByCat(rest.filter(b=>b.category!=='BookSummary')).map(([c,x])=>sectionHTML(c,c,x,false)).join('')}
   else body=groupByCat(bs).map(([c,x])=>sectionHTML(c,c,x,f!=='want',c==='BookSummary'||f==='want')).join('');
-  return `<header class="top"><div><h1>내 서재</h1><div class="sub">올해 ${doneThisYear().length}권 읽음, 목표 ${S.settings.goal}권</div></div><div class="hbtns"><button class="btn ghost" data-action="selmode">${S.selMode?'선택 끝':'선택'}</button><button class="btn ghost" data-action="import">가져오기</button><button class="btn" data-action="add">책 추가</button></div></header>${bulkBarHTML()}
+  return `<header class="top"><div><h1>내 서재</h1><div class="sub">올해 ${doneThisYear().length} / ${S.settings.goal}권</div></div><div class="hbtns acts"><button class="btn act" data-action="selmode" aria-label="여러 권 선택"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/></svg>${S.selMode?'선택 끝':'선택'}</button><button class="btn act" data-action="import"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>가져오기</button><button class="btn act primary" data-action="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>책 추가</button></div></header>${bulkBarHTML()}
     ${all.length>12?`<input class="search" type="search" placeholder="제목, 저자, 분류로 찾기" value="${esc(S.sq)}" data-field="sq" aria-label="책 검색">`:''}
-    <div class="chips" role="group" aria-label="상태 필터">${chips}</div><div class="chips" role="group" aria-label="평점 필터" style="padding-top:0">${rchips}</div>${topCards}${cont}${body}
+    <div class="chipwrap"><div class="chips" role="group" aria-label="상태 필터">${chips}</div></div><div class="chipwrap"><div class="chips" role="group" aria-label="평점 필터" style="padding-top:0">${rchips}</div></div>${topCards}${cont}${body}
     ${bs.length?'<div class="legend"><span><b style="background:var(--ribbon)"></b>리본: 읽는 중</span><span>★ 내 평점(0.5점 단위)</span></div>':''}`;
 }
 
@@ -617,8 +627,8 @@ function estimate(b){if(!b.pages||b.status!=='reading')return'';const rem=b.page
   if(pg<=0)return'';const days=Math.ceil(rem/(pg/7));return dstr(addDays(new Date(),days))}
 function todayCardHTML(){const c=dailyCfg(),m=dayMap(),t=m[dstr(new Date())],v=dayVal(t,c.unit),p=Math.min(1,v/c.target),st=streak(m),wk=weekDays(m);
   const r=20,circ=2*Math.PI*r;
-  return `<section class="today" data-action="tab" data-tab="goal" role="button" tabindex="0"><svg viewBox="0 0 48 48" class="ring" aria-hidden="true"><circle cx="24" cy="24" r="${r}"/><circle cx="24" cy="24" r="${r}" style="stroke-dasharray:${circ};stroke-dashoffset:${circ*(1-p)}"/></svg>
-    <div class="tt"><b>${v}${c.unit==='min'?'분':'쪽'} / ${c.target}${c.unit==='min'?'분':'쪽'}</b><span>오늘</span></div>
+  return `<section class="today" data-action="tab" data-tab="goal" role="button" tabindex="0"><div class="ringwrap"><svg viewBox="0 0 48 48" class="ring" aria-hidden="true"><circle cx="24" cy="24" r="${r}"/><circle cx="24" cy="24" r="${r}" style="stroke-dasharray:${circ};stroke-dashoffset:${circ*(1-p)}"/></svg><b>${Math.round(p*100)}%</b></div>
+    <div class="tt"><b>${v}${c.unit==='min'?'분':'쪽'} / ${c.target}${c.unit==='min'?'분':'쪽'}</b><span>오늘 목표 달성</span></div>
     <div class="tt"><b>${st}일</b><span>연속</span></div><div class="tt"><b>${wk}/${c.days}일</b><span>이번 주</span></div></section>`}
 function heatmapHTML(){const c=dailyCfg(),m=dayMap();const end=new Date();const dow=(end.getDay()+6)%7;const start=addDays(end,-(dow+77));const cells=[];
   for(let i=0;i<84;i++){const d=addDays(start,i);const k=dstr(d);const o=m[k];const v=dayVal(o,c.unit);const lv=d>end?-1:!v?0:v>=c.target?3:v>=c.target/2?2:1;cells.push(`<i class="l${lv}" title="${k} ${v}${c.unit==='min'?'분':'쪽'}"></i>`)}
@@ -759,7 +769,7 @@ let lastMain='';
 function renderMain(){
   const v=$('#view');
   const html=tr(S.view==='shelf'?vShelf():S.view==='quotes'?vQuotes():S.view==='goal'?vGoal():vSettings());
-  if(html!==lastMain){lastMain=html;v.innerHTML=html}
+  if(html!==lastMain){lastMain=html;v.innerHTML=html;const q=v.querySelector('.qotd blockquote');if(q&&q.scrollHeight>q.clientHeight+4){q.classList.add('more');q.insertAdjacentHTML('afterend',`<div class="mhint">${trText('아래로 밀어 더 읽기')}</div>`)}}
   const TABS={shelf:'서재',quotes:'문구',goal:'목표',settings:'설정'};
   document.querySelectorAll('.tabs button').forEach(b=>{b.setAttribute('aria-current',b.dataset.tab===S.view?'page':'false');b.lastChild.textContent=trText(TABS[b.dataset.tab])});
   $('#sync').textContent=trText(S.syncMsg||'');
