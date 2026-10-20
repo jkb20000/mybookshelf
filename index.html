@@ -68,9 +68,10 @@
 .today .tt span{font-size:11px;color:var(--muted)}
 .qotd{margin:0 12px 14px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;padding:12px 14px}
 .qotd .qh{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
-.qotd .qbody{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;text-align:left;width:100%;display:block;white-space:normal}
-.qotd blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;text-align:left;max-height:9.5em;overflow-y:auto;overscroll-behavior:contain;padding-right:6px}
-.qotd blockquote.more{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent)}
+.qotd .qbody{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;text-align:left;display:block;cursor:pointer}
+.qotd blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;text-align:left}
+.qotd blockquote.clamp{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.qotd .qmore{display:block;margin:6px 0 0 auto}
 .qotd .mhint{font-size:11px;color:var(--muted);margin-top:4px}
 .qotd .meta{margin-top:6px;font-size:12px;color:var(--muted)}
 .heat{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px}
@@ -275,7 +276,7 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 
 /* quotes */
 .search{margin:0 20px 12px;display:block;width:calc(100% - 40px);border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px}
-.qcard{background:var(--surface);margin:0 12px 10px;border-radius:14px;padding:18px 18px 14px;border:1px solid var(--line);border-left:4px solid var(--c);text-align:left;width:calc(100% - 24px);display:block}
+.qcard{background:var(--surface);margin:0 12px 10px;border-radius:14px;padding:18px 18px 14px;border:1px solid var(--line);border-left:4px solid var(--c);text-align:left;display:block;cursor:pointer}
 .qcard blockquote{margin:0;font-family:var(--serif);font-size:17px;line-height:1.75;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;text-align:left}
 .qcard .meta{margin-top:10px;font-size:12px;color:var(--muted)}
 
@@ -446,7 +447,7 @@ const EN_STR={
  '읽기 시작 (타이머)':'Start timer','읽기 시작':'Start','읽기 끝내기':'Stop reading','어디까지 읽었나요?':'Where did you stop?','세션 저장':'Save session','타이머 취소':'Cancel timer','계속 읽기':'Keep reading','다른 책 타이머가 진행 중이에요':'A timer is running for another book','다시 읽기':'Read again',
  '선택 끝':'Done','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
  '데이터 내보내기':'Export data','JSON 백업':'JSON backup','CSV (엑셀용)':'CSV (for Excel)','JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.':'JSON includes covers and photos and can be imported back into this app.','이 화면에서는 파일 저장을 쓸 수 없어요.':'File saving is not available in this view.','파일을 저장했어요':'File saved','파일을 저장하지 못했어요':'Could not save the file',
- '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','아래로 밀어 더 읽기':'Scroll for more','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
+ '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
 };
 const EN_KEYS=Object.keys(EN_STR).sort((a,b)=>b.length-a.length);
 function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.replace(rx,rep);for(const k of EN_KEYS)if(t.includes(k))t=t.split(k).join(EN_STR[k]);return t}
@@ -607,8 +608,8 @@ function vQuotes(){
   return `<header class="top"><div><h1>기억하고 싶은 문구</h1><div class="sub">${items.length}개 모음</div></div></header>
     <input class="search" type="search" placeholder="문구, 책 제목, 태그로 찾기" value="${esc(S.qq)}" data-field="qq" aria-label="문구 검색">
     ${tags.length||items.some(({x})=>x.fav)?`<div class="chips" role="group" aria-label="태그"><button class="chip" data-action="qtag" data-g="" aria-pressed="${tf===''}">전체</button><button class="chip" data-action="qtag" data-g="★" aria-pressed="${tf==='★'}">★ 즐겨찾기</button>${tags.map(g=>`<button class="chip" data-action="qtag" data-g="${esc(g)}" aria-pressed="${tf===g}">#${esc(g)}</button>`).join('')}</div>`:''}
-    ${shown.length?shown.map(({b,x})=>`<button class="qcard" style="--c:${b.color}" data-action="openq" data-id="${b.id}">
-      ${x.photo?`<img class="qphoto" src="${x.photo}" alt="저장한 페이지 사진">`:''}${x.text?`<blockquote>${esc(x.text)}</blockquote>`:''}<div class="meta">${x.fav?'★ ':''}《${esc(b.title)}》${x.page?` p.${esc(x.page)}`:''}${(x.tags||[]).map(g=>` <em class="tag">#${esc(g)}</em>`).join('')}</div></button>`).join('')
+    ${shown.length?shown.map(({b,x})=>`<div class="qcard" role="button" tabindex="0" style="--c:${b.color}" data-action="openq" data-id="${b.id}">
+      ${x.photo?`<img class="qphoto" src="${x.photo}" alt="저장한 페이지 사진">`:''}${x.text?`<blockquote>${esc(x.text)}</blockquote>`:''}<div class="meta">${x.fav?'★ ':''}《${esc(b.title)}》${x.page?` p.${esc(x.page)}`:''}${(x.tags||[]).map(g=>` <em class="tag">#${esc(g)}</em>`).join('')}</div></div>`).join('')
     :`<div class="empty"><p>${items.length?'찾는 문구가 없어요':'아직 모은 문구가 없어요'}</p>${items.length?'':'책을 열고 문구 탭에서 마음에 남은 문장을 저장해 보세요.'}</div>`}`;
 }
 
@@ -644,7 +645,8 @@ function autoSession(b,from,to){if(S.timer&&S.timer.bookId===b.id)return;if(to==
 function quoteCardHTML(){const items=[];list().forEach(b=>(b.quotes||[]).forEach(x=>{if(x.text)items.push({b,x})}));if(items.length<12)return'';
   const seed=hash(today())+(S.qshift||0);const {b,x}=items[seed%items.length];
   return `<section class="qotd" style="--c:${b.color}"><div class="qh"><span>오늘의 문구</span><button class="linkbtn" data-action="qnext" style="font-size:12px">다음 문구 ›</button></div>
-    <button class="qbody" data-action="openq" data-id="${b.id}"><blockquote>${esc(x.text)}</blockquote><div class="meta">《${esc(b.title)}》${x.page?` p.${esc(x.page)}`:''}</div></button></section>`}
+    <div class="qbody" role="button" tabindex="0" data-action="openq" data-id="${b.id}"><blockquote class="${S.qexp?'':'clamp'}">${esc(x.text)}</blockquote><div class="meta">《${esc(b.title)}》${x.page?` p.${esc(x.page)}`:''}</div></div>
+    <button class="linkbtn qmore" data-action="qexp" style="font-size:12px;display:none">${S.qexp?'접기 ▴':'더 보기 ▾'}</button></section>`}
 
 /* ---------- journal timeline ---------- */
 function timelineHTML(b){const ev=[];
@@ -769,7 +771,7 @@ let lastMain='';
 function renderMain(){
   const v=$('#view');
   const html=tr(S.view==='shelf'?vShelf():S.view==='quotes'?vQuotes():S.view==='goal'?vGoal():vSettings());
-  if(html!==lastMain){lastMain=html;v.innerHTML=html;const q=v.querySelector('.qotd blockquote');if(q&&q.scrollHeight>q.clientHeight+4){q.classList.add('more');q.insertAdjacentHTML('afterend',`<div class="mhint">${trText('아래로 밀어 더 읽기')}</div>`)}}
+  if(html!==lastMain){lastMain=html;v.innerHTML=html;const q=v.querySelector('.qotd blockquote'),qm=v.querySelector('.qotd .qmore');if(q&&qm&&(S.qexp||q.scrollHeight>q.clientHeight+4))qm.style.display='block'}
   const TABS={shelf:'서재',quotes:'문구',goal:'목표',settings:'설정'};
   document.querySelectorAll('.tabs button').forEach(b=>{b.setAttribute('aria-current',b.dataset.tab===S.view?'page':'false');b.lastChild.textContent=trText(TABS[b.dataset.tab])});
   $('#sync').textContent=trText(S.syncMsg||'');
@@ -946,7 +948,8 @@ document.addEventListener('click',e=>{
     case 'export':exportData(t.dataset.k);break;
     case 'dot':{const w=t.closest('.dots').previousElementSibling;w.scrollTo({left:(+t.dataset.i)*w.clientWidth,behavior:'smooth'});break}
     case 'qtag':S.qtag=t.dataset.g;renderMain();break;
-    case 'qnext':S.qshift=(S.qshift||0)+1;renderMain();break;
+    case 'qnext':S.qshift=(S.qshift||0)+1;S.qexp=false;renderMain();break;
+    case 'qexp':S.qexp=!S.qexp;renderMain();break;
     case 'dunit':S.settings.dailyUnit=t.dataset.v;putSettings();renderMain();break;
     case 'dtarget':S.settings.dailyTarget=Math.max(5,Math.min(600,dailyCfg().target+(+t.dataset.d)));putSettings();renderMain();break;
     case 'wdays':S.settings.weeklyDays=Math.max(1,Math.min(7,dailyCfg().days+(+t.dataset.d)));putSettings();renderMain();break;
@@ -987,6 +990,7 @@ document.addEventListener('click',e=>{
   }
 });
 document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.getAttribute&&e.target.getAttribute('role')==='button'&&e.target.dataset.action){e.target.click();return}
   const st=e.target.closest&&e.target.closest('.stars');
   if(st&&S.openId&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){const b=S.books[S.openId];b.rating=Math.max(0,Math.min(5,(b.rating||0)+(e.key==='ArrowRight'?.5:-.5)));putBook(b);renderSheet();$('.stars')?.focus();e.preventDefault()}
   if(e.key==='Escape'){if(S.form)closeForm();else if(S.openId)closeBook()}
