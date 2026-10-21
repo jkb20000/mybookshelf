@@ -138,13 +138,18 @@
 .tonerow input{grid-column:1 / -1;width:100%;accent-color:var(--accent);margin:0}
 .tonerow b{text-align:right;font-size:13px;font-variant-numeric:tabular-nums}
 .lgf input{display:block;width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.sel{width:100%;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:10px;padding:10px 12px;font-size:15px;-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px}
+.field input#f-catnew{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.catrow .qbtn{min-height:30px;padding:4px 10px;font-size:12px}
+.catdot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:-1px;flex:none}
+.clegend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;font-size:12px;color:var(--muted)}
 .skins{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .skins button{border:2px solid transparent;border-radius:12px;padding:6px 4px 8px;background:var(--surface-2);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--ink)}
 .skins button[aria-pressed="true"]{border-color:var(--accent)}
 .skins i{display:block;width:100%;height:34px;border-radius:7px;background:var(--sb);border-bottom:6px solid var(--sp);box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;min-height:100%;background-color:var(--bg);background-image:var(--bg-img,none);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{margin:0;min-height:100%;overflow-x:hidden;background-color:var(--bg);background-image:var(--bg-img,none);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal;text-align:center}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -214,7 +219,9 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .tile{background:none;border:0;padding:0;display:block;width:100%;transition:transform .15s}
 .tile:hover{transform:translateY(-3px)}
 .tile .cv{position:relative;aspect-ratio:2/3;width:100%;display:flex;align-items:flex-end}
-.tile .cv img,.tile .gen{width:100%;height:100%;object-fit:cover;border-radius:2px 4px 4px 2px;box-shadow:-1px 0 0 rgba(0,0,0,.15),3px -2px 8px rgba(0,0,0,.28);display:block}
+.tile .cv{justify-content:center}
+.tile .cv img{width:auto;height:auto;max-width:100%;max-height:100%;border-radius:2px 4px 4px 2px;box-shadow:-1px 0 0 rgba(0,0,0,.15),3px -2px 8px rgba(0,0,0,.28);display:block}
+.tile .gen{width:100%;height:100%;border-radius:2px 4px 4px 2px;display:block}
 .tile .gen{background:var(--c);color:#F6F3EC;padding:12px 10px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;box-shadow:inset 5px 0 0 rgba(0,0,0,.18),3px -2px 8px rgba(0,0,0,.28)}
 .tile .gen span{font-family:var(--serif);font-weight:700;font-size:14px;line-height:1.3;word-break:keep-all;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
 .tile .gen small{font-size:10px;opacity:.8;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
@@ -289,7 +296,7 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .qcard .meta{margin-top:10px;font-size:12px;color:var(--muted)}
 
 /* sheet */
-.sheet{position:fixed;inset:0;z-index:10;background:var(--bg);overflow-y:auto;transform:translateY(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);
+.sheet{position:fixed;inset:0;z-index:10;background:var(--bg);overflow-y:auto;overflow-x:hidden;transform:translateY(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .sheet.open{transform:none}
 .sheet .in{max-width:480px;margin:0 auto;padding-bottom:40px}
@@ -302,11 +309,11 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .ccard img.mini{object-fit:cover}
 .qphoto{display:block;max-width:100%;border-radius:8px;margin:2px 0 8px}
 .cover2{margin:6px 16px 16px;display:flex;gap:16px;align-items:flex-start}
-.cover2 .cvbox{flex:none;width:118px;height:177px;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:-1px 0 0 rgba(0,0,0,.15),4px 6px 16px rgba(0,0,0,.3)}
-.cover2 .cvbox img{width:100%;height:100%;object-fit:cover;display:block}
-.cover2 .gen{width:100%;height:100%;background:var(--c);color:#F6F3EC;padding:14px 12px;box-shadow:inset 7px 0 0 rgba(0,0,0,.18),inset 9px 0 0 rgba(255,255,255,.1);display:flex;align-items:flex-end}
+.cover2 .cvbox{flex:none;width:118px;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:-1px 0 0 rgba(0,0,0,.15),4px 6px 16px rgba(0,0,0,.3)}
+.cover2 .cvbox img{width:100%;height:auto;max-height:200px;object-fit:contain;display:block}
+.cover2 .gen{width:100%;height:177px;background:var(--c);color:#F6F3EC;padding:14px 12px;box-shadow:inset 7px 0 0 rgba(0,0,0,.18),inset 9px 0 0 rgba(255,255,255,.1);display:flex;align-items:flex-end}
 .cover2 .gen span{font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.3;word-break:keep-all;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
-.cover2 .ctext{flex:1;min-width:0;padding-top:4px}
+.cover2 .ctext{flex:1;min-width:0;padding-top:4px;overflow-wrap:anywhere}
 .cover2 .ct{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.35;word-break:keep-all}
 .cover2 .cs{font-family:var(--serif);font-size:13px;line-height:1.45;color:var(--muted);margin-top:4px;word-break:keep-all}
 .cover2 .ca{font-size:13px;color:var(--ink);margin-top:10px;line-height:1.5}
@@ -314,8 +321,9 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .cover .ct{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1.3;word-break:keep-all}
 .cover .ca{margin-top:6px;font-size:14px;opacity:.85}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--chip);border-radius:10px;padding:3px;gap:3px}
-.seg button{border:0;background:transparent;border-radius:8px;padding:8px 0;font-size:13px;text-align:center}
-.seg button[aria-pressed="true"]{background:var(--surface);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.seg{background:transparent!important;padding:0!important;gap:6px!important}
+.seg button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:8px 0;font-size:13px;text-align:center}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
 .stars{position:relative;display:inline-block;font-size:28px;line-height:1;letter-spacing:2px;cursor:pointer;user-select:none;touch-action:manipulation}
 .stars .bg{color:var(--line)}
 .stars .fg{position:absolute;inset:0;overflow:hidden;color:var(--ribbon);white-space:nowrap;width:var(--p)}
@@ -351,6 +359,13 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .srcrow{display:flex;gap:10px;align-items:center;font-size:12px;margin-top:4px}
 .srcrow em{font-style:normal;color:var(--muted);background:var(--chip);border-radius:999px;padding:1px 7px}
 .srcrow a{color:var(--accent);font-weight:600;text-decoration:none}
+.coveredit{display:flex;gap:14px;align-items:flex-start}
+.cethumb{flex:none;width:64px;height:96px;border-radius:3px 6px 6px 3px;overflow:hidden;background:var(--c);display:flex;align-items:flex-end;padding:6px;box-shadow:2px 3px 8px rgba(0,0,0,.25)}
+.cethumb.has{padding:0;background:var(--surface-2)}
+.cethumb img{width:100%;height:100%;object-fit:contain;display:block}
+.cethumb span{font-family:var(--serif);font-weight:700;font-size:10px;line-height:1.25;color:#F6F3EC;word-break:keep-all;overflow:hidden;max-height:100%}
+.ceside{flex:1;min-width:0}
+.ceacts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .swatches{display:flex;gap:8px;flex-wrap:wrap}
 .swatches button{width:30px;height:30px;border-radius:50%;border:0;background:var(--c)}
 .swatches button[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}
@@ -366,6 +381,8 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .btn.act:not(.primary) svg{stroke:var(--gmd)}
 .btn.act svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .btn.act.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.act.danger{color:var(--danger);border-color:var(--danger)}
+.btn.act.danger svg{stroke:var(--danger)}
 @media (max-width:430px){.btn.act:not(.primary) .lbl{display:none}.btn.act:not(.primary){padding:7px 9px}.btn.act.selon .lbl{display:inline}}
 .top h1{white-space:nowrap}
 .top h1.brand{font-size:24px;letter-spacing:-.01em}
@@ -430,7 +447,7 @@ const EN_RX=[
  [/이미 서재에 있는 책 (\d+)권/g,'Already on your shelf: $1'],[/(\d+)권 추가/g,'Add $1'],[/, (\d+)권 합치기/g,', merge $1'],[/(\d+)권 가져오기/g,'Import $1'],
  [/(\d+)권을 새로 꽂았어요/g,'Added $1 new books'],[/, (\d+)권은 기존 기록에 합쳤어요/g,', merged $1 into existing records'],[/(\d+)권은 저장하지 못했어요\./g,'$1 could not be saved.'],
  [/책 정보를 읽는 중\.\.\. (\d+) \/ (\d+)/g,'Reading books... $1 / $2'],[/《(.*?)》 완독을 기록했어요/g,'Marked 《$1》 as finished'],[/《(.*?)》을 삭제했어요/g,'Deleted 《$1》'],
- [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
+ [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권은 미분류로 옮겼어요/g,'Moved $1 books to Uncategorized'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
 ];
 const EN_STR={
  '내 서재':'My Shelf','책 추가':'Add','가져오기':'Import','제목, 저자, 분류로 찾기':'Search title, author, category','전체':'All','읽는 중':'Reading','다 읽음':'Finished','읽고 싶은':'Want to read','소장':'Owned',
@@ -458,7 +475,7 @@ const EN_STR={
  '읽기 시작 (타이머)':'Start timer','▶ 읽기 시작':'▶ Start','읽기 시작':'Start','읽기 끝내기':'Stop reading','어디까지 읽었나요?':'Where did you stop?','세션 저장':'Save session','타이머 취소':'Cancel timer','계속 읽기':'Keep reading','다른 책 타이머가 진행 중이에요':'A timer is running for another book','다시 읽기':'Read again',
  '선택 끝':'Done','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
  '데이터 내보내기':'Export data','JSON 백업':'JSON backup','CSV (엑셀용)':'CSV (for Excel)','JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.':'JSON includes covers and photos and can be imported back into this app.','이 화면에서는 파일 저장을 쓸 수 없어요.':'File saving is not available in this view.','파일을 저장했어요':'File saved','파일을 저장하지 못했어요':'Could not save the file',
- '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','분류 관리':'Categories','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
+ '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','표지':'Cover','책 색':'Book color','표지 사진이 서재와 상세 화면에 보여요.':'The cover photo is shown on the shelf and in details.','표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.':'Take or upload a cover image. Without one, the title is shown on the book color as on the left.','표지가 없을 때의 표지 바탕색이자, 목표 탭의 완독 그래프와 문구 카드 테두리에 쓰이는 이 책의 색이에요.':'This book\'s color: the cover background when there is no photo, and its mark in the Goal charts and quote cards.',' 표지 사진을 올리면 표지에서 자동으로 골라요.':' With a cover photo, it is picked from the cover automatically.','제목':'Title','책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.':'The book color follows its category. Category colors are assigned in order under Categories in Settings and used in Goal charts and quote cards.','분류 관리':'Categories','+ 새 분류 추가':'+ New category','새 분류 이름':'New category name','분류 바꾸기':'Change category','추가':'Add','분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.':'Deleting a category moves its books to Uncategorized.','이미 있는 분류예요':'That category already exists','분류를 추가했어요':'Category added','분류를 삭제했어요':'Category deleted','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
 };
 const EN_KEYS=Object.keys(EN_STR).sort((a,b)=>b.length-a.length);
 function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.replace(rx,rep);for(const k of EN_KEYS)if(t.includes(k))t=t.split(k).join(EN_STR[k]);return t}
@@ -474,7 +491,7 @@ function applySkin(){if(S.settings.skin==='oak'){S.settings.skin='wood';if(S.set
 function migrateCats(){Object.values(S.books).forEach(b=>{const n=CAT_RENAME[b.category];if(n){b.category=n;putBook(b)}})}
 const YEAR=new Date().getFullYear();
 const LS='mybookshelf.v1';
-const S={books:{},settings:{goal:24},synced:false,view:'shelf',filter:'all',fset:new Set(),rset:new Set(),rf:'',sq:'',exp:new Set(),year:0,timer:null,finishing:false,selMode:false,sel:new Set(),renameCat:null,editQ:null,delArmQ:null,qtag:'',qshift:0,progFrom:null,importing:false,openId:null,dtab:'review',qq:'',form:null,delArm:false};
+const S={books:{},settings:{goal:24},synced:false,view:'shelf',filter:'all',fset:new Set(),rset:new Set(),rf:'',sq:'',exp:new Set(),year:0,timer:null,finishing:false,selMode:false,sel:new Set(),renameCat:null,delCat:null,editQ:null,delArmQ:null,qtag:'',qshift:0,progFrom:null,importing:false,openId:null,dtab:'review',qq:'',form:null,delArm:false};
 let cloud=null, sample=null, sampleImages=false, pendingRender=false;
 
 const $=s=>document.querySelector(s);
@@ -569,7 +586,7 @@ document.addEventListener('focusout',()=>setTimeout(()=>{if(pendingRender){pendi
 /* ---------- views ---------- */
 const doneThisYear=()=>list().filter(b=>b.status==='done'&&(b.finishedAt||'').startsWith(String(YEAR)));
 
-function coverHTML(b){return b.cover?`<img src="${b.cover}" alt="" decoding="sync">`:`<div class="gen" style="--c:${b.color}"><span>${esc(b.title)}</span><small>${esc(b.author||'')}</small></div>`}
+function coverHTML(b){return b.cover?`<img src="${b.cover}" alt="" decoding="sync">`:`<div class="gen" style="--c:${bc(b)}"><span>${esc(b.title)}</span><small>${esc(b.author||'')}</small></div>`}
 function tileHTML(b,mixed){const p=pct(b);
   return `<button class="tile${mixed&&b.status==='want'?' wish':''}${S.selMode&&S.sel.has(b.id)?' sel':''}" data-action="${S.selMode?'seltile':'open'}" data-id="${b.id}" aria-label="${esc(b.title)}, ${STATUS[b.status]}${b.rating?', 평점 '+b.rating:''}">
     <div class="cv">${coverHTML(b)}${b.format?`<span class="fm">${FORMAT[b.format]}</span>`:''}${b.status==='reading'?'<i class="rib"></i>':''}${b.status==='reading'&&b.pages?`<i class="pg"><b style="width:${p}%"></b></i>`:''}${b.rating?`<span class="rt">${starsInline(b.rating)}</span>`:''}${b.readCount>1?`<span class="rc">↻${b.readCount}</span>`:''}</div></button>`}
@@ -593,7 +610,7 @@ function vShelf(){
   const chips=[['all','전체'],['reading','읽는 중'],['want','Wishlist'],['done','다 읽음'],['owned','소장']]
     .map(([k,l])=>`<button class="chip" data-action="filter" data-f="${k}" aria-pressed="${k==='all'?!fs.size:fs.has(k)}">${l} ${k==='all'?all.length:all.filter(b=>k==='owned'?b.owned:b.status===k).length}</button>`).join('');
   const cont=reading.length&&f==='all'&&!sq&&!rs.size?`<div class="cath"><h2>읽는 중</h2><span>${reading.length}권</span></div><div class="cont">${reading.map(b=>`
-    <div class="ccard" style="--c:${b.color}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:'<div class="mini"></div>'}<div>
+    <div class="ccard" style="--c:${bc(b)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:'<div class="mini"></div>'}<div>
       <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a">${esc(b.author||'')}</div>
       <div class="bar"><i style="width:${pct(b)}%"></i></div>
       <div class="crow"><span>${b.current||0} / ${b.pages||'?'}쪽, ${pct(b)}%${(d=>d?` · 예상 완독 ${d.slice(5).replace('-','/')}`:'')(estimate(b))}</span>${S.timer&&S.timer.bookId===b.id?`<button class="btn small" data-action="open" data-id="${b.id}">⏱ <span data-elapsed>${elapsedText()}</span></button>`:`<span class="hbtns"><button class="btn ghost small" data-action="plus" data-id="${b.id}">+10쪽</button>${S.timer?'':`<button class="btn small" data-action="startopen" data-id="${b.id}">▶ 읽기 시작</button>`}</span>`}</div>
@@ -622,7 +639,7 @@ function vQuotes(){
   return `<header class="top"><div><h1>기억하고 싶은 문구</h1><div class="sub">${items.length}개 모음</div></div></header>
     <input class="search" type="search" placeholder="문구, 책 제목, 태그로 찾기" value="${esc(S.qq)}" data-field="qq" aria-label="문구 검색">
     ${tags.length||items.some(({x})=>x.fav)?`<div class="chips" role="group" aria-label="태그"><button class="chip" data-action="qtag" data-g="" aria-pressed="${tf===''}">전체</button><button class="chip" data-action="qtag" data-g="★" aria-pressed="${tf==='★'}">★ 즐겨찾기</button>${tags.map(g=>`<button class="chip" data-action="qtag" data-g="${esc(g)}" aria-pressed="${tf===g}">#${esc(g)}</button>`).join('')}</div>`:''}
-    ${shown.length?shown.map(({b,x})=>`<div class="qcard" role="button" tabindex="0" style="--c:${b.color}" data-action="openq" data-id="${b.id}">
+    ${shown.length?shown.map(({b,x})=>`<div class="qcard" role="button" tabindex="0" style="--c:${bc(b)}" data-action="openq" data-id="${b.id}">
       ${x.photo?`<img class="qphoto" src="${x.photo}" alt="저장한 페이지 사진">`:''}${x.text?`<blockquote>${esc(x.text)}</blockquote>`:''}<div class="meta">${x.fav?'★ ':''}《${esc(b.title)}》${x.page?` p.${esc(x.page)}`:''}${(x.tags||[]).map(g=>` <em class="tag">#${esc(g)}</em>`).join('')}</div></div>`).join('')
     :`<div class="empty"><p>${items.length?'찾는 문구가 없어요':'아직 모은 문구가 없어요'}</p>${items.length?'':'책을 열고 문구 탭에서 마음에 남은 문장을 저장해 보세요.'}</div>`}`;
 }
@@ -658,7 +675,7 @@ function autoSession(b,from,to){if(S.timer&&S.timer.bookId===b.id)return;if(to==
 /* ---------- quote of the day ---------- */
 function quoteCardHTML(){const items=[];list().forEach(b=>(b.quotes||[]).forEach(x=>{if(x.text)items.push({b,x})}));if(items.length<12)return'';
   const seed=hash(today())+(S.qshift||0);const {b,x}=items[seed%items.length];
-  return `<section class="qotd" style="--c:${b.color}"><div class="qh"><span>오늘의 문구</span><button class="linkbtn" data-action="qnext" style="font-size:12px">다음 문구 ›</button></div>
+  return `<section class="qotd" style="--c:${bc(b)}"><div class="qh"><span>오늘의 문구</span><button class="linkbtn" data-action="qnext" style="font-size:12px">다음 문구 ›</button></div>
     <div class="qbody" role="button" tabindex="0" data-action="openq" data-id="${b.id}"><blockquote class="${S.qexp?'':'clamp'}">${esc(x.text)}</blockquote><div class="meta">《${esc(b.title)}》${x.page?` p.${esc(x.page)}`:''}</div></div>
     <button class="linkbtn qmore" data-action="qexp" style="font-size:12px;display:none">${S.qexp?'접기 ▴':'더 보기 ▾'}</button></section>`}
 
@@ -707,11 +724,19 @@ function bulkBarHTML(){if(!S.selMode)return'';const n=S.sel.size;
   return `<div class="bulk"><div class="row"><b>${n}권 선택</b><button class="linkbtn" data-action="selall">${n?'선택 해제':'전체 선택'}</button><button class="linkbtn" data-action="seldone">완료</button></div>
     <div class="hbtns" style="flex-wrap:wrap;margin-top:6px"><button class="chip" data-action="bown" data-v="1" ${n?'':'disabled'}>소장 표시</button><button class="chip" data-action="bown" data-v="0" ${n?'':'disabled'}>소장 해제</button>
       ${Object.entries(FORMAT).map(([k,l])=>`<button class="chip" data-action="bfmt" data-v="${k}" ${n?'':'disabled'}>${l}</button>`).join('')}</div>
-    <div class="hbtns" style="margin-top:6px"><input type="text" id="bcat" list="catlist2" placeholder="분류 바꾸기" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="bcat" ${n?'':'disabled'}>적용</button>
-      <datalist id="catlist2">${[...new Set(list().map(b=>b.category).filter(Boolean))].sort().map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div></div>`}
+    <div class="hbtns" style="margin-top:6px"><select id="bcat" class="sel" style="flex:1"><option value="">분류 바꾸기</option><option value="__none">미분류</option>${allCats().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select><button class="btn small" data-action="bcat" ${n?'':'disabled'}>적용</button></div></div>`}
 
 /* ---------- category rename ---------- */
-function renameCat(from,to){to=(to||'').trim();if(!to||to===from)return;let n=0;list().forEach(b=>{if((b.category||'')===from){b.category=to;putBook(b);n++}});S.renameCat=null;toast(`${n}권의 분류를 바꿨어요`)}
+function catColor(c){c=(c||'').trim();if(!c)return '#8A8579';const cs=allCats();const i=Math.max(0,cs.indexOf(c));const n=Math.max(cs.length,1);
+  const h=Math.round(4+i*(316/Math.max(n,2)));return `hsl(${h} 42% 40%)`}
+function bc(b){return catColor(b.category)}
+function formCatPreview(f){return f.catNewOn?(f.catNew||'').trim():(f.category||'')}
+function allCats(){const set=new Set((S.settings.categories||[]).filter(Boolean));list().forEach(b=>{if(b.category)set.add(b.category)});return [...set].sort((a,b)=>a.localeCompare(b,'ko'))}
+function saveCats(arr){S.settings.categories=[...new Set(arr.filter(Boolean))];putSettings()}
+function formCat(f){if(f.catNewOn){const n=(f.catNew||'').trim();if(n){if(!allCats().includes(n))saveCats([...allCats(),n]);return n}return ''}return (f.category||'').trim()}
+function renameCat(from,to){to=(to||'').trim();if(!to||to===from){S.renameCat=null;return}let n=0;list().forEach(b=>{if((b.category||'')===from){b.category=to;putBook(b);n++}});saveCats(allCats().map(c=>c===from?to:c));S.renameCat=null;toast(`${n}권의 분류를 바꿨어요`)}
+function deleteCat(c){let n=0;list().forEach(b=>{if(b.category===c){b.category='';putBook(b);n++}});saveCats(allCats().filter(x=>x!==c));S.delCat=null;toast(n?`${n}권은 미분류로 옮겼어요`:'분류를 삭제했어요')}
+function addCat(name){name=(name||'').trim();if(!name)return;if(allCats().includes(name)){toast('이미 있는 분류예요');return}saveCats([...allCats(),name]);toast('분류를 추가했어요')}
 
 /* ---------- export ---------- */
 let dl=null;
@@ -731,11 +756,11 @@ function fmtMin(m){m=Math.round(m);return m>=60?`${Math.floor(m/60)}시간 ${m%6
 function vGoal(){
   const years=[...new Set([YEAR,...list().map(b=>+(b.finishedAt||'').slice(0,4)).filter(Boolean)])].sort((a,b)=>b-a);
   const y=S.year||YEAR,isCur=y===YEAR,g=S.settings.goal;
-  const done=doneInYear(y).sort((a,b)=>(a.finishedAt||'').localeCompare(b.finishedAt||''));
+  const done=doneInYear(y).sort((a,b)=>(a.finishedAt||'').localeCompare(b.finishedAt||''));const doneByCat=done.slice().sort((a,b)=>{const ia=allCats().indexOf(a.category||''),ib=allCats().indexOf(b.category||'');return (ia<0?999:ia)-(ib<0?999:ib)});
   const slots=Math.max(g,done.length);
-  const gs=Array.from({length:slots},(_,i)=>done[i]?`<i style="--c:${done[i].color}" title="${esc(done[i].title)}"></i>`:'<i class="e"></i>').join('');
+  const gs=Array.from({length:slots},(_,i)=>doneByCat[i]?`<i style="--c:${bc(doneByCat[i])}" title="${esc(doneByCat[i].title)}"></i>`:'<i class="e"></i>').join('');
   const left=g-done.length;
-  const months=Array.from({length:12},(_,m)=>done.filter(b=>+b.finishedAt.slice(5,7)===m+1));
+  const corder=c=>{const i=allCats().indexOf(c||'');return i<0?999:i};const months=Array.from({length:12},(_,m)=>done.filter(b=>+b.finishedAt.slice(5,7)===m+1).sort((a,b)=>corder(a.category)-corder(b.category)));
   const mpages=months.map(ms=>ms.reduce((s,b)=>s+(+b.pages||0),0)),mp=Math.max(1,...mpages);
   const pages=done.reduce((s,b)=>s+(+b.pages||0),0);
   const rated=done.filter(b=>b.rating);
@@ -758,12 +783,13 @@ function vGoal(){
     <div><b>${ses.length?fmtMin(mins):'-'}</b><span>독서 시간</span></div><div><b>${ses.length}</b><span>독서 세션</span></div><div><b>${qn}</b><span>남긴 문구</span></div></div>
     ${longest||best?`<div class="kv">${longest?`<div><span>가장 긴 책</span><b>${esc(longest.title)}</b><small>${longest.pages}쪽</small></div>`:''}${best?`<div><span>최고 평점</span><b>${esc(best.title)}</b><small>${starsInline(best.rating)}</small></div>`:''}</div>`:''}</div>
   <div class="sec"><h2>월별 완독</h2>
-    <div class="months">${months.map(ms=>`<div class="m">${ms.map(b=>`<i style="--c:${b.color}" title="${esc(b.title)}"></i>`).join('')}</div>`).join('')}</div>
+    <div class="months">${months.map(ms=>`<div class="m">${ms.map(b=>`<i style="--c:${bc(b)}" title="${esc(b.title)}"></i>`).join('')}</div>`).join('')}</div>
     <div class="mlabels">${Array.from({length:12},(_,i)=>`<span>${i+1}</span>`).join('')}</div>
+    ${(()=>{const used=[...new Set(done.map(b=>b.category||''))].sort((a,b)=>a===''?1:b===''?-1:allCats().indexOf(a)-allCats().indexOf(b));return used.length?`<div class="clegend">${used.map(c=>`<span><i class="catdot" style="--c:${catColor(c)}"></i>${c?esc(c):'미분류'}</span>`).join('')}</div>`:''})()}
     <h2 style="margin-top:16px">월별 읽은 쪽</h2>
     <div class="pbars">${mpages.map(v=>`<div><i style="height:${Math.round(v/mp*100)}%" title="${v}"></i></div>`).join('')}</div>
     <div class="mlabels">${Array.from({length:12},(_,i)=>`<span>${i+1}</span>`).join('')}</div></div>
-  ${cats.length?`<div class="sec"><h2>분류별 완독</h2>${cats.map(([c,n])=>`<div class="hbar"><span>${esc(c)}</span><div><i style="width:${Math.round(n/done.length*100)}%"></i></div><b>${n}</b></div>`).join('')}
+  ${cats.length?`<div class="sec"><h2>분류별 완독</h2>${cats.map(([c,n])=>`<div class="hbar"><span><i class="catdot" style="--c:${catColor(c==='미분류'?'':c)}"></i>${esc(c)}</span><div><i style="width:${Math.round(n/done.length*100)}%;background:${catColor(c==='미분류'?'':c)}"></i></div><b>${n}</b></div>`).join('')}
     ${fmts.length?`<p class="hint" style="margin-top:10px">${fmts.map(([f,n])=>`${FORMAT[f]} ${n}권`).join(', ')}</p>`:''}</div>`:''}`;
 }
 
@@ -775,11 +801,10 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
     <div class="tonerow"><span>따뜻함</span><b>${S.settings.toneW??50}</b><input type="range" min="0" max="100" value="${S.settings.toneW??50}" data-field="toneW" aria-label="따뜻함"></div>
     ${((S.settings.toneB??50)!=50||(S.settings.toneW??50)!=50)?'<button class="linkbtn" data-action="tonereset" style="margin-top:4px">기본(50)으로 되돌리기</button>':''}<p class="hint">0~100, 가운데 50이 기본이에요. 모든 스킨에 함께 적용되고 표지 이미지는 바뀌지 않아요.</p></div>
   <div class="sec"><h2>데이터 내보내기</h2>${dl?`<div class="hbtns"><button class="btn ghost small" data-action="export" data-k="json">JSON 백업</button><button class="btn ghost small" data-action="export" data-k="csv">CSV (엑셀용)</button></div><p class="hint">JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.</p>`:'<p class="hint">이 화면에서는 파일 저장을 쓸 수 없어요.</p>'}</div>
-  <div class="sec"><h2>분류 관리</h2>${(()=>{const m={};list().forEach(b=>{const c=b.category||'';if(c)m[c]=(m[c]||0)+1});const cs=Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0],'ko'));
-    return cs.length?cs.map(([c,n])=>S.renameCat===c?`<div class="catrow"><input type="text" id="rcat" value="${esc(c)}" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="rcatok" data-c="${esc(c)}">저장</button><button class="linkbtn" data-action="rcatcancel">취소</button></div>`
-      :`<div class="catrow"><span>${esc(c)}</span><small>${n}권</small><button class="linkbtn" data-action="rcat" data-c="${esc(c)}">이름 바꾸기</button></div>`).join(''):'<p class="hint">아직 분류가 없어요</p>'})()}</div>
-  ${FB?`<div class="sec"><h2>계정</h2>${S.user?`<p style="margin:0 0 8px;font-size:14px">${esc(S.user.name||S.user.email)}<br><span class="hint" style="margin:0">${esc(S.user.email)}</span></p><button class="btn ghost small" data-action="logout">로그아웃</button>
-    <div style="margin-top:14px"><p class="hint" style="margin:0 0 6px">${S.user.hasPw?'이메일 로그인 비밀번호 바꾸기':'홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)'}</p><div class="hbtns"><input type="password" id="sp-pw" placeholder="새 비밀번호 (6자 이상)" autocomplete="new-password" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px"><button class="btn small" data-action="setpw">${S.user.hasPw?'변경':'등록'}</button></div></div>`:`<p class="hint" style="margin:0 0 8px">로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.</p>${loginFormHTML()}`}</div>`:''}
+  <div class="sec"><h2>분류 관리</h2>${(()=>{const m={};list().forEach(b=>{const c=b.category||'';if(c)m[c]=(m[c]||0)+1});const cs=allCats();
+    return (cs.length?cs.map(c=>S.renameCat===c?`<div class="catrow"><input type="text" id="rcat" value="${esc(c)}" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="rcatok" data-c="${esc(c)}">저장</button><button class="linkbtn" data-action="rcatcancel">취소</button></div>`
+      :`<div class="catrow"><span><i class="catdot" style="--c:${catColor(c)}"></i>${esc(c)}</span><small>${m[c]||0}권</small><button class="qbtn" data-action="rcat" data-c="${esc(c)}">✎ 수정</button><button class="qbtn danger" style="margin-left:0" data-action="dcat" data-c="${esc(c)}">${S.delCat===c?'한 번 더 누르면 삭제':'삭제'}</button></div>`).join(''):'<p class="hint">아직 분류가 없어요</p>')
+      +`<div class="catrow" style="border-bottom:0;padding-top:12px"><input type="text" id="ncat" placeholder="새 분류 이름" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="acat">추가</button></div><p class="hint">분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.</p>`})()}</div>
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>`}
 let lastMain='';
 function renderMain(){
@@ -815,12 +840,12 @@ function vSheet(){
       <div class="acts"><input type="number" id="qpage" placeholder="쪽" aria-label="쪽 번호" min="0"><input type="text" id="qtags" placeholder="태그 (쉼표로 구분)" aria-label="태그" style="width:130px">
       ${sampleImages?'<button class="btn ghost small" data-action="photo" id="phbtn">사진에서 가져오기</button>':''}
       <button class="btn small" data-action="addq" style="margin-left:auto">문구 저장</button></div></div>
-    ${qs.length?qs.map(x=>S.editQ===x.id?`<div class="qitem qedit" style="--c:${b.color}"><textarea id="eqtext" aria-label="문구">${esc(x.text||'')}</textarea>
-      <div class="acts"><input type="number" id="eqpage" placeholder="쪽" value="${esc(x.page||'')}" min="0" aria-label="쪽 번호"><input type="text" id="eqtags" placeholder="태그 (쉼표로 구분)" value="${esc((x.tags||[]).join(', '))}" style="width:130px" aria-label="태그"><span class="hbtns" style="margin-left:auto"><button class="btn small" data-action="editqsave" data-q="${x.id}">저장</button><button class="btn ghost small" data-action="editqcancel">취소</button></span></div></div>`:`<div class="qitem" style="--c:${b.color}">${x.photo?`<img class="qphoto" src="${x.photo}" alt="저장한 페이지 사진">`:''}${x.text?`<blockquote>${esc(x.text)}</blockquote>`:''}<div class="meta"><span>${x.page?'p.'+esc(x.page):''}${(x.tags||[]).map(g=>` <em class="tag">#${esc(g)}</em>`).join('')}</span></div><div class="qacts"><button data-action="favq" data-q="${x.id}" class="qbtn${x.fav?' fav':''}" aria-pressed="${!!x.fav}">${x.fav?'★ 즐겨찾기됨':'☆ 즐겨찾기'}</button><button data-action="editq" data-q="${x.id}" class="qbtn">✎ 수정</button><button data-action="delq" data-q="${x.id}" class="qbtn danger">${S.delArmQ===x.id?'한 번 더 누르면 삭제':'삭제'}</button></div></div>`).join(''):'<p class="hint" style="text-align:center;padding:16px 0">아직 저장한 문구가 없어요</p>'}`;
+    ${qs.length?qs.map(x=>S.editQ===x.id?`<div class="qitem qedit" style="--c:${bc(b)}"><textarea id="eqtext" aria-label="문구">${esc(x.text||'')}</textarea>
+      <div class="acts"><input type="number" id="eqpage" placeholder="쪽" value="${esc(x.page||'')}" min="0" aria-label="쪽 번호"><input type="text" id="eqtags" placeholder="태그 (쉼표로 구분)" value="${esc((x.tags||[]).join(', '))}" style="width:130px" aria-label="태그"><span class="hbtns" style="margin-left:auto"><button class="btn small" data-action="editqsave" data-q="${x.id}">저장</button><button class="btn ghost small" data-action="editqcancel">취소</button></span></div></div>`:`<div class="qitem" style="--c:${bc(b)}">${x.photo?`<img class="qphoto" src="${x.photo}" alt="저장한 페이지 사진">`:''}${x.text?`<blockquote>${esc(x.text)}</blockquote>`:''}<div class="meta"><span>${x.page?'p.'+esc(x.page):''}${(x.tags||[]).map(g=>` <em class="tag">#${esc(g)}</em>`).join('')}</span></div><div class="qacts"><button data-action="favq" data-q="${x.id}" class="qbtn${x.fav?' fav':''}" aria-pressed="${!!x.fav}">${x.fav?'★ 즐겨찾기됨':'☆ 즐겨찾기'}</button><button data-action="editq" data-q="${x.id}" class="qbtn">✎ 수정</button><button data-action="delq" data-q="${x.id}" class="qbtn danger">${S.delArmQ===x.id?'한 번 더 누르면 삭제':'삭제'}</button></div></div>`).join(''):'<p class="hint" style="text-align:center;padding:16px 0">아직 저장한 문구가 없어요</p>'}`;
   return `<div class="sbar"><button class="linkbtn" data-action="close">닫기</button><div><button class="linkbtn" data-action="edit">정보 수정</button>
     <button class="linkbtn" data-action="del" style="color:var(--danger);margin-left:10px">${S.delArm?'한 번 더 누르면 삭제':'삭제'}</button></div></div>
-  ${(()=>{const sp=splitTitle(b.title);const meta=[b.author?esc(b.author):'저자 미입력',b.publisher?esc(b.publisher):'',b.pages?`${b.pages}쪽`:''].filter(Boolean).join(', ');const m2=[FORMAT[b.format],b.category?esc(b.category):'',b.readCount>1?b.readCount+'번 읽음':'',b.isbn?'ISBN '+b.isbn:''].filter(Boolean);
-    return `<div class="cover2" style="--c:${b.color}"><div class="cvbox">${b.cover?`<img class="cimg" src="${b.cover}" alt="${esc(b.title)} 표지" decoding="sync">`:`<div class="gen"><span>${esc(sp.main)}</span></div>`}</div>
+  ${(()=>{const sp=splitTitle(b.title);const meta=[b.author?esc(b.author):'저자 미입력',b.publisher?esc(b.publisher):'',b.pages?`${b.pages}쪽`:''].filter(Boolean).join(', ');const m2=[FORMAT[b.format],b.category?esc(b.category):'',b.readCount>1?b.readCount+'번 읽음':'',b.isbn&&isbnOk(b.isbn)?'ISBN '+b.isbn:''].filter(Boolean);
+    return `<div class="cover2" style="--c:${bc(b)}"><div class="cvbox">${b.cover?`<img class="cimg" src="${b.cover}" alt="${esc(b.title)} 표지" decoding="sync">`:`<div class="gen"><span>${esc(sp.main)}</span></div>`}</div>
     <div class="ctext"><div class="ct">${esc(sp.main)}</div>${sp.sub?`<div class="cs">${esc(sp.sub)}</div>`:''}<div class="ca">${meta}</div>${m2.length?`<div class="ca2">${m2.join(', ')}</div>`:''}</div></div>`})()}
   <div class="sec"><div class="seg" role="group" aria-label="상태">${Object.entries(STATUS).map(([k,l])=>`<button data-action="status" data-s="${k}" aria-pressed="${b.status===k}">${l}</button>`).join('')}</div>
     <div class="row" style="margin-top:14px">${stars(b.rating)}<label class="toggle"><input type="checkbox" data-field="owned" ${b.owned?'checked':''}>소장 중</label></div>
@@ -849,22 +874,26 @@ function renderForm(){const f=S.form;
   <div class="field"><label for="f-author">저자</label><input type="text" id="f-author" data-ff="author" value="${esc(f.author)}" autocomplete="off"></div>
   <div class="field"><label for="f-pub">출판사</label><input type="text" id="f-pub" data-ff="publisher" value="${esc(f.publisher)}" autocomplete="off"></div>
   <div class="field"><label for="f-isbn">ISBN <span style="font-size:12px">(13자리, 바코드 아래 숫자)</span></label><div class="hbtns" style="align-items:center"><input type="text" id="f-isbn" data-ff="isbn" value="${esc(f.isbn)}" inputmode="numeric" autocomplete="off" placeholder="978..." style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px">${sampleImages?`<button class="btn ghost small" data-action="fisbn" ${f.isbnBusy?'disabled':''}>${f.isbnBusy?'읽는 중...':'바코드 사진'}</button>`:''}</div>${f.isbn&&!isbnOk(f.isbn)?'<div class="err">ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요</div>':''}</div>
-  <div class="field"><label for="f-cat">분류</label><input type="text" id="f-cat" data-ff="category" value="${esc(f.category)}" list="catlist" placeholder="예: 소설, 경제, 역사" autocomplete="off">
-    <datalist id="catlist">${[...new Set(list().map(b=>b.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ko')).map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div>
+  <div class="field"><label for="f-cat">분류</label><select id="f-cat" data-ff="category" class="sel">${(()=>{const cs=allCats();if(f.category&&!cs.includes(f.category))cs.push(f.category);return `<option value="" ${!f.category&&!f.catNewOn?'selected':''}>미분류</option>`+cs.map(c=>`<option value="${esc(c)}" ${f.category===c?'selected':''}>${esc(c)}</option>`).join('')+`<option value="__new" ${f.catNewOn?'selected':''}>+ 새 분류 추가</option>`})()}</select>
+    ${f.catNewOn?`<input type="text" id="f-catnew" data-ff="catNew" value="${esc(f.catNew||'')}" placeholder="새 분류 이름" autocomplete="off" style="margin-top:8px">`:''}</div>
   <div class="field"><label for="f-pages">전체 쪽수</label><input type="number" id="f-pages" data-ff="pages" min="1" value="${esc(f.pages)}" inputmode="numeric"></div>
   <div class="field"><label>책 유형 <span style="font-size:12px">(선택, 한 번 더 누르면 해제)</span></label><div class="seg" style="grid-template-columns:repeat(4,1fr)">${Object.entries(FORMAT).map(([k,l])=>`<button data-action="fformat" data-v="${k}" aria-pressed="${f.format===k}">${l}</button>`).join('')}</div></div>
   ${f.id?`<div class="field"><label class="toggle"><input type="checkbox" data-ff="owned" ${f.owned?'checked':''}>소장 중인 책</label></div>`:''}
   ${f.id?'':`<div class="field"><label>상태</label><div class="seg">${Object.entries(STATUS).map(([k,l])=>`<button data-action="fstatus" data-s="${k}" aria-pressed="${f.status===k}">${l}</button>`).join('')}</div></div>
   <div class="field"><label class="toggle"><input type="checkbox" data-ff="owned" ${f.owned?'checked':''}>소장 중인 책</label></div>`}
-  <div class="field"><label>표지 사진</label><div class="hbtns" style="align-items:center">${f.cover?`<img src="${f.cover}" alt="" style="width:44px;height:64px;object-fit:cover;border-radius:3px">`:''}<button class="btn ghost small" data-action="fcover">${f.cover?'다른 사진':'사진 고르기'}</button>${f.cover?'<button class="linkbtn" data-action="fcoverdel">지우기</button>':''}</div><p class="hint">책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요</p></div>
-  <div class="field"><label>책등 색</label><div class="swatches">${COLORS.map(c=>`<button style="--c:${c}" data-action="fcolor" data-c="${c}" aria-pressed="${f.color===c}" aria-label="색 ${c}"></button>`).join('')}</div></div>
+  <div class="field"><label>표지</label><div class="coveredit">
+      <div class="cethumb${f.cover?' has':''}" style="--c:${catColor(formCatPreview(f))}">${f.cover?`<img src="${f.cover}" alt="표지">`:`<span>${esc(f.title||'제목')}</span>`}</div>
+      <div class="ceside"><div class="ceacts"><button class="btn act" data-action="fcover"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span>${f.cover?'다른 사진':'사진 고르기'}</span></button>${f.cover?'<button class="btn act danger" data-action="fcoverdel"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg><span>지우기</span></button>':''}</div>
+        <p class="hint" style="margin:6px 0 0">${f.cover?'표지 사진이 서재와 상세 화면에 보여요.':'표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.'}</p></div></div></div>
+  <div class="field"><label>책 색</label><div class="row" style="justify-content:flex-start;gap:10px"><i class="catdot" style="--c:${catColor(formCatPreview(f))}"></i><span style="font-size:14px">${formCatPreview(f)?esc(formCatPreview(f)):'미분류'}</span></div>
+    <p class="hint">책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.</p></div>
   <div class="mact"><button class="btn ghost" data-action="fcancel">취소</button><button class="btn" data-action="fsave">${f.id?'변경 저장':'책 추가'}</button></div>`)}
 function closeForm(){S.form=null;$('#modal').hidden=true}
 function saveForm(){const f=S.form;
   if(!f.title.trim()){f.err='제목을 입력해 주세요';renderForm();$('#f-title').focus();return}
   const pages=Math.max(0,parseInt(f.pages)||0);
-  if(f.id){const b={...S.books[f.id],title:f.title.trim(),author:f.author.trim(),pages,color:f.color,owned:f.owned,format:f.format,category:f.category.trim(),cover:f.cover||'',isbn:cleanIsbn(f.isbn),publisher:(f.publisher||'').trim()};if(b.current>pages&&pages)b.current=pages;putBook(b);closeForm();renderAll();toast('저장했어요');return}
-  const b={id:uid(),title:f.title.trim(),author:f.author.trim(),pages,current:0,status:'want',owned:f.owned,format:f.format,category:f.category.trim(),publisher:(f.publisher||'').trim(),isbn:cleanIsbn(f.isbn),cover:f.cover||'',rating:0,review:'',summary:'',quotes:[],color:f.color,createdAt:Date.now()};
+  if(f.id){const b={...S.books[f.id],title:f.title.trim(),author:f.author.trim(),pages,color:f.color,owned:f.owned,format:f.format,category:formCat(f),cover:f.cover||'',isbn:cleanIsbn(f.isbn),publisher:(f.publisher||'').trim()};if(b.current>pages&&pages)b.current=pages;putBook(b);closeForm();renderAll();toast('저장했어요');return}
+  const b={id:uid(),title:f.title.trim(),author:f.author.trim(),pages,current:0,status:'want',owned:f.owned,format:f.format,category:formCat(f),publisher:(f.publisher||'').trim(),isbn:cleanIsbn(f.isbn),cover:f.cover||'',rating:0,review:'',summary:'',quotes:[],color:f.color,createdAt:Date.now()};
   setStatus(b,f.status);putBook(b);closeForm();renderAll();toast('책을 추가했어요');
 }
 function setStatus(b,s){b.status=s;
@@ -957,10 +986,12 @@ document.addEventListener('click',e=>{
     case 'seldone':S.selMode=false;S.sel.clear();renderMain();break;
     case 'bown':bulkApply(x=>x.owned=t.dataset.v==='1');renderMain();break;
     case 'bfmt':bulkApply(x=>x.format=t.dataset.v);renderMain();break;
-    case 'bcat':{const v=($('#bcat')?.value||'').trim();if(!v)return;bulkApply(x=>x.category=v);renderMain();break}
+    case 'bcat':{const v=($('#bcat')?.value||'');if(!v)return;bulkApply(x=>x.category=v==='__none'?'':v);renderMain();break}
     case 'rcat':S.renameCat=t.dataset.c;renderMain();setTimeout(()=>$('#rcat')?.focus(),30);break;
     case 'rcatcancel':S.renameCat=null;renderMain();break;
     case 'rcatok':renameCat(t.dataset.c,$('#rcat')?.value);renderMain();break;
+    case 'dcat':{const c=t.dataset.c;if(S.delCat!==c){S.delCat=c;renderMain();setTimeout(()=>{if(S.delCat===c){S.delCat=null;renderMain()}},4000);break}deleteCat(c);renderMain();break}
+    case 'acat':addCat($('#ncat')?.value);renderMain();break;
     case 'export':exportData(t.dataset.k);break;
     case 'dot':{const w=t.closest('.dots').previousElementSibling;w.scrollTo({left:(+t.dataset.i)*w.clientWidth,behavior:'smooth'});break}
     case 'qtag':S.qtag=t.dataset.g;renderMain();break;
@@ -1016,7 +1047,7 @@ document.addEventListener('keydown',e=>{
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeForm()});
 document.addEventListener('input',e=>{
   const t=e.target;
-  if(t.dataset.ff){S.form[t.dataset.ff]=t.type==='checkbox'?t.checked:t.value;return}
+  if(t.dataset.ff){if(t.dataset.ff==='category'){if(t.value==='__new'){S.form.category='';S.form.catNewOn=true;renderForm();setTimeout(()=>$('#f-catnew')?.focus(),30)}else{S.form.category=t.value;if(S.form.catNewOn){S.form.catNewOn=false;renderForm()}}return}S.form[t.dataset.ff]=t.type==='checkbox'?t.checked:t.value;return}
   const f=t.dataset.field;if(!f)return;
   if(f==='toneB'||f==='toneW'){S.settings[f]=+t.value;applySkin();const bEl=t.previousElementSibling;if(bEl)bEl.textContent=t.value;clearTimeout(timers._tone);timers._tone=setTimeout(()=>{putSettings();lastMain='';renderMain()},500);return}
   if(f==='qq'||f==='sq'){S[f]=t.value;const pos=t.selectionStart;renderMain();const s=$('.search');if(s){s.focus();s.setSelectionRange(pos,pos)}return}
@@ -1189,7 +1220,7 @@ function renderImp(busy){const el={set innerHTML(h){$('#impIn').innerHTML=tr(h)}
   if(IMP.step==='bwreview'){const r=buildImport(),bs=r.books,newN=bs.length-r.dup;
     const c=s=>bs.filter(b=>b.status===s).length,memo=bs.filter(b=>b.review).length,ph=bs.reduce((s,b)=>s+b.quotes.filter(q=>q.photo).length,0),
       tq=bs.reduce((s,b)=>s+b.quotes.filter(q=>!q.photo).length,0),cov=bs.filter(b=>b.cover).length,p5=bs.filter(b=>b._ph).length;
-    const pv=bs.slice(-5).reverse().map(b=>`<div class="pv" style="--c:${b.color}">${b.cover?`<img src="${b.cover}" alt="" style="width:34px;height:48px;object-fit:cover;border-radius:2px">`:'<i></i>'}<div><b>${esc(b.title)}</b><span>${esc(b.author||'저자 없음')}, ${STATUS[b.status]}${b.rating?` ${starsInline(b.rating)}`:''}${b.finishedAt?`, 완독 ${b.finishedAt}`:''}</span></div></div>`).join('');
+    const pv=bs.slice(-5).reverse().map(b=>`<div class="pv" style="--c:${bc(b)}">${b.cover?`<img src="${b.cover}" alt="" style="width:34px;height:48px;object-fit:cover;border-radius:2px">`:'<i></i>'}<div><b>${esc(b.title)}</b><span>${esc(b.author||'저자 없음')}, ${STATUS[b.status]}${b.rating?` ${starsInline(b.rating)}`:''}${b.finishedAt?`, 완독 ${b.finishedAt}`:''}</span></div></div>`).join('');
     el.innerHTML=bar+`<header class="top"><div><h1>${esc(IMP.src||'백업')} 가져오기</h1><div class="sub">${esc(IMP.fileName)}</div></div></header>
     <div class="sec"><div class="sumline">${bs.length}권을 찾았어요.</div><p class="hint" style="margin:6px 0 0">다 읽음 ${c('done')}권, 읽는 중 ${c('reading')}권, 읽고 싶은 ${c('want')}권</p>
       <p class="hint" style="margin:4px 0 0">${[cov?`표지 ${cov}장`:'',memo?`리뷰·메모 ${memo}권`:'',tq?`문구 ${tq}개`:'',ph?`페이지 사진 ${ph}장`:''].filter(Boolean).join(', ')}</p></div>
@@ -1293,7 +1324,7 @@ async function readBookswing(file){
     const events=[...k(4).map(a=>({type:'progress',date:sec2d(+a.date),ts:(+a.date||0)*1000,page:+a.page||0})),...k(6).map(a=>({type:'rated',date:sec2d(+a.date),ts:(+a.date||0)*1000,rating:Math.max(0,Math.min(5,+j.rating||0))})),...k(2).map(a=>({type:'note',date:sec2d(+a.date),ts:(+a.date||0)*1000,text:String(a.text||'').trim()}))].filter(e=>e.date);
     let cover='',color='';const cf=byName[(j.uuid||name.replace(/\.book$/i,''))+'_i.png'];
     if(cf){try{const r=await imgToData(await cf.async('blob'),160,.78,true);cover=r.url;color=r.color}catch(e){}}
-    out.push({title:String(j.title).trim(),author:bwAuthor(j.author),publisher:String(j.publisher||'').trim(),isbn:String(j.isbn||'').trim(),translator:String(j.translator||'').trim(),
+    out.push({title:String(j.title).trim(),author:bwAuthor(j.author),publisher:String(j.publisher||'').trim(),isbn:(v=>isbnOk(v)?cleanIsbn(v):'')(String(j.isbn||'').trim()),translator:String(j.translator||'').trim(),
       category:(c=>CAT_RENAME[c]||c)(String(j.category||'').trim()),pages,current,status,owned:false,format:'',rating:Math.max(0,Math.min(5,+j.rating||0)),startedAt,finishedAt,review,summary:'',quotes,
       readCount:+j.readCount||0,cover,events,color:color||COLORS[hash(j.title)%COLORS.length],createdAt:(+j.date||0)*1000,_ph:placeholder})}
   out.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));return out}
