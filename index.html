@@ -13,6 +13,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <script src="firebase-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,6 +144,10 @@
 .catrow .qbtn{min-height:30px;padding:4px 10px;font-size:12px}
 .catdot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:-1px;flex:none}
 .clegend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;font-size:12px;color:var(--muted)}
+.bkcard{display:flex;align-items:center;gap:10px;border-color:var(--ribbon)}
+.bkcard>div:first-child{flex:1;min-width:0;font-size:14px}
+.danger-zone{border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.danger-zone h2{color:var(--danger)}
 .skins{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .skins button{border:2px solid transparent;border-radius:12px;padding:6px 4px 8px;background:var(--surface-2);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--ink)}
 .skins button[aria-pressed="true"]{border-color:var(--accent)}
@@ -447,7 +452,7 @@ const EN_RX=[
  [/이미 서재에 있는 책 (\d+)권/g,'Already on your shelf: $1'],[/(\d+)권 추가/g,'Add $1'],[/, (\d+)권 합치기/g,', merge $1'],[/(\d+)권 가져오기/g,'Import $1'],
  [/(\d+)권을 새로 꽂았어요/g,'Added $1 new books'],[/, (\d+)권은 기존 기록에 합쳤어요/g,', merged $1 into existing records'],[/(\d+)권은 저장하지 못했어요\./g,'$1 could not be saved.'],
  [/책 정보를 읽는 중\.\.\. (\d+) \/ (\d+)/g,'Reading books... $1 / $2'],[/《(.*?)》 완독을 기록했어요/g,'Marked 《$1》 as finished'],[/《(.*?)》을 삭제했어요/g,'Deleted 《$1》'],
- [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권은 미분류로 옮겼어요/g,'Moved $1 books to Uncategorized'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
+ [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권의 표지·사진이 아직 책 데이터 안에 들어 있어요\. 저장소로 옮기면 앱을 열 때 받는 데이터가 크게 줄어요\./g,'$1 books still keep covers or photos inside their data. Moving them to storage greatly reduces what the app downloads on open.'],[/마지막 백업 (\d{4}-\d\d-\d\d)/g,'Last backup $1'],[/최근 오류 기록 (\d+)건/g,'Recent errors: $1'],[/일부\((\d+)권\)는 지우지 못했어요\. 다시 시도해 주세요/g,'$1 books could not be deleted. Try again'],[/(\d+)권은 미분류로 옮겼어요/g,'Moved $1 books to Uncategorized'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
 ];
 const EN_STR={
  '내 서재':'My Shelf','책 추가':'Add','가져오기':'Import','제목, 저자, 분류로 찾기':'Search title, author, category','전체':'All','읽는 중':'Reading','다 읽음':'Finished','읽고 싶은':'Want to read','소장':'Owned',
@@ -475,7 +480,7 @@ const EN_STR={
  '읽기 시작 (타이머)':'Start timer','▶ 읽기 시작':'▶ Start','읽기 시작':'Start','읽기 끝내기':'Stop reading','어디까지 읽었나요?':'Where did you stop?','세션 저장':'Save session','타이머 취소':'Cancel timer','계속 읽기':'Keep reading','다른 책 타이머가 진행 중이에요':'A timer is running for another book','다시 읽기':'Read again',
  '선택 끝':'Done','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
  '데이터 내보내기':'Export data','JSON 백업':'JSON backup','CSV (엑셀용)':'CSV (for Excel)','JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.':'JSON includes covers and photos and can be imported back into this app.','이 화면에서는 파일 저장을 쓸 수 없어요.':'File saving is not available in this view.','파일을 저장했어요':'File saved','파일을 저장하지 못했어요':'Could not save the file',
- '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','표지':'Cover','책 색':'Book color','표지 사진이 서재와 상세 화면에 보여요.':'The cover photo is shown on the shelf and in details.','표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.':'Take or upload a cover image. Without one, the title is shown on the book color as on the left.','표지가 없을 때의 표지 바탕색이자, 목표 탭의 완독 그래프와 문구 카드 테두리에 쓰이는 이 책의 색이에요.':'This book\'s color: the cover background when there is no photo, and its mark in the Goal charts and quote cards.',' 표지 사진을 올리면 표지에서 자동으로 골라요.':' With a cover photo, it is picked from the cover automatically.','제목':'Title','책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.':'The book color follows its category. Category colors are assigned in order under Categories in Settings and used in Goal charts and quote cards.','분류 관리':'Categories','+ 새 분류 추가':'+ New category','새 분류 이름':'New category name','분류 바꾸기':'Change category','추가':'Add','분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.':'Deleting a category moves its books to Uncategorized.','이미 있는 분류예요':'That category already exists','분류를 추가했어요':'Category added','분류를 삭제했어요':'Category deleted','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
+ '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','표지':'Cover','책 색':'Book color','표지 사진이 서재와 상세 화면에 보여요.':'The cover photo is shown on the shelf and in details.','표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.':'Take or upload a cover image. Without one, the title is shown on the book color as on the left.','표지가 없을 때의 표지 바탕색이자, 목표 탭의 완독 그래프와 문구 카드 테두리에 쓰이는 이 책의 색이에요.':'This book\'s color: the cover background when there is no photo, and its mark in the Goal charts and quote cards.',' 표지 사진을 올리면 표지에서 자동으로 골라요.':' With a cover photo, it is picked from the cover automatically.','제목':'Title','책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.':'The book color follows its category. Category colors are assigned in order under Categories in Settings and used in Goal charts and quote cards.','백업할 때가 됐어요':'Time to back up','아직 백업한 적이 없어요':'No backup yet','지금 백업':'Back up now','나중에':'Later',' - 백업을 권해요':' - backup recommended','문제 해결':'Troubleshooting','기록 지우기':'Clear log','데이터 삭제':'Delete data','모든 책, 문구, 독서 기록, 설정을 지워요. 되돌릴 수 없으니 먼저 JSON 백업을 받아 두세요.':'Deletes all books, quotes, reading logs and settings. This cannot be undone, so take a JSON backup first.',' 계정도 함께 삭제돼요.':' Your account is deleted too.','확인을 위해 아래 칸에 ':'To confirm, type ','라고 입력하세요':' below','영구 삭제':'Delete forever','계정과 모든 데이터 삭제':'Delete account and all data','모든 데이터 삭제':'Delete all data','삭제라고 정확히 입력해 주세요':'Please type 삭제 or delete exactly','삭제하는 중...':'Deleting...','계정과 데이터를 삭제했어요':'Account and data deleted','데이터는 지웠어요. 계정 삭제는 보안상 다시 로그인한 뒤 한 번 더 눌러주세요':'Data deleted. For security, sign in again and tap once more to delete the account','데이터는 지웠지만 계정 삭제에 실패했어요':'Data deleted, but the account could not be deleted','모든 데이터를 삭제했어요':'All data deleted','표지 저장소':'Cover storage','표지 저장소로 옮기기':'Move covers to storage','옮길 표지가 없어요':'No covers to move','표지를 저장소로 옮겼어요':'Covers moved to storage','저장소가 켜져 있지 않아 일부만 옮겼어요':'Storage is not enabled, so only some were moved','로그인 후 사용할 수 있어요':'Sign in first','표지 저장소를 쓸 수 없어 표지는 기존 방식으로 저장해요':'Cover storage is unavailable, so covers are saved the old way','firebase-config.js에 storageBucket 값이 없어 표지를 데이터와 함께 저장하고 있어요.':'No storageBucket in firebase-config.js, so covers are stored with the data.','분류 관리':'Categories','+ 새 분류 추가':'+ New category','새 분류 이름':'New category name','분류 바꾸기':'Change category','추가':'Add','분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.':'Deleting a category moves its books to Uncategorized.','이미 있는 분류예요':'That category already exists','분류를 추가했어요':'Category added','분류를 삭제했어요':'Category deleted','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
 };
 const EN_KEYS=Object.keys(EN_STR).sort((a,b)=>b.length-a.length);
 function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.replace(rx,rep);for(const k of EN_KEYS)if(t.includes(k))t=t.split(k).join(EN_STR[k]);return t}
@@ -488,10 +493,10 @@ function applySkin(){if(S.settings.skin==='oak'){S.settings.skin='wood';if(S.set
   const r=document.documentElement;r.dataset.skin=S.settings.skin||'wood';const b=+(S.settings.toneB??50),w=+(S.settings.toneW??50);
   r.style.setProperty('--tl',(b>50?(b-50)/50*16:0)+'%');r.style.setProperty('--td',(b<50?(50-b)/50*16:0)+'%');
   r.style.setProperty('--tw',(w>50?(w-50)/50*12:0)+'%');r.style.setProperty('--tc',(w<50?(50-w)/50*12:0)+'%')}
-function migrateCats(){Object.values(S.books).forEach(b=>{const n=CAT_RENAME[b.category];if(n){b.category=n;putBook(b)}})}
+
 const YEAR=new Date().getFullYear();
 const LS='mybookshelf.v1';
-const S={books:{},settings:{goal:24},synced:false,view:'shelf',filter:'all',fset:new Set(),rset:new Set(),rf:'',sq:'',exp:new Set(),year:0,timer:null,finishing:false,selMode:false,sel:new Set(),renameCat:null,delCat:null,editQ:null,delArmQ:null,qtag:'',qshift:0,progFrom:null,importing:false,openId:null,dtab:'review',qq:'',form:null,delArm:false};
+const S={books:{},settings:{goal:24},synced:false,view:'shelf',filter:'all',fset:new Set(),rset:new Set(),rf:'',sq:'',exp:new Set(),year:0,timer:null,finishing:false,selMode:false,sel:new Set(),renameCat:null,delCat:null,delAll:false,editQ:null,delArmQ:null,qtag:'',qshift:0,progFrom:null,importing:false,openId:null,dtab:'review',qq:'',form:null,delArm:false};
 let cloud=null, sample=null, sampleImages=false, pendingRender=false;
 
 const $=s=>document.querySelector(s);
@@ -504,21 +509,32 @@ const pct=b=>b.pages?Math.min(100,Math.round((b.current||0)/b.pages*100)):0;
 
 /* ---------- storage ---------- */
 function loadLocal(){try{const d=JSON.parse(localStorage.getItem(LS)||'null');if(d){S.books=d.books||{};S.settings={...S.settings,...(d.settings||{})};S.synced=!!d.synced}}catch(e){}}
-function saveLocal(){const lite=()=>{const o={};for(const k in S.books){const b={...S.books[k]};delete b.cover;b.quotes=(b.quotes||[]).filter(q=>!q.photo);o[k]=b}return o};
+function saveLocal(){const isData=v=>typeof v==='string'&&v.startsWith('data:');const lite=()=>{const o={};for(const k in S.books){const b={...S.books[k]};if(isData(b.cover))delete b.cover;b.quotes=(b.quotes||[]).filter(q=>!isData(q.photo));o[k]=b}return o};
   const put=books=>localStorage.setItem(LS,JSON.stringify({books,settings:S.settings,synced:S.synced}));
   try{put(cloud?lite():S.books)}catch(e){try{put(lite())}catch(e2){}}}
 function onWriteErr(e){if(e&&e.code==='invalid_argument'){cloud=null;setSync('이 기기에만 저장 중');}else if(e&&e.code==='quota_exceeded'){toast('저장 공간이 가득 찼어요. 책이나 문구를 일부 삭제해 주세요')}}
-function putBook(b){b.updatedAt=Date.now();S.books[b.id]=b;saveLocal();if(cloud)cloud.books.doc(b.id).set(JSON.parse(JSON.stringify(b))).catch(onWriteErr)}
+const isDataUrl=v=>typeof v==='string'&&v.startsWith('data:');
+async function upImg(path,dataUrl){const ref=FB.st.ref(path);const snap=await ref.putString(dataUrl,'data_url',{contentType:'image/jpeg',cacheControl:'public,max-age=31536000'});return await snap.ref.getDownloadURL()}
+async function offloadImages(b){if(!FB||!FB.st||FB.stOff||!S.user)return b;const uid=S.user.uid;let ch=false;
+  try{if(isDataUrl(b.cover)){b.cover=await upImg(`users/${uid}/covers/${b.id}.jpg`,b.cover);ch=true}
+    for(const q of (b.quotes||[])){if(isDataUrl(q.photo)){q.photo=await upImg(`users/${uid}/photos/${b.id}_${q.id}.jpg`,q.photo);ch=true}}}
+  catch(e){FB.stOff=true;logError('storage',e.code||e.message);toast('표지 저장소를 쓸 수 없어 표지는 기존 방식으로 저장해요')}
+  if(ch){S.books[b.id]=b;saveLocal()}return b}
+function cloudWrite(b){const go=x=>cloud.books.doc(x.id).set(JSON.parse(JSON.stringify(x))).catch(onWriteErr);
+  if(FB&&FB.st&&!FB.stOff&&(isDataUrl(b.cover)||(b.quotes||[]).some(q=>isDataUrl(q.photo))))return offloadImages(b).then(go);return go(b)}
+function putBook(b){b.updatedAt=Date.now();S.books[b.id]=b;saveLocal();if(cloud)cloudWrite(b)}
 const timers={};
 function putBookLater(b){S.books[b.id]=b;saveLocal();clearTimeout(timers[b.id]);timers[b.id]=setTimeout(()=>putBook(S.books[b.id]),700)}
-function removeBook(id){delete S.books[id];saveLocal();if(cloud)cloud.books.doc(id).delete().catch(onWriteErr)}
+function removeBook(id){const old=S.books[id];delete S.books[id];saveLocal();if(!cloud)return;
+  if(FB){cloud.books.doc(id).set({id,deleted:true,updatedAt:Date.now()}).catch(onWriteErr);if(FB.st&&old){[old.cover,...(old.quotes||[]).map(q=>q.photo)].filter(u=>typeof u==='string'&&u.includes('firebasestorage')).forEach(u=>{try{FB.st.refFromURL(u).delete().catch(()=>{})}catch(e){}})}}
+  else cloud.books.doc(id).delete().catch(onWriteErr)}
 function putSettings(){saveLocal();if(cloud)cloud.settings.set({...S.settings}).catch(onWriteErr)}
 function setSync(t){S.syncMsg=t;$('#sync').textContent=trText(t)}
 
 let FB=null;
 function initFirebase(){const cfg=window.FIREBASE_CONFIG;if(!cfg||!cfg.apiKey||!window.firebase)return false;
   try{firebase.initializeApp(cfg)}catch(e){}
-  FB={auth:firebase.auth(),db:firebase.firestore()};try{FB.db.enablePersistence({synchronizeTabs:true}).catch(()=>{})}catch(e){}
+  FB={auth:firebase.auth(),db:firebase.firestore(),st:(cfg.storageBucket&&firebase.storage)?firebase.storage():null,stOff:false};try{FB.db.enablePersistence({synchronizeTabs:true}).catch(()=>{})}catch(e){}
   dl={save:async({filename,data})=>{const blob=new Blob([data],{type:filename.endsWith('.json')?'application/json':'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}};
   FB.auth.getRedirectResult().catch(e=>{toast('로그인에 실패했어요: '+(e.code||''))});
   FB.auth.onAuthStateChanged(u=>{S.user=u?{name:u.displayName||'',email:u.email||'',uid:u.uid,hasPw:(u.providerData||[]).some(p=>p.providerId==='password')}:null;
@@ -542,18 +558,22 @@ function loginFormHTML(){const standalone=window.navigator.standalone||matchMedi
   return `<div class="lgf"><input type="email" id="lg-email" placeholder="이메일" autocomplete="username" inputmode="email"><input type="password" id="lg-pw" placeholder="비밀번호 (6자 이상)" autocomplete="current-password">
     <div class="hbtns"><button class="btn small" data-action="emaillogin">${S.signup?'가입하고 로그인':'이메일로 로그인'}</button>${standalone?'':'<button class="btn ghost small" data-action="login">Google로 로그인</button>'}</div>
     <p class="hint">처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.${standalone?' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':''}</p></div>`}
-function attachFirestore(uid){const base=FB.db.collection('users').doc(uid);
-  cloud={books:base.collection('books'),settings:base.collection('meta').doc('settings')};
+async function attachFirestore(uid){const base=FB.db.collection('users').doc(uid);
+  cloud={books:base.collection('books'),settings:base.collection('meta').doc('settings'),errors:base.collection('errors')};
   setSync('내 계정에 저장 중');
-  let first=true;
-  cloud.books.onSnapshot(snap=>{
-    if(first){first=false;
-      if(snap.empty&&!S.synced&&list().length){list().forEach(b=>cloud.books.doc(b.id).set(JSON.parse(JSON.stringify(b))).catch(onWriteErr));S.synced=true;saveLocal();return}
+  const LSK='mybookshelf.lastSync.'+uid;let last=0;try{last=+localStorage.getItem(LSK)||0}catch(e){}
+  if(last){try{const c=await cloud.books.get({source:'cache'});if(c.empty)last=0;else{const nb={};c.docs.forEach(d=>{const x=d.data();if(!x.deleted)nb[d.id]={...x}});S.books=nb;S.synced=true;renderSoon()}}catch(e){last=0}}
+  let first=true,maxSeen=last;
+  const q=last?cloud.books.where('updatedAt','>',last-5*60000):cloud.books;
+  q.onSnapshot(snap=>{
+    if(first&&!last){first=false;
+      if(snap.empty&&!S.synced&&list().length){list().forEach(b=>cloudWrite(b));S.synced=true;saveLocal();return}
     }
-    if(S.importing)return;
-    S.synced=true;const nb={};snap.docs.forEach(d=>{nb[d.id]={...d.data()}});
-    for(const k in timers){if(S.books[k]&&nb[k])nb[k]=S.books[k]}
-    S.books=nb;saveLocal();migrateCats();renderSoon();
+    first=false;if(S.importing)return;S.synced=true;
+    if(!last&&snap.docChanges().length===snap.size){const nb={};snap.docs.forEach(d=>{const x=d.data();if(!x.deleted)nb[d.id]={...x};maxSeen=Math.max(maxSeen,+x.updatedAt||0)});for(const k in timers){if(S.books[k]&&nb[k])nb[k]=S.books[k]}S.books=nb}
+    else snap.docChanges().forEach(ch=>{const x=ch.doc.data(),id=ch.doc.id;maxSeen=Math.max(maxSeen,+x.updatedAt||0);if(timers[id])return;if(ch.type==='removed'){if(!last)delete S.books[id];return}if(x.deleted)delete S.books[id];else S.books[id]={...x}});
+    if(!snap.metadata.hasPendingWrites&&!snap.metadata.fromCache){try{localStorage.setItem(LSK,String(maxSeen))}catch(e){}}
+    saveLocal();migrateCats();renderSoon();
   },e=>{cloud=null;setSync('동기화 오류: '+(e.code||''));renderSoon()});
   cloud.settings.onSnapshot(s=>{if(s.exists){S.settings={...S.settings,...s.data()};applySkin();saveLocal();renderSoon()}},()=>{})}
 async function initCloud(){
@@ -564,7 +584,7 @@ async function initCloud(){
   const id=user?await user.id():null;
   if(!db||!id){setSync('이 기기에만 저장 중');return}
   const base=db.doc('data/users/'+id+'/profile');
-  cloud={books:base.collection('books'),settings:db.doc('data/users/'+id+'/settings')};
+  cloud={books:base.collection('books'),settings:db.doc('data/users/'+id+'/settings'),errors:base.collection('errors')};
   setSync('내 계정에 저장 중');
   let first=true;
   cloud.books.onSnapshot(snap=>{
@@ -616,7 +636,8 @@ function vShelf(){
       <div class="crow"><span>${b.current||0} / ${b.pages||'?'}쪽, ${pct(b)}%${(d=>d?` · 예상 완독 ${d.slice(5).replace('-','/')}`:'')(estimate(b))}</span>${S.timer&&S.timer.bookId===b.id?`<button class="btn small" data-action="open" data-id="${b.id}">⏱ <span data-elapsed>${elapsedText()}</span></button>`:`<span class="hbtns"><button class="btn ghost small" data-action="plus" data-id="${b.id}">+10쪽</button>${S.timer?'':`<button class="btn small" data-action="startopen" data-id="${b.id}">▶ 읽기 시작</button>`}</span>`}</div>
     </div></div>`).join('')}</div>`:'';
   const loginBar=FB&&!S.user?`<div class="sec"><p style="margin:0 0 8px;font-size:13px">로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요</p>${loginFormHTML()}</div>`:'';
-  const topCards=loginBar+(f==='all'&&!sq&&!rs.size&&!S.selMode&&all.length?todayCardHTML()+quoteCardHTML():'');
+  const bkCard=f==='all'&&!sq?backupCardHTML():'';
+  const topCards=bkCard+loginBar+(f==='all'&&!sq&&!rs.size&&!S.selMode&&all.length?todayCardHTML()+quoteCardHTML():'');
   let body='';
   if(!bs.length)body=`<div class="empty"><p>${all.length?'이 칸은 아직 비어 있어요':'첫 책을 꽂아보세요'}</p>${all.length?'':'<div class="hbtns" style="justify-content:center"><button class="btn" data-action="import">Bookswing 백업 가져오기</button><button class="btn ghost" data-action="add">직접 추가</button></div>'}</div>`;
   else if(f==='all'&&!sq&&!rs.size){const wish=bs.filter(b=>b.status==='want').sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
@@ -691,6 +712,47 @@ function timelineHTML(b){const ev=[];
     case 'started':return '<b>시작</b>';case 'finished':return '<b>완독</b>';case 'progress':return `<b>진도</b> ${e.x.page}쪽`;case 'rated':return `<b>평점</b> ${starsInline(e.x.rating||0)}`;case 'note':return `<b>메모</b><p>${esc(e.x.text||'')}</p>`;default:return esc(e.x.text||'')}};
   return `<div class="tl">${ev.map(e=>`<div class="tli ${e.k}"><span>${e.d||''}</span><div>${line(e)}</div></div>`).join('')}</div>`}
 
+/* ---------- ops: migrations, error log, backup reminder, data deletion ---------- */
+const SCHEMA=2;
+function runMigrations(){Object.values(S.books).forEach(b=>{if((b.v||0)>=SCHEMA&&!CAT_RENAME[b.category])return;let ch=false;
+  const n=CAT_RENAME[b.category];if(n){b.category=n;ch=true}
+  if(b.isbn&&!isbnOk(b.isbn)){b.isbn='';ch=true}
+  if(Array.isArray(b.quotes)&&b.quotes.some(q=>!q.id)){b.quotes=b.quotes.map((q,j)=>q.id?q:{...q,id:uid()+j});ch=true}
+  if(!b.status||!STATUS[b.status]){b.status='want';ch=true}
+  if(ch){b.v=SCHEMA;putBook(b)}})}
+function migrateCats(){runMigrations()}
+const ELK='mybookshelf.errors';let errCount=0;
+function logError(kind,msg,stack){try{const e={at:Date.now(),kind,msg:String(msg||'').slice(0,300),stack:String(stack||'').slice(0,800),ua:navigator.userAgent.slice(0,120),view:S.view};
+  const arr=JSON.parse(localStorage.getItem(ELK)||'[]');arr.unshift(e);localStorage.setItem(ELK,JSON.stringify(arr.slice(0,50)));
+  if(cloud&&cloud.errors&&errCount<20){errCount++;cloud.errors.doc(String(e.at)+'_'+errCount).set(e).catch(()=>{})}}catch(x){}}
+window.addEventListener('error',e=>logError('error',e.message,e.error&&e.error.stack));
+window.addEventListener('unhandledrejection',e=>logError('promise',e.reason&&(e.reason.message||e.reason.code||e.reason),e.reason&&e.reason.stack));
+function errList(){try{return JSON.parse(localStorage.getItem(ELK)||'[]')}catch(e){return[]}}
+function backupDue(){if(!list().length)return false;const t=+S.settings.lastBackup||0;return Date.now()-t>30*864e5}
+function backupCardHTML(){if(!backupDue()||!dl)return'';let snooze=0;try{snooze=+localStorage.getItem('mybookshelf.bksnooze')||0}catch(e){}if(Date.now()<snooze)return'';
+  const t=+S.settings.lastBackup||0;
+  return `<div class="sec bkcard"><div><b>백업할 때가 됐어요</b><p class="hint" style="margin:2px 0 0">${t?`마지막 백업 ${ymd(new Date(t))}`:'아직 백업한 적이 없어요'}</p></div><div class="hbtns" style="flex:none"><button class="btn small" data-action="export" data-k="json">지금 백업</button><button class="linkbtn" data-action="bksnooze" style="font-size:12px">나중에</button></div></div>`}
+async function deleteAllData(){const ids=Object.keys(S.books);S.importing=true;let failed=0;
+  if(typeof FB!=='undefined'&&FB&&FB.st){const urls=list().flatMap(b=>[b.cover,...(b.quotes||[]).map(q=>q.photo)]).filter(u=>typeof u==='string'&&u.includes('firebasestorage'));await Promise.all(urls.map(u=>{try{return FB.st.refFromURL(u).delete().catch(()=>{})}catch(e){return null}}))}
+  try{if(S.user)localStorage.removeItem('mybookshelf.lastSync.'+S.user.uid)}catch(e){}
+  if(cloud){const q=ids.slice();const worker=async()=>{while(q.length){const id=q.shift();for(let t=0;t<3;t++){try{await cloud.books.doc(id).delete();break}catch(e){if(t===2)failed++;await new Promise(r=>setTimeout(r,600*(t+1)))}}}};
+    await Promise.all([worker(),worker(),worker()]);try{await cloud.settings.set({goal:24})}catch(e){}}
+  S.books={};S.settings={goal:24};S.synced=true;try{localStorage.removeItem(LS);localStorage.removeItem(ELK);localStorage.removeItem(TK)}catch(e){}
+  S.importing=false;return failed}
+async function migrateImages(){if(!FB||!FB.st||!cloud){toast('로그인 후 사용할 수 있어요');return}const todo=list().filter(b=>isDataUrl(b.cover)||(b.quotes||[]).some(q=>isDataUrl(q.photo)));
+  if(!todo.length){toast('옮길 표지가 없어요');return}S.migr={done:0,total:todo.length};renderMain();
+  for(const b of todo){if(FB.stOff)break;await offloadImages(b);if(!FB.stOff){b.updatedAt=Date.now();await cloud.books.doc(b.id).set(JSON.parse(JSON.stringify(b))).catch(onWriteErr)}S.migr.done++;const el=$('#migrbar');if(el){el.style.width=(S.migr.done/S.migr.total*100)+'%';$('#migrcnt').textContent=S.migr.done+' / '+S.migr.total}}
+  const ok=!FB.stOff;S.migr=null;renderMain();toast(ok?'표지를 저장소로 옮겼어요':'저장소가 켜져 있지 않아 일부만 옮겼어요')}
+function storageHTML(){if(typeof FB==='undefined'||!FB||!S.user)return'';const n=list().filter(b=>isDataUrl(b.cover)||(b.quotes||[]).some(q=>isDataUrl(q.photo))).length;
+  if(S.migr)return `<div class="sec"><h2>표지 저장소</h2><div class="bigbar"><i id="migrbar" style="width:${S.migr.done/S.migr.total*100}%"></i></div><div class="hint" id="migrcnt">${S.migr.done} / ${S.migr.total}</div></div>`;
+  if(!FB.st)return `<div class="sec"><h2>표지 저장소</h2><p class="hint" style="margin:0">firebase-config.js에 storageBucket 값이 없어 표지를 데이터와 함께 저장하고 있어요.</p></div>`;
+  return n?`<div class="sec"><h2>표지 저장소</h2><p class="hint" style="margin:0 0 8px">${n}권의 표지·사진이 아직 책 데이터 안에 들어 있어요. 저장소로 옮기면 앱을 열 때 받는 데이터가 크게 줄어요.</p><button class="btn act" data-action="migrimg"><svg viewBox="0 0 24 24"><path d="M12 19V8M7 13l5-5 5 5"/><path d="M4 5h16"/></svg><span>표지 저장소로 옮기기</span></button></div>`:'';}
+function dangerHTML(){return `<div class="sec danger-zone"><h2>데이터 삭제</h2>
+  <p class="hint" style="margin:0 0 8px">모든 책, 문구, 독서 기록, 설정을 지워요. 되돌릴 수 없으니 먼저 JSON 백업을 받아 두세요.${typeof FB!=='undefined'&&FB&&S.user?' 계정도 함께 삭제돼요.':''}</p>
+  ${S.delAll?`<p style="margin:0 0 6px;font-size:13px">확인을 위해 아래 칸에 <b>삭제</b>라고 입력하세요</p><div class="hbtns"><input type="text" id="delconfirm" autocomplete="off" style="flex:1;border:1px solid var(--danger);background:var(--surface-2);border-radius:8px;padding:8px 10px"><button class="btn act danger" data-action="delallgo"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span>영구 삭제</span></button><button class="linkbtn" data-action="delallcancel">취소</button></div>`
+  :`<button class="btn act danger" data-action="delall"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg><span>${typeof FB!=='undefined'&&FB&&S.user?'계정과 모든 데이터 삭제':'모든 데이터 삭제'}</span></button>`}</div>`}
+function errLogHTML(){const es=errList();if(!es.length)return'';return `<details class="sess" style="margin-top:0"><summary>최근 오류 기록 ${es.length}건</summary>${es.slice(0,10).map(e=>`<div class="srec" style="grid-template-columns:auto 1fr"><span>${ymd(new Date(e.at))}</span><span style="overflow-wrap:anywhere">${esc(e.msg)}</span></div>`).join('')}<button class="linkbtn" data-action="errclear" style="font-size:12px;margin-top:6px">기록 지우기</button></details>`}
+
 /* ---------- timer / sessions ---------- */
 const TK='mybookshelf.timer';
 function loadTimer(){try{S.timer=JSON.parse(localStorage.getItem(TK)||'null')}catch(e){S.timer=null}}
@@ -747,7 +809,7 @@ async function exportData(kind){if(!dl)return;const d=today();
       const rows=list().map(b=>[b.title,b.author,b.publisher,b.isbn,b.category,FORMAT[b.format]||'',b.pages,b.current,STATUS[b.status],b.rating,b.owned?'Y':'',b.startedAt,b.finishedAt,b.readCount||'',b.review,b.summary,
         (b.quotes||[]).filter(q=>q.text).map(q=>q.text.replace(/\n/g,' ')+(q.page?` (p.${q.page})`:'')).join(' | '),(b.sessions||[]).length].map(csvCell).join(','));
       await dl.save({filename:`MyBookShelf_${d}.csv`,data:'\uFEFF'+H.join(',')+'\n'+rows.join('\n')})}
-    toast('파일을 저장했어요')}
+    if(kind==='json'){S.settings.lastBackup=Date.now();putSettings();renderMain()}toast('파일을 저장했어요')}
   catch(e){if(e&&e.code==='user_cancelled')return;if(e&&e.code==='unavailable'){dl=null;renderMain()}toast('파일을 저장하지 못했어요')}}
 
 function doneInYear(y){return list().filter(b=>b.status==='done'&&(b.finishedAt||'').startsWith(String(y)))}
@@ -800,11 +862,14 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
     <div class="tonerow"><span>밝기</span><b>${S.settings.toneB??50}</b><input type="range" min="0" max="100" value="${S.settings.toneB??50}" data-field="toneB" aria-label="밝기"></div>
     <div class="tonerow"><span>따뜻함</span><b>${S.settings.toneW??50}</b><input type="range" min="0" max="100" value="${S.settings.toneW??50}" data-field="toneW" aria-label="따뜻함"></div>
     ${((S.settings.toneB??50)!=50||(S.settings.toneW??50)!=50)?'<button class="linkbtn" data-action="tonereset" style="margin-top:4px">기본(50)으로 되돌리기</button>':''}<p class="hint">0~100, 가운데 50이 기본이에요. 모든 스킨에 함께 적용되고 표지 이미지는 바뀌지 않아요.</p></div>
-  <div class="sec"><h2>데이터 내보내기</h2>${dl?`<div class="hbtns"><button class="btn ghost small" data-action="export" data-k="json">JSON 백업</button><button class="btn ghost small" data-action="export" data-k="csv">CSV (엑셀용)</button></div><p class="hint">JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.</p>`:'<p class="hint">이 화면에서는 파일 저장을 쓸 수 없어요.</p>'}</div>
+  <div class="sec"><h2>데이터 내보내기</h2>${dl?`<p class="hint" style="margin:0 0 8px">${S.settings.lastBackup?`마지막 백업 ${ymd(new Date(+S.settings.lastBackup))}`:'아직 백업한 적이 없어요'}${backupDue()?' - 백업을 권해요':''}</p><div class="hbtns"><button class="btn ghost small" data-action="export" data-k="json">JSON 백업</button><button class="btn ghost small" data-action="export" data-k="csv">CSV (엑셀용)</button></div><p class="hint">JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.</p>`:'<p class="hint">이 화면에서는 파일 저장을 쓸 수 없어요.</p>'}</div>
   <div class="sec"><h2>분류 관리</h2>${(()=>{const m={};list().forEach(b=>{const c=b.category||'';if(c)m[c]=(m[c]||0)+1});const cs=allCats();
     return (cs.length?cs.map(c=>S.renameCat===c?`<div class="catrow"><input type="text" id="rcat" value="${esc(c)}" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="rcatok" data-c="${esc(c)}">저장</button><button class="linkbtn" data-action="rcatcancel">취소</button></div>`
       :`<div class="catrow"><span><i class="catdot" style="--c:${catColor(c)}"></i>${esc(c)}</span><small>${m[c]||0}권</small><button class="qbtn" data-action="rcat" data-c="${esc(c)}">✎ 수정</button><button class="qbtn danger" style="margin-left:0" data-action="dcat" data-c="${esc(c)}">${S.delCat===c?'한 번 더 누르면 삭제':'삭제'}</button></div>`).join(''):'<p class="hint">아직 분류가 없어요</p>')
       +`<div class="catrow" style="border-bottom:0;padding-top:12px"><input type="text" id="ncat" placeholder="새 분류 이름" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="acat">추가</button></div><p class="hint">분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.</p>`})()}</div>
+  ${errLogHTML()?`<div class="sec"><h2>문제 해결</h2>${errLogHTML()}</div>`:''}
+  ${storageHTML()}
+  ${dangerHTML()}
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>`}
 let lastMain='';
 function renderMain(){
@@ -970,6 +1035,16 @@ document.addEventListener('click',e=>{
     case 'emaillogin':emailLogin();break;
     case 'setpw':setPassword();break;
     case 'logout':fbLogout();break;
+    case 'migrimg':migrateImages();break;
+    case 'bksnooze':try{localStorage.setItem('mybookshelf.bksnooze',String(Date.now()+7*864e5))}catch(e){}renderMain();break;
+    case 'errclear':try{localStorage.removeItem(ELK)}catch(e){}renderMain();break;
+    case 'delall':S.delAll=true;renderMain();setTimeout(()=>$('#delconfirm')?.focus(),30);break;
+    case 'delallcancel':S.delAll=false;renderMain();break;
+    case 'delallgo':{if(($('#delconfirm')?.value||'').trim()!=='삭제'&&($('#delconfirm')?.value||'').trim().toLowerCase()!=='delete'){toast('삭제라고 정확히 입력해 주세요');break}
+      t.disabled=true;toast('삭제하는 중...');deleteAllData().then(async failed=>{S.delAll=false;
+        if(typeof FB!=='undefined'&&FB&&FB.auth.currentUser){try{await FB.auth.currentUser.delete();toast('계정과 데이터를 삭제했어요')}catch(e){toast(e.code==='auth/requires-recent-login'?'데이터는 지웠어요. 계정 삭제는 보안상 다시 로그인한 뒤 한 번 더 눌러주세요':'데이터는 지웠지만 계정 삭제에 실패했어요')}}
+        else toast(failed?`일부(${failed}권)는 지우지 못했어요. 다시 시도해 주세요`:'모든 데이터를 삭제했어요');
+        applySkin();lastMain='';renderAll()});break}
     case 'skin':S.settings.skin=t.dataset.k;applySkin();putSettings();renderMain();break;
     case 'year':S.year=+t.dataset.y;renderMain();break;
     case 'start':startTimer(t.dataset.id);renderSheet();renderMain();break;
@@ -1346,7 +1421,7 @@ async function runImport(){const r=buildImport();const now=Date.now();const writ
   let failed=0,quota=false;
   if(cloud){const q=writes.slice();const tick=()=>{IMP.done++;const bar=$('#impbar'),c=$('#impcnt');if(bar)bar.style.width=(IMP.done/IMP.total*100)+'%';if(c)c.textContent=IMP.done+' / '+IMP.total};
     const worker=async()=>{while(q.length&&!quota){const b=q.shift();let ok=false;
-      for(let t=0;t<4&&!ok;t++){try{await cloud.books.doc(b.id).set(JSON.parse(JSON.stringify(b)));ok=true}
+      for(let t=0;t<4&&!ok;t++){try{if(typeof FB!=='undefined'&&FB&&FB.st&&!FB.stOff)await offloadImages(b);await cloud.books.doc(b.id).set(JSON.parse(JSON.stringify(b)));ok=true}
         catch(e){if(e&&e.code==='quota_exceeded'){quota=true;break}if(e&&(e.code==='resource_exhausted'||e.code==='unavailable'))await new Promise(r=>setTimeout(r,800*(t+1)+Math.random()*400));else break}}
       if(!ok){failed++;if(!r.exist.has(bkey(b.title,b.author)))delete S.books[b.id]}tick()}};
     await Promise.all([worker(),worker(),worker()]);if(quota)q.forEach(b=>{failed++;if(!r.exist.has(bkey(b.title,b.author)))delete S.books[b.id]});saveLocal()}
