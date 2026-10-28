@@ -27,7 +27,6 @@
   --sans:"IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   color-scheme:light;
   box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
@@ -112,7 +111,7 @@
 .sess{margin-top:12px;font-size:13px}
 .sess summary{cursor:pointer;color:var(--muted)}
 .srec{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:6px 0;border-bottom:1px solid var(--line)}
-.bulk{position:sticky;top:0;z-index:4;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 12px 12px;padding:10px 12px}
+.bulk{position:sticky;top:62px;z-index:4;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 12px 12px;padding:10px 12px}
 .tile.sel .cv{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 .tile.sel .cv::after{content:"✓";position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .catrow{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -159,10 +158,33 @@ button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal;text-align:center}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .app{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:88px}
+.appbar{position:sticky;top:0;z-index:6;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 10px;background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+.iconbtn{width:38px;height:38px;flex:none;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;padding:0}
+.iconbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.abrand{flex:1;min-width:0;background:none;border:0;padding:0;text-align:left!important;color:var(--ink)}
+.abrand b{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:-.01em;white-space:nowrap}
+.appbar .hbtns.acts{flex:none}
+.pagesub{margin:0;padding:12px 20px 10px;font-size:13px;color:var(--muted)}
+.sec[id]{scroll-margin-top:72px}
+.dback{position:fixed;inset:0;z-index:30;background:rgba(10,14,20,.45);opacity:0;pointer-events:none;transition:opacity .2s}
+.dback.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:31;width:min(300px,82vw);background:var(--surface);color:var(--ink);transform:translateX(-104%);transition:transform .25s cubic-bezier(.2,.8,.2,1);padding:calc(18px + env(safe-area-inset-top,0px)) 0 calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,.25);overflow-y:auto}
+.drawer.open{transform:none}
+.dhead{padding:0 20px 16px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.dlogo{width:40px;height:40px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.dlogo svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round}
+.dhead b{display:block;font-family:var(--serif);font-size:20px}
+.dhead span{display:block;font-size:12px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ditem{display:flex!important;align-items:center;gap:14px;width:100%;background:none;border:0;padding:13px 20px;font-size:15px;color:var(--ink);text-align:left!important}
+.ditem svg{width:20px;height:20px;flex:none;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ditem:active{background:var(--surface-2)}
+.ditem.danger,.ditem.danger svg{color:var(--danger);stroke:var(--danger)}
+.dsep{height:1px;background:var(--line);margin:6px 20px}
+.dfoot{margin-top:auto;padding:14px 20px 0;font-size:12px;color:var(--muted)}
 
 /* header */
-.top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:22px 20px 14px}
-.top h1{font-family:var(--serif);font-weight:700;font-size:28px;line-height:1.2;margin:0;letter-spacing:-.01em}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:16px 20px 10px}
+.top h1{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.2;margin:0;letter-spacing:-.01em}
 .top .sub{color:var(--muted);font-size:13px;margin-top:4px;white-space:nowrap}
 .top>div:first-child{flex:none}
 .btn{border:0;border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px;background:var(--accent);color:var(--accent-ink);white-space:nowrap}
@@ -234,7 +256,11 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .tile .pg{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(0,0,0,.35);border-radius:0 0 4px 2px;overflow:hidden}
 .tile .pg b{display:block;height:100%;background:var(--ribbon)}
 .tile .rc{position:absolute;right:5px;bottom:8px;background:rgba(15,20,26,.78);color:#F6F3EC;font-size:11px;font-weight:600;padding:2px 6px;border-radius:999px;line-height:1.3}
-.tile .fm{position:absolute;left:5px;top:6px;background:rgba(15,20,26,.72);color:#F6F3EC;font-size:10px;font-weight:600;padding:2px 6px;border-radius:999px;line-height:1.3}
+.tile .rt.unr{opacity:.55}
+.tile .tlb{position:absolute;left:-4px;top:-9px;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.tile .newb{background:var(--ribbon);color:#fff;font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:999px;line-height:1.3;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tile.isnew .cv img,.tile.isnew .gen{outline:2px solid var(--ribbon);outline-offset:2px}
+.tile .fm{margin-left:9px;background:rgba(15,20,26,.72);color:#F6F3EC;font-size:10px;font-weight:600;padding:2px 6px;border-radius:999px;line-height:1.3}
 .tile .rt{position:absolute;left:5px;bottom:8px;background:rgba(15,20,26,.78);padding:2px 6px;border-radius:999px;line-height:1}
 .sti{position:relative;display:inline-block;font-size:11px;line-height:1;letter-spacing:1px;vertical-align:middle;white-space:nowrap}
 .sti .bg{color:rgba(255,255,255,.35)}
@@ -265,7 +291,7 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 /* tabs */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);
   padding-bottom:env(safe-area-inset-bottom,0px)}
-.tabs .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tabs .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
 .tabs button{background:none;border:0;padding:10px 0 12px;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px}
 .tabs button[aria-current="page"]{color:var(--ink);font-weight:600}
 .tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7}
@@ -398,10 +424,11 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .sync{font-size:11px;color:var(--muted);text-align:center;padding:18px 0 0}
 .hbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;flex:1;min-width:0}
-.btn.act{display:inline-flex;align-items:center;gap:5px;background:transparent;color:var(--accent);border:1.5px solid var(--accent);border-radius:10px;padding:6px 10px;font-size:13px}
-.btn.act:not(.primary) svg{stroke:var(--gmd)}
+.btn.act{display:inline-flex;align-items:center;gap:5px;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.btn.act svg{stroke:currentColor}
 .btn.act svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.btn.act.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.act.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.act.selon{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .btn.act.danger{color:var(--danger);border-color:var(--danger)}
 .btn.act.danger svg{stroke:var(--danger)}
 .hbtns.acts .btn.act{min-height:36px;padding:7px 12px;font-size:13px}
@@ -433,14 +460,16 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 </head>
 <body>
 <div class="app">
+  <header class="appbar" id="appbar"></header>
   <main id="view"></main>
   <p class="sync" id="sync"></p>
 </div>
+<div class="dback" id="dback"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
 <nav class="tabs" aria-label="메뉴"><div class="in">
   <button data-action="tab" data-tab="shelf"><svg viewBox="0 0 24 24"><path d="M4 4v16M8 6v14M12 4v16M16.5 5.5l3.5 14"/><path d="M2 20.5h20"/></svg>서재</button>
   <button data-action="tab" data-tab="quotes"><svg viewBox="0 0 24 24"><path d="M5 7h5v5H7c0 2 1 3 3 3v2c-3 0-5-2-5-5zM14 7h5v5h-3c0 2 1 3 3 3v2c-3 0-5-2-5-5z"/></svg>문구</button>
   <button data-action="tab" data-tab="goal"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/></svg>목표</button>
-  <button data-action="tab" data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>설정</button>
 </div></nav>
 <section class="sheet" id="sheet" aria-hidden="true"><div class="in" id="sheetIn"></div></section>
 <div class="modal" id="modal" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true"></div></div>
@@ -494,9 +523,9 @@ const EN_STR={
  '출판사':'Publisher','ISBN':'ISBN','읽은 쪽':'Pages read','읽은 횟수':'Times read','독서 상태':'Status','평점':'Rating','소장 여부':'Owned','시작일':'Start date','완독일':'Finish date','리뷰·감상':'Review','문구 쪽':'Quote page','저자 없음':'No author','완독':'Finished','시작':'Started',
  '연간 요약':'Year in review','완독':'Finished','읽은 쪽':'Pages','독서 시간':'Reading time','독서 세션':'Sessions','가장 긴 책':'Longest book','최고 평점':'Top rated','월별 읽은 쪽':'Pages by month','분류별 완독':'Finished by category','완독한 책':'Books finished','연도':'Year',
  '읽기 시작 (타이머)':'Start timer','▶ 읽기 시작':'▶ Start','읽기 시작':'Start','읽기 끝내기':'Stop reading','어디까지 읽었나요?':'Where did you stop?','세션 저장':'Save session','타이머 취소':'Cancel timer','계속 읽기':'Keep reading','다른 책 타이머가 진행 중이에요':'A timer is running for another book','다시 읽기':'Read again',
- '선택 끝':'Done','책 설정':'Edit books','완료':'Done','여러 권 골라 설정 바꾸기':'Select books to change settings','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
+ '선택 끝':'Done','책 설정':'Edit','완료':'Done','여러 권 골라 설정 바꾸기':'Select books to change settings','선택':'Select','선택 해제':'Clear','전체 선택':'Select all','완료':'Done','소장 표시':'Mark owned','소장 해제':'Unmark owned','분류 바꾸기':'Change category','적용':'Apply',
  '데이터 내보내기':'Export data','JSON 백업':'JSON backup','CSV (엑셀용)':'CSV (for Excel)','JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.':'JSON includes covers and photos and can be imported back into this app.','이 화면에서는 파일 저장을 쓸 수 없어요.':'File saving is not available in this view.','파일을 저장했어요':'File saved','파일을 저장하지 못했어요':'Could not save the file',
- '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','표지':'Cover','책 색':'Book color','표지 사진이 서재와 상세 화면에 보여요.':'The cover photo is shown on the shelf and in details.','표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.':'Take or upload a cover image. Without one, the title is shown on the book color as on the left.','표지가 없을 때의 표지 바탕색이자, 목표 탭의 완독 그래프와 문구 카드 테두리에 쓰이는 이 책의 색이에요.':'This book\'s color: the cover background when there is no photo, and its mark in the Goal charts and quote cards.',' 표지 사진을 올리면 표지에서 자동으로 골라요.':' With a cover photo, it is picked from the cover automatically.','제목':'Title','책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.':'The book color follows its category. Category colors are assigned in order under Categories in Settings and used in Goal charts and quote cards.','백업할 때가 됐어요':'Time to back up','아직 백업한 적이 없어요':'No backup yet','지금 백업':'Back up now','나중에':'Later',' - 백업을 권해요':' - backup recommended','문제 해결':'Troubleshooting','기록 지우기':'Clear log','데이터 삭제':'Delete data','모든 책, 문구, 독서 기록, 설정을 지워요. 되돌릴 수 없으니 먼저 JSON 백업을 받아 두세요.':'Deletes all books, quotes, reading logs and settings. This cannot be undone, so take a JSON backup first.',' 계정도 함께 삭제돼요.':' Your account is deleted too.','확인을 위해 아래 칸에 ':'To confirm, type ','라고 입력하세요':' below','영구 삭제':'Delete forever','계정과 모든 데이터 삭제':'Delete account and all data','모든 데이터 삭제':'Delete all data','삭제라고 정확히 입력해 주세요':'Please type 삭제 or delete exactly','삭제하는 중...':'Deleting...','계정과 데이터를 삭제했어요':'Account and data deleted','데이터는 지웠어요. 계정 삭제는 보안상 다시 로그인한 뒤 한 번 더 눌러주세요':'Data deleted. For security, sign in again and tap once more to delete the account','데이터는 지웠지만 계정 삭제에 실패했어요':'Data deleted, but the account could not be deleted','모든 데이터를 삭제했어요':'All data deleted','표지 저장소':'Cover storage','표지 저장소로 옮기기':'Move covers to storage','옮길 표지가 없어요':'No covers to move','표지를 저장소로 옮겼어요':'Covers moved to storage','저장소가 켜져 있지 않아 일부만 옮겼어요':'Storage is not enabled, so only some were moved','로그인 후 사용할 수 있어요':'Sign in first','표지 저장소를 쓸 수 없어 표지는 기존 방식으로 저장해요':'Cover storage is unavailable, so covers are saved the old way','firebase-config.js에 storageBucket 값이 없어 표지를 데이터와 함께 저장하고 있어요.':'No storageBucket in firebase-config.js, so covers are stored with the data.','추가 방법':'How to add','검색해서 추가':'Search','직접 입력':'Manual','파일에서 가져오기':'From file','제목, 저자, ISBN으로 검색':'Title, author or ISBN','Google Books와 Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요.':'Searches Google Books and Open Library and fills in cover, publisher, pages and ISBN.','찾는 중...':'Searching...','결과가 없어요. 다른 검색어를 쓰거나 직접 입력해 주세요.':'No results. Try other words or enter it manually.','찾는 책이 없나요? 직접 입력':'Not found? Enter manually',' 검색 결과로 채웠어요. 내용을 확인하고 저장하세요.':' result filled in. Check and save.','네이버 책':'Naver Books','검색으로 한 권씩 추가하거나, Bookswing 같은 다른 앱의 백업 파일로 한꺼번에 가져올 수 있어요.':'Add books one by one with search, or import a backup from apps like Bookswing.','Claude 지식':'Claude knowledge','바코드 사진':'Barcode photo','분류 관리':'Categories','+ 새 분류 추가':'+ New category','새 분류 이름':'New category name','분류 바꾸기':'Change category','추가':'Add','분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.':'Deleting a category moves its books to Uncategorized.','이미 있는 분류예요':'That category already exists','분류를 추가했어요':'Category added','분류를 삭제했어요':'Category deleted','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
+ '매일 목표':'Daily goal','일주일에 읽는 날':'Reading days per week','최근 12주, 진할수록 목표에 가까움. 최고 연속 ':'Last 12 weeks, darker is closer to goal. Best streak ','오늘 목표 달성':'Today\'s goal','오늘':'Today','연속':'Streak','이번 주':'This week','예상 완독':'Est. finish','오늘의 문구':'Quote of the day','더 보기 ▾':'More ▾','접기 ▴':'Less ▴','다음 문구 ›':'Next ›','다른 문구':'Next','한 줄 메모 (선택)':'One-line note (optional)','기록':'Log','아직 기록이 없어요. 타이머로 읽거나 진도를 올리면 여기에 쌓여요.':'No log yet. Timed reading and progress updates appear here.','메모':'Note','태그 (쉼표로 구분)':'Tags (comma separated)','즐겨찾기':'Favorite','★ 즐겨찾기':'★ Favorites','문구, 책 제목, 태그로 찾기':'Search quotes, titles, tags','태그':'Tags','줄이기':'Less','늘리기':'More','분':'min','출처: Claude 지식':'Source: Claude knowledge','알라딘':'Aladin','교보':'Kyobo','표지 사진':'Cover photo','다른 사진':'Change photo','사진 고르기':'Choose photo','지우기':'Remove','책 표지를 찍거나 서점에서 저장한 이미지를 올리면 서재와 상세 화면에 표지로 보여요':'Take a photo of the cover or upload a saved image to show it on the shelf and in details','Claude가 알고 있는 정보라 출판사·쪽수는 틀릴 수 있어요. 서점 링크에서 확인하고, 표지는 아래 "표지 사진"으로 넣을 수 있어요.':'Based on what Claude knows, so publisher and pages may be off. Check via the store links and add a cover with "Cover photo" below.','(13자리, 바코드 아래 숫자)':'(13 digits under the barcode)','바코드 사진':'Barcode photo','ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요':'ISBN check digit does not match. Please verify','ISBN을 읽었어요':'ISBN read','사진에서 ISBN을 찾지 못했어요. 바코드 아래 숫자가 또렷하게 나오게 찍어 주세요':'No ISBN found. Photograph the digits under the barcode clearly','★ 즐겨찾기됨':'★ Favorited','☆ 즐겨찾기':'☆ Favorite','✎ 수정':'✎ Edit','문구를 삭제했어요':'Quote deleted','수정':'Edit','문구를 고쳤어요':'Quote updated','이메일':'Email','비밀번호 (6자 이상)':'Password (6+ characters)','이메일로 로그인':'Sign in with email','가입하고 로그인':'Sign up and sign in','처음이면 쓰고 싶은 이메일과 비밀번호를 넣고 로그인하면 바로 가입돼요.':'First time? Enter an email and password to sign up right away.',' 홈 화면 앱에서는 Google 로그인이 iOS 제약으로 동작하지 않아 이메일 방식을 써주세요.':' Google sign-in does not work in the home screen app on iOS, so use email here.','로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in to see the same shelf on every device.','홈 화면 앱용 비밀번호 설정 (이 계정에 비밀번호를 붙여 이메일로도 로그인할 수 있게 해요)':'Set a password for the home screen app (lets you sign in by email with this same account)','이메일 로그인 비밀번호 바꾸기':'Change email sign-in password','새 비밀번호 (6자 이상)':'New password (6+ characters)','등록':'Set','변경':'Change','계정':'Account','로그아웃':'Sign out','Google로 로그인':'Sign in with Google','Google 계정으로 로그인하면 아이폰, PC 어디서 열어도 같은 서재가 보여요.':'Sign in with Google to see the same shelf on every device.','로그인하면 기록이 계정에 저장되고 모든 기기에서 같이 보여요':'Sign in to keep your records in your account across devices','로그인하면 모든 기기에서 같은 서재를 볼 수 있어요':'Sign in to sync across devices','표지':'Cover','책 색':'Book color','표지 사진이 서재와 상세 화면에 보여요.':'The cover photo is shown on the shelf and in details.','표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.':'Take or upload a cover image. Without one, the title is shown on the book color as on the left.','표지가 없을 때의 표지 바탕색이자, 목표 탭의 완독 그래프와 문구 카드 테두리에 쓰이는 이 책의 색이에요.':'This book\'s color: the cover background when there is no photo, and its mark in the Goal charts and quote cards.',' 표지 사진을 올리면 표지에서 자동으로 골라요.':' With a cover photo, it is picked from the cover automatically.','제목':'Title','책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.':'The book color follows its category. Category colors are assigned in order under Categories in Settings and used in Goal charts and quote cards.','백업할 때가 됐어요':'Time to back up','아직 백업한 적이 없어요':'No backup yet','지금 백업':'Back up now','나중에':'Later',' - 백업을 권해요':' - backup recommended','문제 해결':'Troubleshooting','기록 지우기':'Clear log','데이터 삭제':'Delete data','모든 책, 문구, 독서 기록, 설정을 지워요. 되돌릴 수 없으니 먼저 JSON 백업을 받아 두세요.':'Deletes all books, quotes, reading logs and settings. This cannot be undone, so take a JSON backup first.',' 계정도 함께 삭제돼요.':' Your account is deleted too.','확인을 위해 아래 칸에 ':'To confirm, type ','라고 입력하세요':' below','영구 삭제':'Delete forever','계정과 모든 데이터 삭제':'Delete account and all data','모든 데이터 삭제':'Delete all data','삭제라고 정확히 입력해 주세요':'Please type 삭제 or delete exactly','삭제하는 중...':'Deleting...','계정과 데이터를 삭제했어요':'Account and data deleted','데이터는 지웠어요. 계정 삭제는 보안상 다시 로그인한 뒤 한 번 더 눌러주세요':'Data deleted. For security, sign in again and tap once more to delete the account','데이터는 지웠지만 계정 삭제에 실패했어요':'Data deleted, but the account could not be deleted','모든 데이터를 삭제했어요':'All data deleted','표지 저장소':'Cover storage','표지 저장소로 옮기기':'Move covers to storage','옮길 표지가 없어요':'No covers to move','표지를 저장소로 옮겼어요':'Covers moved to storage','저장소가 켜져 있지 않아 일부만 옮겼어요':'Storage is not enabled, so only some were moved','로그인 후 사용할 수 있어요':'Sign in first','표지 저장소를 쓸 수 없어 표지는 기존 방식으로 저장해요':'Cover storage is unavailable, so covers are saved the old way','firebase-config.js에 storageBucket 값이 없어 표지를 데이터와 함께 저장하고 있어요.':'No storageBucket in firebase-config.js, so covers are stored with the data.','추가 방법':'How to add','검색해서 추가':'Search','직접 입력':'Manual','파일에서 가져오기':'From file','제목, 저자, ISBN으로 검색':'Title, author or ISBN','Google Books와 Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요.':'Searches Google Books and Open Library and fills in cover, publisher, pages and ISBN.','찾는 중...':'Searching...','결과가 없어요. 다른 검색어를 쓰거나 직접 입력해 주세요.':'No results. Try other words or enter it manually.','찾는 책이 없나요? 직접 입력':'Not found? Enter manually',' 검색 결과로 채웠어요. 내용을 확인하고 저장하세요.':' result filled in. Check and save.','네이버 책':'Naver Books','검색으로 한 권씩 추가하거나, Bookswing 같은 다른 앱의 백업 파일로 한꺼번에 가져올 수 있어요.':'Add books one by one with search, or import a backup from apps like Bookswing.','Claude 지식':'Claude knowledge','바코드 사진':'Barcode photo','최근 추가':'Recently added','메뉴 열기':'Open menu','책 가져오기 (파일)':'Import books (file)','백업·내보내기':'Backup & export','분류 관리':'Categories','+ 새 분류 추가':'+ New category','새 분류 이름':'New category name','분류 바꾸기':'Change category','추가':'Add','분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.':'Deleting a category moves its books to Uncategorized.','이미 있는 분류예요':'That category already exists','분류를 추가했어요':'Category added','분류를 삭제했어요':'Category deleted','이 앱에서 내보낸 백업이에요. 책, 세션, 문구, 표지가 그대로 들어가요.':'A backup from this app. Books, sessions, quotes and covers are restored as they were.','이름 바꾸기':'Rename','저장':'Save','아직 분류가 없어요':'No categories yet','서재':'Shelf','목표':'Goal','상태 필터':'Status filter','평점 필터':'Rating filter','책 검색':'Book search','문구 검색':'Quote search','필터':'Filter','메뉴':'Menu','백업':'Backup','표지':'cover','한국어':'한국어','English':'English','색':'Color'
 };
 const EN_KEYS=Object.keys(EN_STR).sort((a,b)=>b.length-a.length);
 function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.replace(rx,rep);for(const k of EN_KEYS)if(t.includes(k))t=t.split(k).join(EN_STR[k]);return t}
@@ -624,13 +653,14 @@ const doneThisYear=()=>list().filter(b=>b.status==='done'&&(b.finishedAt||'').st
 
 function coverHTML(b){return b.cover?`<img src="${b.cover}" alt="" decoding="sync">`:`<div class="gen" style="--c:${bc(b)}"><span>${esc(b.title)}</span><small>${esc(b.author||'')}</small></div>`}
 function tileHTML(b,mixed){const p=pct(b);
-  return `<button class="tile${mixed&&b.status==='want'?' wish':''}${S.selMode&&S.sel.has(b.id)?' sel':''}" data-action="${S.selMode?'seltile':'open'}" data-id="${b.id}" aria-label="${esc(b.title)}, ${STATUS[b.status]}${b.rating?', 평점 '+b.rating:''}">
-    <div class="cv">${coverHTML(b)}${b.format?`<span class="fm">${FORMAT[b.format]}</span>`:''}${b.status==='reading'?'<i class="rib"></i>':''}${b.status==='reading'&&b.pages?`<i class="pg"><b style="width:${p}%"></b></i>`:''}${b.rating?`<span class="rt">${starsInline(b.rating)}</span>`:''}${b.readCount>1?`<span class="rc">↻${b.readCount}</span>`:''}</div></button>`}
+  return `<button class="tile${isNew(b)?' isnew':''}${mixed&&b.status==='want'?' wish':''}${S.selMode&&S.sel.has(b.id)?' sel':''}" data-action="${S.selMode?'seltile':'open'}" data-id="${b.id}" aria-label="${esc(b.title)}, ${STATUS[b.status]}${b.rating?', 평점 '+b.rating:''}">
+    <div class="cv">${coverHTML(b)}${isNew(b)||b.format?`<span class="tlb">${isNew(b)?'<span class="newb">NEW</span>':''}${b.format?`<span class="fm">${FORMAT[b.format]}</span>`:''}</span>`:''}${b.status==='reading'?'<i class="rib"></i>':''}${b.status==='reading'&&b.pages?`<i class="pg"><b style="width:${p}%"></b></i>`:''}${b.rating?`<span class="rt">${starsInline(b.rating)}</span>`:(b.status==='done'?`<span class="rt unr" title="평점 없음">${starsInline(0)}</span>`:'')}${b.readCount>1?`<span class="rc">↻${b.readCount}</span>`:''}</div></button>`}
 function sectionHTML(key,name,books,mixed,pre){const pages=[];for(let i=0;i<books.length;i+=3)pages.push(books.slice(i,i+3));
   const dots=pages.length<=1?'':`<div class="dots"><div class="dwrap"><div class="dtrack">${pages.map((_,i)=>`<button class="dot${i===0?' on':''}${i>14?' far':''}" data-action="dot" data-i="${i}" aria-label="${i+1}/${pages.length}"></button>`).join('')}</div></div>${pages.length>16?`<span class="dn"><b>1</b>/${pages.length}</span>`:''}</div>`;
   return `<section class="cat${pre?' pre':''}"><div class="cath"><h2>${esc(name)}</h2><span>${books.length}권</span>${pre?'<em>서재 입고 전</em>':''}</div>
     <div class="wood" data-pages="${pages.length}">${pages.map(r=>`<div class="srow">${r.map(b=>tileHTML(b,mixed)).join('')}</div>`).join('')}</div>${dots}</section>`}
-const sortIn=(a,b)=>((b.rating||0)-(a.rating||0))||({reading:0,done:1,want:2}[a.status]-{reading:0,done:1,want:2}[b.status])||(b.finishedAt||'').localeCompare(a.finishedAt||'')||(b.createdAt||0)-(a.createdAt||0);
+const isNew=b=>!b.source&&b.createdAt&&(Date.now()-b.createdAt)<7*864e5;
+const sortIn=(a,b)=>(isNew(b)-isNew(a))||(isNew(a)&&isNew(b)?(b.createdAt-a.createdAt):0)||((b.rating||0)-(a.rating||0))||({reading:0,done:1,want:2}[a.status]-{reading:0,done:1,want:2}[b.status])||(b.finishedAt||'').localeCompare(a.finishedAt||'')||(b.createdAt||0)-(a.createdAt||0);
 function groupByCat(books){const m=new Map();books.forEach(b=>{const c=(b.category||'').trim()||'미분류';if(!m.has(c))m.set(c,[]);m.get(c).push(b)});
   return [...m.entries()].sort((a,b)=>a[0]==='미분류'?1:b[0]==='미분류'?-1:a[0].localeCompare(b[0],'ko')).map(([c,bs])=>[c,bs.sort(sortIn)])}
 function vShelf(){
@@ -658,10 +688,11 @@ function vShelf(){
   if(!bs.length)body=`<div class="empty"><p>${all.length?'이 칸은 아직 비어 있어요':'첫 책을 꽂아보세요'}</p>${all.length?'':'<div class="hbtns" style="justify-content:center"><button class="btn" data-action="add">책 추가</button></div><p class="hint" style="margin-top:10px">검색으로 한 권씩 추가하거나, Bookswing 같은 다른 앱의 백업 파일로 한꺼번에 가져올 수 있어요.</p>'}</div>`;
   else if(f==='all'&&!sq&&!rs.size){const wish=bs.filter(b=>b.status==='want').sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
     const rest=bs.filter(b=>b.status!=='want'&&b.status!=='reading'),summ=rest.filter(b=>b.category==='BookSummary').sort(sortIn);
-    body=(wish.length?sectionHTML('__wish','Wishlist',wish,false,true):'')+(summ.length?sectionHTML('BookSummary','BookSummary',summ,false,true):'')
+    const recent=bs.filter(isNew).sort((a,b)=>b.createdAt-a.createdAt);
+    body=(recent.length?sectionHTML('__recent',trText('최근 추가'),recent,true):'')+(wish.length?sectionHTML('__wish','Wishlist',wish,false,true):'')+(summ.length?sectionHTML('BookSummary','BookSummary',summ,false,true):'')
       +groupByCat(rest.filter(b=>b.category!=='BookSummary')).map(([c,x])=>sectionHTML(c,c,x,false)).join('')}
   else body=groupByCat(bs).map(([c,x])=>sectionHTML(c,c,x,f!=='want',c==='BookSummary'||f==='want')).join('');
-  return `<header class="top"><div><h1 class="brand">My BookShelf</h1><div class="sub">올해 ${doneThisYear().length} / ${S.settings.goal}권</div></div><div class="hbtns acts"><button class="btn act${S.selMode?' selon':''}" data-action="selmode" aria-label="여러 권 골라 설정 바꾸기"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/></svg><span class="lbl">${S.selMode?'완료':'책 설정'}</span></button><button class="btn act primary" data-action="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">책 추가</span></button></div></header>${bulkBarHTML()}
+  return `<p class="pagesub">올해 ${doneThisYear().length} / ${S.settings.goal}권</p>${bulkBarHTML()}
     ${all.length>12?`<input class="search" type="search" placeholder="제목, 저자, 분류로 찾기" value="${esc(S.sq)}" data-field="sq" aria-label="책 검색">`:''}
     <div class="chipwrap"><div class="chips" role="group" aria-label="상태 필터">${chips}</div></div><div class="chipwrap"><div class="chips" role="group" aria-label="평점 필터" style="padding-top:0">${rchips}</div></div>${topCards}${cont}${body}
     ${bs.length?'<div class="legend"><span><b style="background:var(--ribbon)"></b>리본: 읽는 중</span><span>★ 내 평점</span><span>↻ 읽은 횟수</span></div>':''}`;
@@ -763,7 +794,7 @@ function storageHTML(){if(typeof FB==='undefined'||!FB||!S.user)return'';const n
   if(S.migr)return `<div class="sec"><h2>표지 저장소</h2><div class="bigbar"><i id="migrbar" style="width:${S.migr.done/S.migr.total*100}%"></i></div><div class="hint" id="migrcnt">${S.migr.done} / ${S.migr.total}</div></div>`;
   if(!FB.st)return `<div class="sec"><h2>표지 저장소</h2><p class="hint" style="margin:0">firebase-config.js에 storageBucket 값이 없어 표지를 데이터와 함께 저장하고 있어요.</p></div>`;
   return n?`<div class="sec"><h2>표지 저장소</h2><p class="hint" style="margin:0 0 8px">${n}권의 표지·사진이 아직 책 데이터 안에 들어 있어요. 저장소로 옮기면 앱을 열 때 받는 데이터가 크게 줄어요.</p><button class="btn act" data-action="migrimg"><svg viewBox="0 0 24 24"><path d="M12 19V8M7 13l5-5 5 5"/><path d="M4 5h16"/></svg><span>표지 저장소로 옮기기</span></button></div>`:'';}
-function dangerHTML(){return `<div class="sec danger-zone"><h2>데이터 삭제</h2>
+function dangerHTML(){return `<div class="sec danger-zone" id="sec-danger"><h2>데이터 삭제</h2>
   <p class="hint" style="margin:0 0 8px">모든 책, 문구, 독서 기록, 설정을 지워요. 되돌릴 수 없으니 먼저 JSON 백업을 받아 두세요.${typeof FB!=='undefined'&&FB&&S.user?' 계정도 함께 삭제돼요.':''}</p>
   ${S.delAll?`<p style="margin:0 0 6px;font-size:13px">확인을 위해 아래 칸에 <b>삭제</b>라고 입력하세요</p><div class="hbtns"><input type="text" id="delconfirm" autocomplete="off" style="flex:1;border:1px solid var(--danger);background:var(--surface-2);border-radius:8px;padding:8px 10px"><button class="btn act danger" data-action="delallgo"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span>영구 삭제</span></button><button class="linkbtn" data-action="delallcancel">취소</button></div>`
   :`<button class="btn act danger" data-action="delall"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg><span>${typeof FB!=='undefined'&&FB&&S.user?'계정과 모든 데이터 삭제':'모든 데이터 삭제'}</span></button>`}</div>`}
@@ -878,8 +909,8 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
     <div class="tonerow"><span>밝기</span><b>${S.settings.toneB??50}</b><input type="range" min="0" max="100" value="${S.settings.toneB??50}" data-field="toneB" aria-label="밝기"></div>
     <div class="tonerow"><span>따뜻함</span><b>${S.settings.toneW??50}</b><input type="range" min="0" max="100" value="${S.settings.toneW??50}" data-field="toneW" aria-label="따뜻함"></div>
     ${((S.settings.toneB??50)!=50||(S.settings.toneW??50)!=50)?'<button class="linkbtn" data-action="tonereset" style="margin-top:4px">기본(50)으로 되돌리기</button>':''}<p class="hint">0~100, 가운데 50이 기본이에요. 모든 스킨에 함께 적용되고 표지 이미지는 바뀌지 않아요.</p></div>
-  <div class="sec"><h2>데이터 내보내기</h2>${dl?`<p class="hint" style="margin:0 0 8px">${S.settings.lastBackup?`마지막 백업 ${ymd(new Date(+S.settings.lastBackup))}`:'아직 백업한 적이 없어요'}${backupDue()?' - 백업을 권해요':''}</p><div class="hbtns"><button class="btn ghost small" data-action="export" data-k="json">JSON 백업</button><button class="btn ghost small" data-action="export" data-k="csv">CSV (엑셀용)</button></div><p class="hint">JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.</p>`:'<p class="hint">이 화면에서는 파일 저장을 쓸 수 없어요.</p>'}</div>
-  <div class="sec"><h2>분류 관리</h2>${(()=>{const m={};list().forEach(b=>{const c=b.category||'';if(c)m[c]=(m[c]||0)+1});const cs=allCats();
+  <div class="sec" id="sec-export"><h2>데이터 내보내기</h2>${dl?`<p class="hint" style="margin:0 0 8px">${S.settings.lastBackup?`마지막 백업 ${ymd(new Date(+S.settings.lastBackup))}`:'아직 백업한 적이 없어요'}${backupDue()?' - 백업을 권해요':''}</p><div class="hbtns"><button class="btn ghost small" data-action="export" data-k="json">JSON 백업</button><button class="btn ghost small" data-action="export" data-k="csv">CSV (엑셀용)</button></div><p class="hint">JSON에는 표지와 사진까지 모두 들어가요. 이 앱에 다시 가져올 수도 있어요.</p>`:'<p class="hint">이 화면에서는 파일 저장을 쓸 수 없어요.</p>'}</div>
+  <div class="sec" id="sec-cat"><h2>분류 관리</h2>${(()=>{const m={};list().forEach(b=>{const c=b.category||'';if(c)m[c]=(m[c]||0)+1});const cs=allCats();
     return (cs.length?cs.map(c=>S.renameCat===c?`<div class="catrow"><input type="text" id="rcat" value="${esc(c)}" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="rcatok" data-c="${esc(c)}">저장</button><button class="linkbtn" data-action="rcatcancel">취소</button></div>`
       :`<div class="catrow"><span><i class="catdot" style="--c:${catColor(c)}"></i>${esc(c)}</span><small>${m[c]||0}권</small><button class="qbtn" data-action="rcat" data-c="${esc(c)}">✎ 수정</button><button class="qbtn danger" style="margin-left:0" data-action="dcat" data-c="${esc(c)}">${S.delCat===c?'한 번 더 누르면 삭제':'삭제'}</button></div>`).join(''):'<p class="hint">아직 분류가 없어요</p>')
       +`<div class="catrow" style="border-bottom:0;padding-top:12px"><input type="text" id="ncat" placeholder="새 분류 이름" style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 10px"><button class="btn small" data-action="acat">추가</button></div><p class="hint">분류를 삭제하면 그 분류의 책은 미분류로 옮겨져요.</p>`})()}</div>
@@ -888,11 +919,33 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
   ${dangerHTML()}
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>`}
 let lastMain='';
+/* ---------- app bar & drawer ---------- */
+const IC={menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+  tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',imp:'<path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 19h16"/>',exp:'<path d="M12 15V4M7 9l5-5 5 5"/><path d="M4 19h16"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',
+  book:'<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/>'};
+const svgI=k=>`<svg viewBox="0 0 24 24">${IC[k]}</svg>`;
+function appbarHTML(){const shelf=S.view==='shelf';
+  return `<button class="iconbtn" data-action="drawer" aria-label="메뉴 열기">${svgI('menu')}</button>
+  <button class="abrand" data-action="tab" data-tab="shelf"><b>My BookShelf</b></button>
+  <div class="hbtns acts">${shelf?`<button class="btn act${S.selMode?' selon':''}" data-action="selmode" aria-label="여러 권 골라 설정 바꾸기"><svg viewBox="0 0 24 24">${S.selMode?'<path d="M5 12l5 5 9-10"/>':'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>'}</svg><span class="lbl">${S.selMode?'완료':'책 설정'}</span></button>`:''}<button class="btn act primary" data-action="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">책 추가</span></button></div>`}
+function drawerHTML(){const fb=typeof FB!=='undefined'&&FB;
+  const it=(ic,l,v,a,cls)=>`<button class="ditem${cls?' '+cls:''}" data-action="dnav" data-v="${v}" data-a="${a||''}">${svgI(ic)}<span>${l}</span></button>`;
+  return `<div class="dhead"><div class="dlogo">${svgI('book')}</div><b>My BookShelf</b>${S.user?`<span>${esc(S.user.email||S.user.name||'')}</span>`:''}</div>
+  ${it('gear','설정','settings','')}${it('tag','분류 관리','settings','sec-cat')}
+  <div class="dsep"></div>
+  ${it('imp','책 가져오기 (파일)','import','')}${it('exp','백업·내보내기','settings','sec-export')}
+  <div class="dsep"></div>
+  ${fb?it('user','계정','settings','sec-account'):''}${it('trash','데이터 삭제','settings','sec-danger','danger')}
+  <div class="dfoot">${esc(trText(S.syncMsg||''))}</div>`}
+function openDrawer(){const d=$('#drawer');d.innerHTML=tr(drawerHTML());d.classList.add('open');d.setAttribute('aria-hidden','false');$('#dback').classList.add('open');S.drawer=true}
+function closeDrawer(){$('#drawer').classList.remove('open');$('#drawer').setAttribute('aria-hidden','true');$('#dback').classList.remove('open');S.drawer=false}
 function renderMain(){
   const v=$('#view');
   const html=tr(S.view==='shelf'?vShelf():S.view==='quotes'?vQuotes():S.view==='goal'?vGoal():vSettings());
   if(html!==lastMain){lastMain=html;v.innerHTML=html;const q=v.querySelector('.qotd blockquote'),qm=v.querySelector('.qotd .qmore');if(q&&qm&&(S.qexp||q.scrollHeight>q.clientHeight+4))qm.style.display='block'}
-  const TABS={shelf:'서재',quotes:'문구',goal:'목표',settings:'설정'};
+  $('#appbar').innerHTML=tr(appbarHTML());
+  const TABS={shelf:'서재',quotes:'문구',goal:'목표'};
   document.querySelectorAll('.tabs button').forEach(b=>{b.setAttribute('aria-current',b.dataset.tab===S.view?'page':'false');b.lastChild.textContent=trText(TABS[b.dataset.tab])});
   $('#sync').textContent=trText(S.syncMsg||'');
 }
@@ -1087,6 +1140,9 @@ document.addEventListener('click',e=>{
         if(typeof FB!=='undefined'&&FB&&FB.auth.currentUser){try{await FB.auth.currentUser.delete();toast('계정과 데이터를 삭제했어요')}catch(e){toast(e.code==='auth/requires-recent-login'?'데이터는 지웠어요. 계정 삭제는 보안상 다시 로그인한 뒤 한 번 더 눌러주세요':'데이터는 지웠지만 계정 삭제에 실패했어요')}}
         else toast(failed?`일부(${failed}권)는 지우지 못했어요. 다시 시도해 주세요`:'모든 데이터를 삭제했어요');
         applySkin();lastMain='';renderAll()});break}
+    case 'drawer':S.drawer?closeDrawer():openDrawer();break;
+    case 'dnav':{const v=t.dataset.v,a=t.dataset.a;closeDrawer();if(v==='import'){openImport();break}if(S.openId)closeBook();S.view=v;renderMain();
+      setTimeout(()=>{const el=a&&document.getElementById(a);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo(0,0)},60);break}
     case 'skin':S.settings.skin=t.dataset.k;applySkin();putSettings();renderMain();break;
     case 'year':S.year=+t.dataset.y;renderMain();break;
     case 'start':startTimer(t.dataset.id);renderSheet();renderMain();break;
@@ -1158,11 +1214,12 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.getAttribute&&e.target.getAttribute('role')==='button'&&e.target.dataset.action){e.target.click();return}
   const st=e.target.closest&&e.target.closest('.stars');
   if(st&&S.openId&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){const b=S.books[S.openId];b.rating=Math.max(0,Math.min(5,(b.rating||0)+(e.key==='ArrowRight'?.5:-.5)));putBook(b);renderSheet();$('.stars')?.focus();e.preventDefault()}
-  if(e.key==='Escape'){if(S.form)closeForm();else if(S.openId)closeBook()}
+  if(e.key==='Escape'){if(S.drawer){closeDrawer();return}if(S.form)closeForm();else if(S.openId)closeBook()}
   if(e.key==='Enter'&&(e.target.id==='lg-pw'||e.target.id==='lg-email')){e.preventDefault();emailLogin();return}
   if(e.key==='Enter'&&S.form&&e.target.tagName==='INPUT'){e.preventDefault();if(e.target.id==='f-q')bookSearch();else saveForm()}
 });
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeForm()});
+$('#dback').addEventListener('click',closeDrawer);
 document.addEventListener('input',e=>{
   const t=e.target;
   if(t.dataset.ff){if(t.dataset.ff==='category'){if(t.value==='__new'){S.form.category='';S.form.catNewOn=true;renderForm();setTimeout(()=>$('#f-catnew')?.focus(),30)}else{S.form.category=t.value;if(S.form.catNewOn){S.form.catNewOn=false;renderForm()}}return}S.form[t.dataset.ff]=t.type==='checkbox'?t.checked:t.value;return}
