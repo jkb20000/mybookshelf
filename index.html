@@ -168,8 +168,11 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .sec[id]{scroll-margin-top:72px}
 .dback{position:fixed;inset:0;z-index:30;background:rgba(10,14,20,.45);opacity:0;pointer-events:none;transition:opacity .2s}
 .dback.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;bottom:0;left:0;z-index:31;width:min(300px,82vw);background:var(--surface);color:var(--ink);transform:translateX(-104%);transition:transform .25s cubic-bezier(.2,.8,.2,1);padding:calc(18px + env(safe-area-inset-top,0px)) 0 calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,.25);overflow-y:auto}
-.drawer.open{transform:none}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:31;width:min(300px,82vw);background:var(--surface);color:var(--ink);transform:translateX(-104%);visibility:hidden;transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s linear .28s;will-change:transform;padding:calc(10px + env(safe-area-inset-top,0px)) 0 calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,.25);overflow-y:auto}
+.drawer.open{transform:none;visibility:visible;transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.dtop{display:flex;align-items:center;gap:12px;padding:0 12px 12px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.dtop .dhead{padding:0;border:0;margin:0;min-width:0;flex:1}
+.dtop .dhead b{font-size:21px;line-height:1.2;color:var(--accent);letter-spacing:-.01em}
 .dhead{padding:0 20px 16px;border-bottom:1px solid var(--line);margin-bottom:6px}
 .dlogo{width:40px;height:40px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
 .dlogo svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round}
@@ -455,7 +458,15 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .radio input{margin-top:4px;accent-color:var(--accent)}
 .bigbar{height:8px;background:var(--chip);border-radius:4px;overflow:hidden;margin:14px 0 8px}
 .bigbar i{display:block;height:100%;background:var(--accent);transition:width .2s}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.appbar .abrand{position:static;flex:1;min-width:0;display:flex;align-items:center;justify-content:center;text-align:center!important}
+.appbar .abrand b{overflow:hidden;text-overflow:ellipsis}
+.appbar .hbtns.acts{margin-left:auto}
+.appbar .btn.act .lbl{display:none}
+.appbar .hbtns.acts .btn.act{width:38px;height:38px;min-height:38px;padding:0;justify-content:center;gap:0}
+.appbar .hbtns.acts .btn.act svg{width:18px;height:18px}
+.appbar .btn.act.primary{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.appbar .abrand b{font-size:25px;font-weight:700;letter-spacing:-.02em;color:var(--accent);text-shadow:0 1px 0 color-mix(in srgb,var(--surface) 60%,transparent)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}.drawer{transition:transform .2s ease,visibility 0s linear .2s!important}.drawer.open{transition:transform .2s ease,visibility 0s!important}.dback{transition:opacity .2s!important}}
 </style>
 </head>
 <body>
@@ -931,7 +942,7 @@ function appbarHTML(){const shelf=S.view==='shelf';
   <div class="hbtns acts">${shelf?`<button class="btn act${S.selMode?' selon':''}" data-action="selmode" aria-label="여러 권 골라 설정 바꾸기"><svg viewBox="0 0 24 24">${S.selMode?'<path d="M5 12l5 5 9-10"/>':'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>'}</svg><span class="lbl">${S.selMode?'완료':'책 설정'}</span></button>`:''}<button class="btn act primary" data-action="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">책 추가</span></button></div>`}
 function drawerHTML(){const fb=typeof FB!=='undefined'&&FB;
   const it=(ic,l,v,a,cls)=>`<button class="ditem${cls?' '+cls:''}" data-action="dnav" data-v="${v}" data-a="${a||''}">${svgI(ic)}<span>${l}</span></button>`;
-  return `<div class="dhead"><div class="dlogo">${svgI('book')}</div><b>My BookShelf</b>${S.user?`<span>${esc(S.user.email||S.user.name||'')}</span>`:''}</div>
+  return `<div class="dtop"><button class="iconbtn" data-action="drawer" aria-label="메뉴 닫기">${svgI('menu')}</button><div class="dhead"><b>My BookShelf</b>${S.user?`<span>${esc(S.user.email||S.user.name||'')}</span>`:''}</div></div>
   ${it('gear','설정','settings','')}${it('tag','분류 관리','settings','sec-cat')}
   <div class="dsep"></div>
   ${it('imp','책 가져오기 (파일)','import','')}${it('exp','백업·내보내기','settings','sec-export')}
@@ -1220,6 +1231,7 @@ document.addEventListener('keydown',e=>{
 });
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeForm()});
 $('#dback').addEventListener('click',closeDrawer);
+(()=>{const d=$('#drawer');let x0=null,y0=0;d.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});d.addEventListener('touchend',e=>{if(x0==null)return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(dx<-60&&Math.abs(dy)<Math.abs(dx))closeDrawer()},{passive:true})})();
 document.addEventListener('input',e=>{
   const t=e.target;
   if(t.dataset.ff){if(t.dataset.ff==='category'){if(t.value==='__new'){S.form.category='';S.form.catNewOn=true;renderForm();setTimeout(()=>$('#f-catnew')?.focus(),30)}else{S.form.category=t.value;if(S.form.catNewOn){S.form.catNewOn=false;renderForm()}}return}S.form[t.dataset.ff]=t.type==='checkbox'?t.checked:t.value;return}
