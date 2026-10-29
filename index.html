@@ -827,7 +827,7 @@ function dashHTML(){let open=false;try{open=localStorage.getItem('mybookshelf.da
   const bk=backupCardHTML();
   return `<section class="dash${open?' open':''}"><button class="dashh" data-action="dash" aria-expanded="${open}"><span class="dmini" style="--p:${Math.round(p*100)}%"></span><span class="dsum"><b>올해 ${doneThisYear().length} / ${S.settings.goal}권</b><i>${v}${u} / ${c.target}${u}</i><i>${st}일 연속</i></span>${bk&&!open?'<em class="dbk">백업 필요</em>':''}<span class="dchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></button>
     ${open?`<div class="dashb">${bk}${todayCardHTML()}${quoteCardHTML()}</div>`:''}</section>`}
-Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
+Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
 function vShelf(){
   const all=list(),fs=S.fset,rs=S.rset,sq=S.sq.trim().toLowerCase();
   const f=fs.size?(fs.size===1?[...fs][0]:'multi'):'all';
@@ -1090,13 +1090,18 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>`}
 let lastMain='';
 /* ---------- app bar & drawer ---------- */
-const IC={menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+const IC={menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',back:'<path d="M15 5l-7 7 7 7"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
   tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',imp:'<path d="M12 4v11M7 10l5 5 5-5"/><path d="M4 19h16"/>',exp:'<path d="M12 15V4M7 9l5-5 5 5"/><path d="M4 19h16"/>',
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',
   book:'<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/>'};
 const svgI=k=>`<svg viewBox="0 0 24 24">${IC[k]}</svg>`;
+function goBack(){if(S.view!=='settings')return;S.view=S.prevView||'shelf';const y=S.prevScroll||0;S.prevView=null;S.prevScroll=0;renderMain();setTimeout(()=>window.scrollTo(0,y),0)}
+window.addEventListener('popstate',()=>{if(S.view==='settings')goBack()});
+/* swipe right from the left edge = back (settings) */
+(()=>{let sx=null,sy=0;document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=(S.view==='settings'&&!S.drawer&&!S.openId&&t.clientX<32)?t.clientX:null;sy=t.clientY},{passive:true});
+  document.addEventListener('touchend',e=>{if(sx==null)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=Math.abs(t.clientY-sy);sx=null;if(dx>70&&dy<dx*.6){if(history.state&&history.state.mbsView==='settings')history.back();else goBack()}},{passive:true})})();
 function appbarHTML(){const shelf=S.view==='shelf';
-  return `<button class="iconbtn" data-action="drawer" aria-label="메뉴 열기">${svgI('menu')}</button>
+  return `${S.view==='settings'?`<button class="iconbtn" data-action="back" aria-label="뒤로">${svgI('back')}</button>`:`<button class="iconbtn" data-action="drawer" aria-label="메뉴 열기">${svgI('menu')}</button>`}
   <button class="abrand" data-action="tab" data-tab="shelf"><b>My BookShelf</b></button>
   <div class="hbtns acts">${shelf?`<button class="btn act${S.selMode?' selon':''}" data-action="selmode" aria-label="여러 권 골라 설정 바꾸기"><svg viewBox="0 0 24 24">${S.selMode?'<path d="M5 12l5 5 9-10"/>':'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>'}</svg><span class="lbl">${S.selMode?'완료':'책 설정'}</span></button>`:''}<button class="btn act primary" data-action="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">책 추가</span></button></div>`}
 function drawerHTML(){const fb=typeof FB!=='undefined'&&FB;
@@ -1297,6 +1302,7 @@ document.addEventListener('click',e=>{
   const a=t.dataset.action, b=S.openId?S.books[S.openId]:null;
   if(a!=='del'&&S.delArm){S.delArm=false;if(S.openId)renderSheet()}
   switch(a){
+    case 'back':if(history.state&&history.state.mbsView==='settings'){history.back()}else goBack();break;
     case 'tab':S.view=t.dataset.tab;if(S.openId)closeBook();renderMain();window.scrollTo(0,0);break;
     case 'filter':{const k=t.dataset.f;if(k==='all')S.fset.clear();else S.fset.has(k)?S.fset.delete(k):S.fset.add(k);renderMain();break}
     case 'lang':S.settings.lang=t.dataset.k;putSettings();lastMain='';renderAll();break;
@@ -1322,7 +1328,7 @@ document.addEventListener('click',e=>{
         else toast(failed?`일부(${failed}권)는 지우지 못했어요. 다시 시도해 주세요`:'모든 데이터를 삭제했어요');
         applySkin();lastMain='';renderAll()});break}
     case 'drawer':S.drawer?closeDrawer():openDrawer();break;
-    case 'dnav':{const v=t.dataset.v,a=t.dataset.a;closeDrawer();if(v==='import'){openImport();break}if(S.openId)closeBook();S.view=v;renderMain();
+    case 'dnav':{const v=t.dataset.v,a=t.dataset.a;closeDrawer();if(v==='import'){openImport();break}if(S.openId)closeBook();if(S.view!=='settings'&&v==='settings'){S.prevView=S.view;S.prevScroll=window.scrollY;try{history.pushState({mbsView:'settings'},'')}catch(e){}}S.view=v;renderMain();
       setTimeout(()=>{const el=a&&document.getElementById(a);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo(0,0)},60);break}
     case 'skin':S.settings.skin=t.dataset.k;applySkin();putSettings();renderMain();break;
     case 'year':S.year=+t.dataset.y;renderMain();break;
