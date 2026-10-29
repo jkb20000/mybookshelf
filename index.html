@@ -502,6 +502,12 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .rmeta{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 4px}
 .dchip{background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:600;border-radius:999px;padding:2px 9px;line-height:1.4}
 .sadd{font-size:12px!important;padding:0!important}
+.ccard{overflow:hidden}
+.ccard .a{display:flex;gap:4px;min-width:0;white-space:nowrap}
+.ccard .a .au{overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+.ccard .a .sd{flex:none}
+.ccard .t{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rmeta{flex-wrap:nowrap!important;overflow:hidden;white-space:nowrap}
 .rdate{font-size:12px;color:var(--muted);align-self:center}
 .rcat{background:var(--chip);color:var(--ink);font-size:11px;border-radius:999px;padding:2px 9px;line-height:1.4}
 .rcard .crow .sti .bg{color:var(--line)}.rcard .crow .sti .fg{color:var(--ribbon)}
@@ -796,8 +802,8 @@ const destOf=b=>b.status==='want'?'Wishlist':b.status==='reading'?'읽는 중':b
 function recentHTML(rs){const md=t=>{const d=new Date(t);return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`};
   return `<div class="cath"><h2>최근 추가</h2><span>${rs.length}권</span></div><div class="cont">${rs.map(b=>`
     <div class="ccard rcard" style="--c:${bc(b)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:`<div class="mini gmini"><span>${esc(b.title)}</span></div>`}<div>
-      <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a">${esc(b.author||'')}</div>
-      <div class="rmeta"><span class="dchip">${destOf(b)}</span>${b.category&&!b.isSummary&&b.status!=='want'?`<span class="rcat">${esc(b.category)}</span>`:''}${b.format?`<span class="rcat">${FORMAT[b.format]}</span>`:''}<span class="rdate">${md(b.createdAt)} 추가</span></div>
+      <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a"><span class="au">${esc(b.author||'')}</span><span class="sd">${b.author?'· ':''}${md(b.createdAt)} 추가</span></div>
+      <div class="rmeta"><span class="dchip">${destOf(b)}</span>${b.category&&!b.isSummary&&b.status!=='want'?`<span class="rcat">${esc(b.category)}</span>`:''}${b.format?`<span class="rcat">${FORMAT[b.format]}</span>`:''}</div>
       <div class="crow"><span class="hbtns">${b.status==='want'?`<button class="btn ghost small" data-action="shelve" data-id="${b.id}">등록</button><button class="btn ghost small" data-action="editid" data-id="${b.id}">열기</button>`:`<button class="btn ghost small" data-action="open" data-id="${b.id}">열기</button>`}${b.status==='reading'?'':`<button class="btn small" data-action="readnow" data-id="${b.id}">▶ 읽기</button>`}</span></div>
     </div></div>`).join('')}</div>`}
 function trayItemHTML(b){const sel=S.selMode&&S.sel.has(b.id);
@@ -836,7 +842,7 @@ function vShelf(){
     .map(([k,l])=>`<button class="chip" data-action="filter" data-f="${k}" aria-pressed="${k==='all'?!fs.size:fs.has(k)}">${l} ${k==='all'?all.length:all.filter(b=>k==='owned'?b.owned:k==='lent'?b.lent:k==='summary'?b.isSummary:b.status===k).length}</button>`).join('');
   const cont=reading.length&&f==='all'&&!sq&&!rs.size?`<div class="cath"><h2>읽는 중</h2><span>${reading.length}권</span></div><div class="cont">${reading.map(b=>`
     <div class="ccard" style="--c:${bc(b)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:'<div class="mini"></div>'}<div>
-      <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a">${esc(b.author||'')}${b.startedAt?` · ${b.startedAt.replace(/-/g,'.')} 시작`:' · <button class="linkbtn sadd" data-action="open" data-id="'+b.id+'">시작일 추가</button>'}</div>
+      <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a"><span class="au">${esc(b.author||'')}</span>${b.startedAt?`<span class="sd">· ${b.startedAt.replace(/-/g,'.')} 시작</span>`:'<span class="sd">· <button class="linkbtn sadd" data-action="open" data-id="'+b.id+'">시작일 추가</button></span>'}</div>
       <div class="bar"><i style="width:${pct(b)}%"></i></div>
       <div class="crow"><span>${b.current||0} / ${b.pages||'?'}쪽, ${pct(b)}%${(d=>d?` · 예상 완독 ${d.slice(5).replace('-','/')}`:'')(estimate(b))}</span>${S.timer&&S.timer.bookId===b.id?`<button class="btn small" data-action="open" data-id="${b.id}">⏱ <span data-elapsed>${elapsedText()}</span></button>`:`<span class="hbtns"><button class="btn ghost small" data-action="plus" data-id="${b.id}">+10쪽</button>${S.timer?'':`<button class="btn small" data-action="startopen" data-id="${b.id}">▶ 계속 읽기</button>`}</span>`}</div>
     </div></div>`).join('')}</div>`:'';
