@@ -44,18 +44,44 @@
   color-scheme:dark;
 }
 /* skins */
-:root[data-skin="wood"]{--dot:#8E6B45;--bg0:#D8BD95;--bg-img:repeating-linear-gradient(92deg,rgba(90,50,20,.08) 0 2px,transparent 2px 9px,rgba(90,50,20,.05) 9px 11px,transparent 11px 23px,rgba(90,50,20,.09) 23px 24px,transparent 24px 41px);
-  --surface0:#FBF5EA;--surface-20:#F2E7D3;--ink:#3A2816;--muted:#7B624E;--line0:#D9C3A2;--accent:#7A4A1E;--accent-ink:#FFF8EC;--chip0:#EBD8B9;
-  --plank:#8E5E2E;--plank-edge:#5B3917;--ribbon:#D9342B;color-scheme:light;
-  --shelf-bg:repeating-linear-gradient(91deg,rgba(90,50,20,.10) 0 2px,transparent 2px 8px,rgba(90,50,20,.06) 8px 10px,transparent 10px 21px,rgba(90,50,20,.11) 21px 22px,transparent 22px 37px),linear-gradient(180deg,#E6CA9F,#D5B585)}
-:root[data-skin="walnut"]{--dot:#7A5232;--bg0:#B98A5E;--bg-img:repeating-linear-gradient(92deg,rgba(60,30,10,.10) 0 2px,transparent 2px 9px,rgba(60,30,10,.06) 9px 11px,transparent 11px 23px,rgba(60,30,10,.11) 23px 24px,transparent 24px 41px);
-  --surface0:#F7EEE2;--surface-20:#EEDFCB;--ink:#2E1D10;--muted:#6E5340;--line0:#D3BC9E;--accent:#6B3F1D;--accent-ink:#FFF6EA;--chip0:#E6D2B6;
-  --plank:#5E3A1E;--plank-edge:#3A2210;--ribbon:#D9342B;color-scheme:light;
-  --shelf-bg:repeating-linear-gradient(91deg,rgba(60,30,10,.12) 0 2px,transparent 2px 8px,rgba(60,30,10,.07) 8px 10px,transparent 10px 21px,rgba(60,30,10,.13) 21px 22px,transparent 22px 37px),linear-gradient(180deg,#C79A6C,#A9784C)}
-:root[data-skin="linen"]{--dot:#9C9484;--bg0:#F3F0E8;--bg-img:none;--surface0:#FFFFFF;--surface-20:#F7F4EC;--ink:#2B2A26;--muted:#6E6A62;--line0:#DDD7CA;--accent:#2F5D50;--accent-ink:#FFFFFF;--chip0:#E7E2D5;
-  --plank:#BFA98B;--plank-edge:#8C7658;--ribbon:#E2B93B;color-scheme:light;--shelf-bg:linear-gradient(180deg,#F7F4EC,#FFFFFF)}
-:root[data-skin="slate"]{--dot:#8A96A3;--bg0:#E7EAEE;--bg-img:none;--surface0:#FFFFFF;--surface-20:#F3F5F7;--ink:#1B2430;--muted:#5D6774;--line0:#CCD3DA;--accent:#3D5A80;--accent-ink:#FFFFFF;--chip0:#DCE1E7;
-  --plank:#B49C7E;--plank-edge:#8E7558;--ribbon:#E2B93B;color-scheme:light;--shelf-bg:linear-gradient(180deg,#F3F5F7,#FFFFFF)}
+:root[data-skin="wood"]{--dot:#B07A43;--bg0:#EBD7B5;--bg-img:repeating-linear-gradient(92deg,rgba(150,95,40,.06) 0 2px,transparent 2px 11px,rgba(150,95,40,.04) 11px 13px,transparent 13px 29px);
+ --surface0:#FFFBF3;--surface-20:#F8EEDC;--ink:#3B2715;--muted:#7A5E43;--line0:#E6D2AE;--accent:#A0522D;--accent-ink:#FFFFFF;--chip0:#F2E2C4;
+ --plank:#B97D45;--plank-edge:#8A5528;--ribbon:#8E2B3A;color-scheme:light;--gmd:#A0522D;
+ --shelf-bg:repeating-linear-gradient(91deg,rgba(150,95,40,.08) 0 2px,transparent 2px 9px,rgba(150,95,40,.05) 9px 11px,transparent 11px 24px),linear-gradient(180deg,#F3E2C2,#E6CFA6);
+ --bg-ink:#3B2715;--bg-muted:#5E4630;--bg-accent:#8A3F1E;--bg-shadow:0 1px 0 rgba(255,250,235,.5)}
+:root[data-skin="walnut"]{--dot:#C9A14A;--bg0:#3A2620;--bg-img:repeating-linear-gradient(92deg,rgba(0,0,0,.10) 0 2px,transparent 2px 10px,rgba(255,200,150,.04) 10px 12px,transparent 12px 26px);
+ --surface0:#F7F0E2;--surface-20:#EFE4CF;--ink:#2A1C14;--muted:#6F5A48;--line0:#DCCBAE;--accent:#2F5D46;--accent-ink:#FFFFFF;--chip0:#E7DAC0;
+ --plank:#6B3A22;--plank-edge:#3E2012;--ribbon:#C9A14A;color-scheme:light;--gmd:#2F5D46;
+ --shelf-bg:repeating-linear-gradient(91deg,rgba(0,0,0,.10) 0 2px,transparent 2px 9px,rgba(0,0,0,.06) 9px 11px,transparent 11px 24px),linear-gradient(180deg,#5A3424,#462818);
+ --bg-ink:#F4E9D6;--bg-muted:#D9C7AE;--bg-accent:#E2C27A;--bg-shadow:0 1px 2px rgba(0,0,0,.4)}
+:root[data-skin="linen"]{--dot:#8FA48C;--bg0:#DDE4D5;--bg-img:none;
+ --surface0:#FFFFFF;--surface-20:#F3F5EF;--ink:#24302A;--muted:#5C6B61;--line0:#CCD6C7;--accent:#3E6B57;--accent-ink:#FFFFFF;--chip0:#E3EADD;
+ --plank:#CDB08A;--plank-edge:#A2845F;--ribbon:#C8653F;color-scheme:light;--gmd:#3E6B57;
+ --shelf-bg:linear-gradient(180deg,#F6F1E7,#EBE2D2);
+ --bg-ink:#24302A;--bg-muted:#4F5E54;--bg-accent:#2F5A47;--bg-shadow:none}
+:root[data-skin="slate"]{--dot:#8E959C;--bg0:#E3E5E6;--bg-img:none;--surface0:#F8F8F7;--surface-20:#EFF0EF;--ink:#2B2F33;--muted:#5D6369;--line0:#D3D6D8;--accent:#4C5661;--accent-ink:#FFFFFF;--chip0:#E2E4E5;
+  --plank:#ABA59C;--plank-edge:#827C73;--ribbon:#B39A63;color-scheme:light;--gmd:#4C5661;--shelf-bg:linear-gradient(180deg,#F1F1EF,#F8F8F7);
+  --bg-ink:#2B2F33;--bg-muted:#53595F;--bg-accent:#3F4852;--bg-shadow:none}
+:root[data-skin="british"]{--dot:#C8A55A;--bg0:#1F2C40;--bg-img:none;
+ --surface0:#F5F1E8;--surface-20:#ECE5D6;--ink:#1E2633;--muted:#5D6575;--line0:#D8CFBD;--accent:#1F3A5F;--accent-ink:#FFFFFF;--chip0:#E4DCCB;
+ --plank:#6E4A2C;--plank-edge:#432A17;--ribbon:#C8A55A;color-scheme:light;--gmd:#1F3A5F;
+ --shelf-bg:repeating-linear-gradient(91deg,rgba(0,0,0,.10) 0 2px,transparent 2px 9px,rgba(0,0,0,.06) 9px 11px,transparent 11px 24px),linear-gradient(180deg,#7A5434,#5F4027);
+ --bg-ink:#F1EBDD;--bg-muted:#B9C3D3;--bg-accent:#E3C98A;--bg-shadow:0 1px 2px rgba(0,0,0,.35)}
+:root[data-skin="cherry"]{--dot:#8C4A2F;--bg0:#C98E6E;--bg-img:repeating-linear-gradient(92deg,rgba(110,40,20,.09) 0 2px,transparent 2px 10px,rgba(110,40,20,.05) 10px 12px,transparent 12px 27px,rgba(110,40,20,.08) 27px 28px,transparent 28px 44px);
+ --surface0:#FFF8F1;--surface-20:#F7E9DC;--ink:#3A1F14;--muted:#7A5444;--line0:#E8CDB8;--accent:#2E5E5A;--accent-ink:#FFFFFF;--chip0:#F1DCCB;
+ --plank:#8C4A2F;--plank-edge:#5E2C17;--ribbon:#E0B341;color-scheme:light;--gmd:#2E5E5A;
+ --shelf-bg:repeating-linear-gradient(91deg,rgba(110,40,20,.10) 0 2px,transparent 2px 8px,rgba(110,40,20,.06) 8px 10px,transparent 10px 21px),linear-gradient(180deg,#D9A283,#C48565);
+ --bg-ink:#2A140C;--bg-muted:#3F2216;--bg-accent:#122B29;--bg-shadow:0 1px 0 rgba(255,235,220,.3)}
+:root[data-skin="birch"]{--dot:#B8A37F;--bg0:#EEE8DC;--bg-img:repeating-linear-gradient(92deg,rgba(120,100,70,.05) 0 1px,transparent 1px 13px,rgba(120,100,70,.035) 13px 15px,transparent 15px 34px);
+ --surface0:#FFFFFF;--surface-20:#F7F4EE;--ink:#222222;--muted:#5F5A52;--line0:#E2DACB;--accent:#2B2B2B;--accent-ink:#FFFFFF;--chip0:#EDE7DB;
+ --plank:#D6BF98;--plank-edge:#AD9468;--ribbon:#D29B12;color-scheme:light;--gmd:#2B2B2B;
+ --shelf-bg:linear-gradient(180deg,#F8F3EA,#EFE6D6);
+ --bg-ink:#222222;--bg-muted:#514C45;--bg-accent:#1E1E1E;--bg-shadow:none}
+:root[data-skin="wine"]{--dot:#C98F9C;--bg0:#2B1820;--bg-img:none;
+ --surface0:#F8F1EC;--surface-20:#EFE3DB;--ink:#2B1A1F;--muted:#6E5560;--line0:#DFCBC6;--accent:#7A2E43;--accent-ink:#FFFFFF;--chip0:#EADAD3;
+ --plank:#5B2F2A;--plank-edge:#3A1A17;--ribbon:#D8A657;color-scheme:light;--gmd:#7A2E43;
+ --shelf-bg:repeating-linear-gradient(91deg,rgba(0,0,0,.10) 0 2px,transparent 2px 9px,rgba(0,0,0,.06) 9px 11px,transparent 11px 24px),linear-gradient(180deg,#6A3A33,#552C26);
+ --bg-ink:#F6E8EA;--bg-muted:#D8BCC3;--bg-accent:#E7B97A;--bg-shadow:0 1px 2px rgba(0,0,0,.4)}
 :root[data-skin="night"]{--dot:#6E7A87;--bg0:#12161B;--bg-img:none;--surface0:#1B2128;--surface-20:#222932;--ink:#E5E9EE;--muted:#9AA4AF;--line0:#2E3740;--accent:#93B3DB;--accent-ink:#0F1620;--chip0:#262E37;
   --plank:#5A4A39;--plank-edge:#3A2F24;--ribbon:#D6AE3A;color-scheme:dark;--shelf-bg:linear-gradient(180deg,#222932,#1B2128)}
 .today{margin:0 12px 10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:grid;grid-template-columns:48px 1fr 1fr 1fr;gap:12px;align-items:center;cursor:pointer}
@@ -204,7 +230,7 @@ button{cursor:pointer;-webkit-appearance:none;appearance:none;white-space:normal
 .chips{display:flex;gap:6px;padding:0 44px 12px 20px;overflow-x:auto;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{border:0;background:var(--chip);color:var(--ink);border-radius:999px;padding:6px 13px;font-size:13px;white-space:nowrap}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
 
 /* continue reading */
 .cont{display:flex;gap:10px;overflow-x:auto;padding:2px 20px 16px;scroll-snap-type:x mandatory;scrollbar-width:none}
@@ -555,8 +581,6 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .cont::after{content:"";flex:0 0 2px}
 /* text placed directly on the page background */
 :root{--bg-ink:var(--ink);--bg-muted:var(--muted);--bg-accent:var(--accent);--bg-shadow:none}
-:root[data-skin="wood"]{--bg-muted:#4F3A28;--bg-accent:#5C3410;--bg-shadow:0 1px 0 rgba(255,240,215,.35)}
-:root[data-skin="walnut"]{--bg-ink:#24160B;--bg-muted:#3A2616;--bg-accent:#3F2210;--bg-shadow:0 1px 0 rgba(255,235,205,.3)}
 :root[data-skin="ocean"]{--bg-muted:#46607A;--bg-accent:#245A94}
 .cath h2,.shelfstart span{color:var(--bg-ink);text-shadow:var(--bg-shadow)}
 .cath span,.cath em,.shelfstart small,.legend,.sync,.pagesub,.dots .dn{color:var(--bg-muted)!important;text-shadow:var(--bg-shadow)}
@@ -579,6 +603,10 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .shelfh~.cat:not(.traysec) .cath h2{font-size:16.5px;font-weight:700}
 .shelfh~.cat:not(.traysec) .cath{padding-top:0!important;padding-bottom:8px!important}
 .ditem.on{background:color-mix(in srgb,var(--accent) 12%,transparent);font-weight:600}
+.skg{margin:10px 2px 6px;font-size:12px;color:var(--muted);font-weight:600}
+.skg:first-of-type{margin-top:0}
+.skins{grid-template-columns:repeat(4,1fr)!important;gap:6px!important}
+.skins button{font-size:10.5px!important;padding:5px 3px 7px!important;line-height:1.25}
 .lentin{display:block;width:100%;margin-top:8px;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px}
 .tile .fm.lentb{background:#C2410C!important;color:#fff!important;border-color:rgba(0,0,0,.2)}
 .dedit{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
@@ -662,7 +690,9 @@ function trText(t){if(lang()!=='en')return t;for(const [rx,rep] of EN_RX)t=t.rep
 function tr(html){const parts=String(html).split(/([\uE000\uE001])/);let inside=0,out='';
   for(const p of parts){if(p==='\uE000'){inside++;continue}if(p==='\uE001'){inside--;continue}out+=inside>0?p:trText(p)}return out}
 
-const SKINS=[['wood','도서관 오크','#D8BD95','#8E5E2E'],['walnut','호두나무','#B98A5E','#5E3A1E'],['linen','밝은 리넨','#F3F0E8','#BFA98B'],['slate','차분한 회색','#E7EAEE','#B49C7E'],['night','어두운 밤','#12161B','#5A4A39'],['forest','포레스트 그린','#1F3A33','#5C4632'],['ocean','오션 블루','#E3EEF7','#8FA8BF'],['lavender','라벤더 퍼플','#ECE7F4','#9F8CC2']];
+/* each row runs light to dark */
+const SKIN_GROUPS=[['나무 서재',['birch','wood','cherry','walnut']],['밝은 중성',['ocean','lavender','slate','linen']],['어두운 서재',['forest','british','wine','night']]];
+const SKINS=[['wood','햇살 열람실','#EBD7B5','#B97D45'],['walnut','클래식 서재','#3A2620','#6B3A22'],['cherry','체리 우드','#C98E6E','#8C4A2F'],['birch','자작나무','#EEE8DC','#D6BF98'],['linen','모던 북카페','#DDE4D5','#CDB08A'],['slate','차분한 회색','#E3E5E6','#ABA59C'],['ocean','오션 블루','#E3EEF7','#8FA8BF'],['lavender','라벤더 퍼플','#ECE7F4','#9F8CC2'],['british','브리티시 서재','#1F2C40','#6E4A2C'],['night','어두운 밤','#12161B','#5A4A39'],['forest','포레스트 그린','#1F3A33','#5C4632'],['wine','와인 셀러','#2B1820','#5B2F2A']];
 function applySkin(){if(S.settings.skin==='oak'){S.settings.skin='wood';if(S.settings.toneB==null)S.settings.toneB=75}
   if(S.settings.toneB==null&&S.settings.tone)S.settings.toneB=50+S.settings.tone*25;if(S.settings.toneW==null&&S.settings.warm)S.settings.toneW=50+S.settings.warm*25;
   const r=document.documentElement;r.dataset.skin=S.settings.skin||'wood';const b=+(S.settings.toneB??50),w=+(S.settings.toneW??50);
@@ -828,7 +858,7 @@ function dashHTML(){let open=false;try{open=localStorage.getItem('mybookshelf.da
   const bk=backupCardHTML();
   return `<section class="dash${open?' open':''}"><button class="dashh" data-action="dash" aria-expanded="${open}"><span class="dmini" style="--p:${Math.round(p*100)}%"></span><span class="dsum"><b>올해 ${doneThisYear().length} / ${S.settings.goal}권</b><i>${v}${u} / ${c.target}${u}</i><i>${st}일 연속</i></span>${bk&&!open?'<em class="dbk">백업 필요</em>':''}<span class="dchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></button>
     ${open?`<div class="dashb">${bk}${todayCardHTML()}${quoteCardHTML()}</div>`:''}</section>`}
-Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
+Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
 function vShelf(){
   const all=list(),fs=S.fset,rs=S.rset,sq=S.sq.trim().toLowerCase();
   const f=fs.size?(fs.size===1?[...fs][0]:'multi'):'all';
@@ -1074,7 +1104,7 @@ function vGoal(){
 
 function vSettings(){return `<header class="top"><div><h1>설정</h1></div></header>
   <div class="sec"><h2>언어</h2><div class="seg" style="grid-template-columns:1fr 1fr">${[['ko','한국어'],['en','English']].map(([k,l])=>`<button data-action="lang" data-k="${k}" aria-pressed="${lang()===k}">${l}</button>`).join('')}</div></div>
-  <div class="sec"><h2>책장 스타일</h2><div class="skins">${SKINS.map(([k,l,bg,pl])=>`<button data-action="skin" data-k="${k}" aria-pressed="${(S.settings.skin||'wood')===k}" style="--sb:${bg};--sp:${pl}"><i></i>${l}</button>`).join('')}</div></div>
+  <div class="sec"><h2>책장 스타일</h2>${SKIN_GROUPS.map(([g,ks])=>`<p class="skg">${g}</p><div class="skins">${ks.map(k=>SKINS.find(x=>x[0]===k)).map(([k,l,bg,pl])=>`<button data-action="skin" data-k="${k}" aria-pressed="${(S.settings.skin||'wood')===k}" style="--sb:${bg};--sp:${pl}"><i></i>${l}</button>`).join('')}</div>`).join('')}</div>
   <div class="sec"><h2>톤 조정</h2>
     <div class="tonerow"><span>밝기</span><b>${S.settings.toneB??50}</b><input type="range" min="0" max="100" value="${S.settings.toneB??50}" data-field="toneB" aria-label="밝기"></div>
     <div class="tonerow"><span>따뜻함</span><b>${S.settings.toneW??50}</b><input type="range" min="0" max="100" value="${S.settings.toneW??50}" data-field="toneW" aria-label="따뜻함"></div>
