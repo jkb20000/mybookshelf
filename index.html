@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyBookShelf</title>
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="manifest.webmanifest?v79">
 <meta name="theme-color" content="#2B2F6B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MyBookShelf">
-<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" href="icon-180.png?v79">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v79">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -605,6 +606,8 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .skins{grid-template-columns:repeat(4,1fr)!important;gap:6px!important}
 .skins button{font-size:10.5px!important;padding:5px 3px 7px!important;line-height:1.25}
 .dver{display:block;margin-top:4px;font-size:11px;opacity:.8;font-variant-numeric:tabular-nums}
+.cvbtn{background:none;border:0;padding:0;display:flex;align-items:center;justify-content:center;align-self:center;cursor:pointer}
+.cvbtn:active .mini{transform:scale(.97)}
 .lentin{display:block;width:100%;margin-top:8px;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px}
 .tile .fm.lentb{background:#C2410C!important;color:#fff!important;border-color:rgba(0,0,0,.2)}
 .dedit{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
@@ -638,7 +641,7 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 <script>
 const COLORS=['#7A2E3A','#2F5D50','#3D5A80','#A07C2C','#5B3F6B','#2A7F84','#8A4B2A','#4B5563'];
 /* app version: keep in step with the cache name in sw.js */
-const APP_VERSION='v76',APP_BUILD='웹앱';
+const APP_VERSION='v79',APP_BUILD='웹앱';
 const STATUS={want:'읽고 싶은',reading:'읽는 중',done:'다 읽음',unread:'안 읽음'};
 const FORMAT={paper:'종이북',ebook:'이북',audio:'오디오북',app:'앱북'};
 const CAT_RENAME={Blinkist:'BookSummary'};
@@ -832,7 +835,7 @@ function coverHTML(b){return b.cover?`<img src="${b.cover}" alt="" decoding="syn
 const destOf=b=>b.status==='want'?'Wishlist':b.status==='reading'?'읽는 중':b.isSummary?'요약본':'Shelf';
 function recentHTML(rs){const md=t=>{const d=new Date(t);return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`};
   return `<div class="cath"><h2>최근 추가</h2><span>${rs.length}권</span></div><div class="cont">${rs.map(b=>`
-    <div class="ccard rcard" style="--c:${bc(b)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:`<div class="mini gmini"><span>${esc(b.title)}</span></div>`}<div>
+    <div class="ccard rcard" style="--c:${bc(b)}"><button class="cvbtn" data-action="open" data-id="${b.id}" aria-label="${esc(b.title)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:`<div class="mini gmini"><span>${esc(b.title)}</span></div>`}</button><div>
       <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a"><span class="au">${esc(b.author||'')}</span><span class="sd">${b.author?'· ':''}${md(b.createdAt)} 추가</span></div>
       <div class="rmeta"><span class="dchip">${destOf(b)}</span>${b.category&&!b.isSummary&&b.status!=='want'?`<span class="rcat">${esc(b.category)}</span>`:''}${b.format?`<span class="rcat">${FORMAT[b.format]}</span>`:''}</div>
       <div class="crow"><span class="hbtns">${b.status==='want'?`<button class="btn ghost small" data-action="shelve" data-id="${b.id}">등록</button><button class="btn ghost small" data-action="editid" data-id="${b.id}">열기</button>`:`<button class="btn ghost small" data-action="open" data-id="${b.id}">열기</button>`}${b.status==='reading'?'':`<button class="btn small" data-action="readnow" data-id="${b.id}">▶ 읽기</button>`}</span></div>
@@ -872,7 +875,7 @@ function vShelf(){
   const chips=[['all','전체'],['reading','읽는 중'],['want','Wishlist'],['summary','요약본'],['done','다 읽음'],['unread','안 읽음'],['owned','소장'],['lent','빌려줌']]
     .map(([k,l])=>`<button class="chip" data-action="filter" data-f="${k}" aria-pressed="${k==='all'?!fs.size:fs.has(k)}">${l} ${k==='all'?all.length:all.filter(b=>k==='owned'?b.owned:k==='lent'?b.lent:k==='summary'?b.isSummary:b.status===k).length}</button>`).join('');
   const cont=reading.length&&f==='all'&&!sq&&!rs.size?`<div class="cath"><h2>읽는 중</h2><span>${reading.length}권</span></div><div class="cont">${reading.map(b=>`
-    <div class="ccard" style="--c:${bc(b)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:'<div class="mini"></div>'}<div>
+    <div class="ccard" style="--c:${bc(b)}"><button class="cvbtn" data-action="open" data-id="${b.id}" aria-label="${esc(b.title)}">${b.cover?`<img class="mini" src="${b.cover}" alt="" decoding="sync">`:`<div class="mini gmini"><span>${esc(b.title)}</span></div>`}</button><div>
       <button class="t" data-action="open" data-id="${b.id}">${esc(b.title)}</button><div class="a"><span class="au">${esc(b.author||'')}</span>${b.startedAt?`<span class="sd">· ${b.startedAt.replace(/-/g,'.')} 시작</span>`:'<span class="sd">· <button class="linkbtn sadd" data-action="open" data-id="'+b.id+'">시작일 추가</button></span>'}</div>
       <div class="bar"><i style="width:${pct(b)}%"></i></div>
       <div class="crow"><span>${b.current||0} / ${b.pages||'?'}쪽, ${pct(b)}%${(d=>d?` · 예상 완독 ${d.slice(5).replace('-','/')}`:'')(estimate(b))}</span>${S.timer&&S.timer.bookId===b.id?`<button class="btn small" data-action="open" data-id="${b.id}">⏱ <span data-elapsed>${elapsedText()}</span></button>`:`<span class="hbtns"><button class="btn ghost small" data-action="plus" data-id="${b.id}">+10쪽</button>${S.timer?'':`<button class="btn small" data-action="startopen" data-id="${b.id}">▶ 계속 읽기</button>`}</span>`}</div>
