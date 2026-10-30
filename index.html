@@ -1097,7 +1097,9 @@ const IC={menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',back:'<path d="M15 5l-7 7 7
   book:'<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/>'};
 const svgI=k=>`<svg viewBox="0 0 24 24">${IC[k]}</svg>`;
 function goBack(){if(S.view!=='settings')return;S.view=S.prevView||'shelf';const y=S.prevScroll||0;S.prevView=null;S.prevScroll=0;renderMain();setTimeout(()=>window.scrollTo(0,y),0)}
-window.addEventListener('popstate',()=>{if(S.view==='settings')goBack()});
+/* iOS home-screen apps and Android turn an edge swipe / back button into history.back():
+   on a settings page the first back opens the menu, a back while the menu is open leaves settings */
+window.addEventListener('popstate',()=>{if(S.view!=='settings')return;if(S.drawer){closeDrawer();goBack()}else{openDrawer();try{history.pushState({mbsView:'settings'},'')}catch(e){}}});
 /* swipe right from the left edge = open the menu (back to the menu from a settings page) */
 (()=>{let sx=null,sy=0;document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=(!S.drawer&&!S.openId&&!S.form&&t.clientX<32)?t.clientX:null;sy=t.clientY},{passive:true});
   document.addEventListener('touchend',e=>{if(sx==null)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=Math.abs(t.clientY-sy);sx=null;if(dx>70&&dy<dx*.6)openDrawer()},{passive:true})})();
@@ -1305,7 +1307,7 @@ document.addEventListener('click',e=>{
   if(a!=='del'&&S.delArm){S.delArm=false;if(S.openId)renderSheet()}
   switch(a){
     case 'back':openDrawer();break;
-    case 'tab':S.view=t.dataset.tab;if(S.openId)closeBook();renderMain();window.scrollTo(0,0);break;
+    case 'tab':if(S.view==='settings'&&history.state&&history.state.mbsView){try{history.replaceState(null,'')}catch(e){}}S.view=t.dataset.tab;if(S.openId)closeBook();renderMain();window.scrollTo(0,0);break;
     case 'filter':{const k=t.dataset.f;if(k==='all')S.fset.clear();else S.fset.has(k)?S.fset.delete(k):S.fset.add(k);renderMain();break}
     case 'lang':S.settings.lang=t.dataset.k;putSettings();lastMain='';renderAll();break;
     case 'tonereset':S.settings.toneB=50;S.settings.toneW=50;applySkin();putSettings();renderMain();break;
@@ -1331,7 +1333,7 @@ document.addEventListener('click',e=>{
         applySkin();lastMain='';renderAll()});break}
     case 'drawer':S.drawer?closeDrawer():openDrawer();break;
     case 'dnav':{const v=t.dataset.v,a=t.dataset.a;closeDrawer();if(v==='import'){openImport();break}if(S.openId)closeBook();if(S.view!=='settings'&&v==='settings'){S.prevView=S.view;S.prevScroll=window.scrollY;try{history.pushState({mbsView:'settings'},'')}catch(e){}}S.view=v;renderMain();
-      const ry=v!=='settings'?(S.prevScroll||0):0;if(v!=='settings'){S.prevView=null;S.prevScroll=0}
+      const ry=v!=='settings'?(S.prevScroll||0):0;if(v!=='settings'){S.prevView=null;S.prevScroll=0;if(history.state&&history.state.mbsView){try{history.replaceState(null,'')}catch(e){}}}
       setTimeout(()=>{const el=a&&document.getElementById(a);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo(0,ry)},60);break}
     case 'skin':S.settings.skin=t.dataset.k;applySkin();putSettings();renderMain();break;
     case 'year':S.year=+t.dataset.y;renderMain();break;
