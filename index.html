@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyBookShelf</title>
-<link rel="manifest" href="manifest.webmanifest?v79">
+<link rel="manifest" href="manifest.webmanifest?v80">
 <meta name="theme-color" content="#2B2F6B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MyBookShelf">
-<link rel="apple-touch-icon" href="icon-180.png?v79">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v79">
+<link rel="apple-touch-icon" href="icon-180.png?v80">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v80">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -641,7 +641,7 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 <script>
 const COLORS=['#7A2E3A','#2F5D50','#3D5A80','#A07C2C','#5B3F6B','#2A7F84','#8A4B2A','#4B5563'];
 /* app version: keep in step with the cache name in sw.js */
-const APP_VERSION='v79',APP_BUILD='웹앱';
+const APP_VERSION='v80',APP_BUILD='웹앱';
 const STATUS={want:'읽고 싶은',reading:'읽는 중',done:'다 읽음',unread:'안 읽음'};
 const FORMAT={paper:'종이북',ebook:'이북',audio:'오디오북',app:'앱북'};
 const CAT_RENAME={Blinkist:'BookSummary'};
@@ -1282,7 +1282,8 @@ async function bookSearch(){const f=S.form;if(!f)return;const q=(f.q||'').trim()
   if(res.length<4){try{res=mergeRes(res,await searchOpenLib(isIsbn?isb:q,isIsbn))}catch(e){logError('search-openlib',e.message)}}
   if(!res.length&&sample){try{res=await claudeSearch(q)}catch(e){aiFail(e)}}
   if(S.form!==f)return;f.results=res.slice(0,10);f.searching=false;renderForm()}
-function storeLinks(r){const q=encodeURIComponent(r.isbn||[r.title,r.author].filter(Boolean).join(' '));
+/* search stores by title + first author: the ISBN from Google Books/Open Library is often an edition the store does not carry */
+function storeLinks(r){const au=String(r.author||'').split(/[,;·]| and | & /)[0].trim();const q=encodeURIComponent([String(r.title||'').split(/[:(]/)[0].trim(),au].filter(Boolean).join(' '));
   return `<a href="https://search.shopping.naver.com/book/search?query=${q}" target="_blank" rel="noopener">네이버 책</a><a href="https://www.aladin.co.kr/search/wsearchresult.aspx?SearchWord=${q}" target="_blank" rel="noopener">알라딘</a><a href="https://www.amazon.com/s?k=${q}&i=stripbooks" target="_blank" rel="noopener">Amazon</a>`}
 function searchPanelHTML(f){const rs=f.results;
   return `<div class="field"><div class="hbtns" style="flex-wrap:nowrap"><input type="search" id="f-q" data-ff="q" value="${esc(f.q)}" placeholder="제목, 저자, ISBN으로 검색" autocomplete="off" enterkeyhint="search" style="flex:1;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px"><button class="btn small" data-action="fsearch" ${f.searching?'disabled':''}>${f.searching?'찾는 중':'검색'}</button>${sampleImages?`<button class="btn act" data-action="fisbn" aria-label="바코드 사진" ${f.isbnBusy?'disabled':''}><svg viewBox="0 0 24 24"><path d="M4 6v12M7 6v12M10 6v12M14 6v12M17 6v12M20 6v12"/></svg></button>`:''}</div>
