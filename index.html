@@ -607,6 +607,7 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .skg:first-of-type{margin-top:0}
 .skins{grid-template-columns:repeat(4,1fr)!important;gap:6px!important}
 .skins button{font-size:10.5px!important;padding:5px 3px 7px!important;line-height:1.25}
+.dver{display:block;margin-top:4px;font-size:11px;opacity:.8;font-variant-numeric:tabular-nums}
 .lentin{display:block;width:100%;margin-top:8px;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px}
 .tile .fm.lentb{background:#C2410C!important;color:#fff!important;border-color:rgba(0,0,0,.2)}
 .dedit{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
@@ -639,6 +640,8 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 
 <script>
 const COLORS=['#7A2E3A','#2F5D50','#3D5A80','#A07C2C','#5B3F6B','#2A7F84','#8A4B2A','#4B5563'];
+/* app version: keep in step with the cache name in sw.js */
+const APP_VERSION='v74',APP_BUILD='웹앱';
 const STATUS={want:'읽고 싶은',reading:'읽는 중',done:'다 읽음',unread:'안 읽음'};
 const FORMAT={paper:'종이북',ebook:'이북',audio:'오디오북',app:'앱북'};
 const CAT_RENAME={Blinkist:'BookSummary'};
@@ -858,7 +861,7 @@ function dashHTML(){let open=false;try{open=localStorage.getItem('mybookshelf.da
   const bk=backupCardHTML();
   return `<section class="dash${open?' open':''}"><button class="dashh" data-action="dash" aria-expanded="${open}"><span class="dmini" style="--p:${Math.round(p*100)}%"></span><span class="dsum"><b>올해 ${doneThisYear().length} / ${S.settings.goal}권</b><i>${v}${u} / ${c.target}${u}</i><i>${st}일 연속</i></span>${bk&&!open?'<em class="dbk">백업 필요</em>':''}<span class="dchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></button>
     ${open?`<div class="dashb">${bk}${todayCardHTML()}${quoteCardHTML()}</div>`:''}</section>`}
-Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
+Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','앱 정보':'About','버전':'Version','웹앱':'Web app','아티팩트':'Artifact','아티팩트와 웹앱이 같은 버전이면 화면도 같아요.':'The artifact and the web app look the same when their versions match.','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
 function vShelf(){
   const all=list(),fs=S.fset,rs=S.rset,sq=S.sq.trim().toLowerCase();
   const f=fs.size?(fs.size===1?[...fs][0]:'multi'):'all';
@@ -1118,7 +1121,8 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
   ${accountHTML()}
   ${storageHTML()}
   ${dangerHTML()}
-  <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>`}
+  <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>
+  <div class="sec"><h2>앱 정보</h2><p style="margin:0;font-size:14px">버전 <b>${APP_VERSION}</b> · ${APP_BUILD}</p><p class="hint" style="margin:4px 0 0">아티팩트와 웹앱이 같은 버전이면 화면도 같아요.</p></div>`}
 let lastMain='';
 /* ---------- app bar & drawer ---------- */
 const IC={menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',back:'<path d="M15 5l-7 7 7 7"/>',shelf:'<path d="M4 4v16M8 6v14M12 4v16M16.5 5.5l3.5 14"/><path d="M2 20.5h20"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
@@ -1146,7 +1150,7 @@ function drawerHTML(){const fb=typeof FB!=='undefined'&&FB;
   ${it('imp','책 가져오기 (파일)','import','')}${it('exp','백업·내보내기','settings','sec-export')}
   <div class="dsep"></div>
   ${fb?it('user','계정','settings','sec-account'):''}${it('trash','데이터 삭제','settings','sec-danger','danger')}
-  <div class="dfoot">${esc(trText(S.syncMsg||''))}</div>`}
+  <div class="dfoot">${esc(trText(S.syncMsg||''))}<span class="dver">MyBookShelf ${APP_VERSION} · ${APP_BUILD}</span></div>`}
 function openDrawer(){const d=$('#drawer');d.innerHTML=tr(drawerHTML());d.classList.add('open');d.setAttribute('aria-hidden','false');$('#dback').classList.add('open');S.drawer=true}
 function closeDrawer(){$('#drawer').classList.remove('open');$('#drawer').setAttribute('aria-hidden','true');$('#dback').classList.remove('open');S.drawer=false}
 function renderMain(){
