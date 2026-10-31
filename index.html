@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyBookShelf</title>
-<link rel="manifest" href="manifest.webmanifest?v90">
+<link rel="manifest" href="manifest.webmanifest?b92">
 <meta name="theme-color" content="#2B2F6B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MyBookShelf">
-<link rel="apple-touch-icon" href="icon-180.png?v90">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v90">
+<link rel="apple-touch-icon" href="icon-180.png?b92">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?b92">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -626,6 +626,7 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .naverlink b{flex:none;width:24px;height:24px;border-radius:6px;background:#03C75A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}.naverlink span{flex:1;min-width:0}.naverlink small{display:block;font-size:12px;color:var(--muted)}.naverlink i{font-style:normal;color:#03C75A;font-weight:700}
 .borrowin .srct{display:flex!important;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.srct:last-of-type{border-bottom:0}
 .srct span{display:flex;flex-direction:column}.srct b{font-size:14px}.srct small{font-size:12px;color:var(--muted)}
+.pgnote{font-size:11px;color:var(--accent);font-weight:600;margin-left:4px}
 .lentin{flex:1 1 160px}
 .duel{display:inline-flex!important;align-items:center;gap:6px;margin:8px 0 0!important;font-size:13px;color:var(--muted)}
 .duel input{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:10px;padding:8px 10px;font-family:var(--sans)}
@@ -664,8 +665,8 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 
 <script>
 const COLORS=['#7A2E3A','#2F5D50','#3D5A80','#A07C2C','#5B3F6B','#2A7F84','#8A4B2A','#4B5563'];
-/* app version: keep in step with the cache name in sw.js */
-const APP_VERSION='v90',APP_BUILD='웹앱';
+/* version shown to people (major.minor.patch) + build number bumped on every file release; the build also names the sw.js cache */
+const APP_VERSION='1.0.0',APP_BUILD_NO=92,APP_DEV='Jessy Jun',APP_BUILD='웹앱';
 const STATUS={want:'읽고 싶은',reading:'읽는 중',done:'다 읽음',unread:'안 읽음'};
 const FORMAT={paper:'종이북',ebook:'이북',audio:'오디오북',app:'앱북'};
 const CAT_RENAME={Blinkist:'BookSummary'};
@@ -683,7 +684,7 @@ const EN_RX=[
  [/이미 서재에 있는 책 (\d+)권/g,'Already on your shelf: $1'],[/(\d+)권 추가/g,'Add $1'],[/, (\d+)권 합치기/g,', merge $1'],[/(\d+)권 가져오기/g,'Import $1'],
  [/(\d+)권을 새로 꽂았어요/g,'Added $1 new books'],[/, (\d+)권은 기존 기록에 합쳤어요/g,', merged $1 into existing records'],[/(\d+)권은 저장하지 못했어요\./g,'$1 could not be saved.'],
  [/책 정보를 읽는 중\.\.\. (\d+) \/ (\d+)/g,'Reading books... $1 / $2'],[/《(.*?)》 완독을 기록했어요/g,'Marked 《$1》 as finished'],[/《(.*?)》을 삭제했어요/g,'Deleted 《$1》'],
- [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/(\d{4})\.(\d\d)\.(\d\d) 추가/g,'Added $1.$2.$3'],[/반납 (\d{4})\.(\d\d)\.(\d\d)/g,'Due $1.$2.$3'],[/(\d{4})\.(\d\d)\.(\d\d) 시작/g,'Started $1.$2.$3'],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권의 표지·사진이 아직 책 데이터 안에 들어 있어요\. 저장소로 옮기면 앱을 열 때 받는 데이터가 크게 줄어요\./g,'$1 books still keep covers or photos inside their data. Moving them to storage greatly reduces what the app downloads on open.'],[/마지막 백업 (\d{4}-\d\d-\d\d)/g,'Last backup $1'],[/최근 오류 기록 (\d+)건/g,'Recent errors: $1'],[/일부\((\d+)권\)는 지우지 못했어요\. 다시 시도해 주세요/g,'$1 books could not be deleted. Try again'],[/(\d+)권은 미분류로 옮겼어요/g,'Moved $1 books to Uncategorized'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
+ [/(\d+)시간 (\d+)분/g,'$1h $2m'],[/(\d+)일 연속/g,'$1-day streak'],[/(\d+)\/(\d+)일/g,'$1/$2 days'],[/(\d+)일/g,'$1 days'],[/(\d+)분 읽었어요/g,'Read for $1 min'],[/(\d+)분/g,'$1 min'],[/독서 세션 (\d+)회, 총 /g,'$1 sessions, total '],[/\(빌드 (\d+)\)/g,'(build $1)'],[/ · 빌드 (\d+)/g,' · build $1'],[/(\d{4})\.(\d\d)\.(\d\d) 추가/g,'Added $1.$2.$3'],[/반납 (\d{4})\.(\d\d)\.(\d\d)/g,'Due $1.$2.$3'],[/(\d{4})\.(\d\d)\.(\d\d) 시작/g,'Started $1.$2.$3'],[/(\d+)권 선택/g,'$1 selected'],[/(\d+)권의 표지·사진이 아직 책 데이터 안에 들어 있어요\. 저장소로 옮기면 앱을 열 때 받는 데이터가 크게 줄어요\./g,'$1 books still keep covers or photos inside their data. Moving them to storage greatly reduces what the app downloads on open.'],[/마지막 백업 (\d{4}-\d\d-\d\d)/g,'Last backup $1'],[/최근 오류 기록 (\d+)건/g,'Recent errors: $1'],[/일부\((\d+)권\)는 지우지 못했어요\. 다시 시도해 주세요/g,'$1 books could not be deleted. Try again'],[/(\d+)권은 미분류로 옮겼어요/g,'Moved $1 books to Uncategorized'],[/(\d+)권을 바꿨어요/g,'Updated $1 books'],[/(\d+)권의 분류를 바꿨어요/g,'Changed the category of $1 books'],[/(\d+)번째 읽기를 시작했어요/g,'Started read number $1'],[/(\d+) → (\d+)쪽/g,'p.$1 → $2'],[/(\d+)줄/g,'$1 rows'],[/(\d+)권/g,(m,n)=>n==='1'?'1 book':n+' books'],[/\+10쪽/g,'+10 pages'],[/(\d+|\?)쪽/g,'$1 pages'],[/(\d{4})년/g,'$1'],[/(\d+)월/g,'$1']
 ];
 const EN_STR={
  '내 서재':'My Shelf','책 추가':'Add','가져오기':'Import','제목, 저자, 분류로 찾기':'Search title, author, category','전체':'All','읽는 중':'Reading','다 읽음':'Finished','읽고 싶은':'Want to read','소장':'Owned',
@@ -886,7 +887,7 @@ function dashHTML(){let open=false;try{open=localStorage.getItem('mybookshelf.da
   const bk=backupCardHTML();
   return `<section class="dash${open?' open':''}"><button class="dashh" data-action="dash" aria-expanded="${open}"><span class="dmini" style="--p:${Math.round(p*100)}%"></span><span class="dsum"><b>올해 ${doneThisYear().length} / ${S.settings.goal}권</b><i>${v}${u} / ${c.target}${u}</i><i>${st}일 연속</i></span>${bk&&!open?'<em class="dbk">백업 필요</em>':''}<span class="dchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></button>
     ${open?`<div class="dashb">${bk}${todayCardHTML()}${quoteCardHTML()}</div>`:''}</section>`}
-Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','국내 판본, 국내 표지':'Korean editions and covers','해외 책, 쪽수와 설명':'International books, pages and descriptions','옛 판본, 다양한 표지':'Older editions, more covers','네이버 책 링크':'Naver Books link','검색 결과 위에 네이버 책 검색 바로가기':'Shortcut to Naver Books above results','켜 둔 엔진을 동시에 검색해요. 한글로 찾으면 카카오, 영문으로 찾으면 Google 결과가 먼저 나와요.':'Searches all enabled engines at once. Korean queries list Kakao first, English queries Google first.','에서 찾아요. 설정에서 켜고 끌 수 있어요.':'. Turn engines on or off in Settings.','검색 엔진 없음':'No engine','국내':'Korean','해외':'International','에서 찾아요. 검색 엔진은 설정에서 바꿀 수 있어요.':'. Change engines in Settings.','국내 하나, 해외 하나를 함께 검색해요. 한글로 찾으면 국내 결과가, 영문으로 찾으면 해외 결과가 먼저 나와요.':'Searches one Korean and one international engine together. Korean queries list Korean results first, English queries international results first.','네이버 책은 앱에서 직접 검색할 수 없어서, 고르면 검색 결과 맨 위에 네이버 책 검색 링크가 나와요.':'Naver Books cannot be searched from the app, so choosing it puts a Naver Books search link at the top of results.','네이버 책에서 찾기':'Search Naver Books','찾는 책이 없나요?':'Not found?','직접 입력':'Enter manually','빌려준 사람 (예: 김OO)':'Lent to (e.g. a friend)','돌려받을 날':'Due back',"부터":' since','빌려옴':'Borrowed','빌린 곳 (예: 시립도서관, 김OO)':'Borrowed from (e.g. city library, a friend)','반납일':'Due','반납함':'Returned','반납함으로 표시했어요':'Marked as returned','오늘 반납':'Due today','책 검색':'Book search','카카오 책':'Kakao Books','네이버 책':'Naver Books',' + Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요. 검색 포털은 설정에서 바꿀 수 있어요.':' + Open Library, filling in cover, publisher, pages and ISBN. Change the portal in Settings.','선택한 포털과 Open Library를 항상 함께 검색하고, 결과가 적으면 다른 포털로 보완해요. 한글로 찾으면 국내판이 먼저 나와요.':'Searches the chosen portal together with Open Library and fills gaps from the other portal. Korean queries show Korean editions first.','네이버 책, 알라딘, Amazon은 검색 결과와 책 화면의 서점 링크로 바로 열 수 있어요.':'Naver Books, Aladin and Amazon open directly from the store links in results and book pages.','앱 정보':'About','버전':'Version','웹앱':'Web app','아티팩트':'Artifact','아티팩트와 웹앱이 같은 버전이면 화면도 같아요.':'The artifact and the web app look the same when their versions match.','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
+Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','개발자':'Developer','버전은 기능이 바뀔 때, 빌드는 파일을 새로 올릴 때마다 올라가요. 아티팩트와 웹앱의 빌드가 같으면 화면도 같아요.':'The version changes with features, the build with every file release. Same build means the same screens in the artifact and the web app.','‹ 검색 결과로':'‹ Back to results','쪽수 찾는 중...':'Finding pages...','ISBN으로 자동 입력':'Filled from ISBN','국내 판본, 국내 표지':'Korean editions and covers','해외 책, 쪽수와 설명':'International books, pages and descriptions','옛 판본, 다양한 표지':'Older editions, more covers','네이버 책 링크':'Naver Books link','검색 결과 위에 네이버 책 검색 바로가기':'Shortcut to Naver Books above results','켜 둔 엔진을 동시에 검색해요. 한글로 찾으면 카카오, 영문으로 찾으면 Google 결과가 먼저 나와요.':'Searches all enabled engines at once. Korean queries list Kakao first, English queries Google first.','에서 찾아요. 설정에서 켜고 끌 수 있어요.':'. Turn engines on or off in Settings.','검색 엔진 없음':'No engine','국내':'Korean','해외':'International','에서 찾아요. 검색 엔진은 설정에서 바꿀 수 있어요.':'. Change engines in Settings.','국내 하나, 해외 하나를 함께 검색해요. 한글로 찾으면 국내 결과가, 영문으로 찾으면 해외 결과가 먼저 나와요.':'Searches one Korean and one international engine together. Korean queries list Korean results first, English queries international results first.','네이버 책은 앱에서 직접 검색할 수 없어서, 고르면 검색 결과 맨 위에 네이버 책 검색 링크가 나와요.':'Naver Books cannot be searched from the app, so choosing it puts a Naver Books search link at the top of results.','네이버 책에서 찾기':'Search Naver Books','찾는 책이 없나요?':'Not found?','직접 입력':'Enter manually','빌려준 사람 (예: 김OO)':'Lent to (e.g. a friend)','돌려받을 날':'Due back',"부터":' since','빌려옴':'Borrowed','빌린 곳 (예: 시립도서관, 김OO)':'Borrowed from (e.g. city library, a friend)','반납일':'Due','반납함':'Returned','반납함으로 표시했어요':'Marked as returned','오늘 반납':'Due today','책 검색':'Book search','카카오 책':'Kakao Books','네이버 책':'Naver Books',' + Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요. 검색 포털은 설정에서 바꿀 수 있어요.':' + Open Library, filling in cover, publisher, pages and ISBN. Change the portal in Settings.','선택한 포털과 Open Library를 항상 함께 검색하고, 결과가 적으면 다른 포털로 보완해요. 한글로 찾으면 국내판이 먼저 나와요.':'Searches the chosen portal together with Open Library and fills gaps from the other portal. Korean queries show Korean editions first.','네이버 책, 알라딘, Amazon은 검색 결과와 책 화면의 서점 링크로 바로 열 수 있어요.':'Naver Books, Aladin and Amazon open directly from the store links in results and book pages.','앱 정보':'About','버전':'Version','웹앱':'Web app','아티팩트':'Artifact','아티팩트와 웹앱이 같은 버전이면 화면도 같아요.':'The artifact and the web app look the same when their versions match.','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
 function vShelf(){
   const all=list(),fs=S.fset,rs=S.rset,sq=S.sq.trim().toLowerCase();
   const f=fs.size?(fs.size===1?[...fs][0]:'multi'):'all';
@@ -1151,7 +1152,7 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
     <label class="toggle srct"><input type="checkbox" data-action="srctoggle" data-k="naver" ${naverOn()?'checked':''}><span><b>네이버 책 링크</b><small>검색 결과 위에 네이버 책 검색 바로가기</small></span></label>
     <p class="hint">켜 둔 엔진을 동시에 검색해요. 한글로 찾으면 카카오, 영문으로 찾으면 Google 결과가 먼저 나와요.</p></div>
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>
-  <div class="sec"><h2>앱 정보</h2><p style="margin:0;font-size:14px">버전 <b>${APP_VERSION}</b> · ${APP_BUILD}</p><p class="hint" style="margin:4px 0 0">아티팩트와 웹앱이 같은 버전이면 화면도 같아요.</p></div>`}
+  <div class="sec"><h2>앱 정보</h2><p style="margin:0;font-size:14px">버전 <b>${APP_VERSION}</b> · 빌드 ${APP_BUILD_NO} · ${APP_BUILD}</p><p style="margin:4px 0 0;font-size:14px">개발자 <b>${APP_DEV}</b></p><p class="hint" style="margin:4px 0 0">버전은 기능이 바뀔 때, 빌드는 파일을 새로 올릴 때마다 올라가요. 아티팩트와 웹앱의 빌드가 같으면 화면도 같아요.</p></div>`}
 let lastMain='';
 /* ---------- app bar & drawer ---------- */
 const IC={menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',back:'<path d="M15 5l-7 7 7 7"/>',shelf:'<path d="M4 4v16M8 6v14M12 4v16M16.5 5.5l3.5 14"/><path d="M2 20.5h20"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
@@ -1179,7 +1180,7 @@ function drawerHTML(){const fb=typeof FB!=='undefined'&&FB;
   ${it('imp','책 가져오기 (파일)','import','')}${it('exp','백업·내보내기','settings','sec-export')}
   <div class="dsep"></div>
   ${fb?it('user','계정','settings','sec-account'):''}${it('trash','데이터 삭제','settings','sec-danger','danger')}
-  <div class="dfoot">${esc(trText(S.syncMsg||''))}<span class="dver">MyBookShelf ${APP_VERSION} · ${APP_BUILD}</span></div>`}
+  <div class="dfoot">${esc(trText(S.syncMsg||''))}<span class="dver">MyBookShelf ${APP_VERSION} (빌드 ${APP_BUILD_NO}) · ${APP_BUILD}<br>개발자 ${APP_DEV}</span></div>`}
 function openDrawer(){const d=$('#drawer');d.innerHTML=tr(drawerHTML());d.classList.add('open');d.setAttribute('aria-hidden','false');$('#dback').classList.add('open');S.drawer=true}
 function closeDrawer(){$('#drawer').classList.remove('open');$('#drawer').setAttribute('aria-hidden','true');$('#dback').classList.remove('open');S.drawer=false}
 function renderMain(){
@@ -1253,7 +1254,7 @@ function renderForm(){const f=S.form;
   <div class="field"><label for="f-isbn">ISBN <span style="font-size:12px">(13자리, 바코드 아래 숫자)</span></label><div class="hbtns" style="align-items:center"><input type="text" id="f-isbn" data-ff="isbn" value="${esc(f.isbn)}" inputmode="numeric" autocomplete="off" placeholder="978..." style="flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px">${sampleImages?`<button class="btn ghost small" data-action="fisbn" ${f.isbnBusy?'disabled':''}>${f.isbnBusy?'읽는 중...':'바코드 사진'}</button>`:''}</div>${f.isbn&&!isbnOk(f.isbn)?'<div class="err">ISBN 검사 숫자가 맞지 않아요. 다시 확인해 주세요</div>':''}</div>
   <div class="field"><label for="f-cat">분류</label><select id="f-cat" data-ff="category" class="sel">${(()=>{const cs=allCats();if(f.category&&!cs.includes(f.category))cs.push(f.category);return `<option value="" ${!f.category&&!f.catNewOn?'selected':''}>미분류</option>`+cs.map(c=>`<option value="${esc(c)}" ${f.category===c?'selected':''}>${esc(c)}</option>`).join('')+`<option value="__new" ${f.catNewOn?'selected':''}>+ 새 분류 추가</option>`})()}</select>
     ${f.catNewOn?`<input type="text" id="f-catnew" data-ff="catNew" value="${esc(f.catNew||'')}" placeholder="새 분류 이름" autocomplete="off" style="margin-top:8px">`:''}</div>
-  <div class="field"><label for="f-pages">전체 쪽수</label><input type="number" id="f-pages" data-ff="pages" min="1" value="${esc(f.pages)}" inputmode="numeric"></div>
+  <div class="field"><label for="f-pages">전체 쪽수${f.pagesBusy?' <span class="pgnote">쪽수 찾는 중...</span>':f.pagesAuto?' <span class="pgnote">ISBN으로 자동 입력</span>':''}</label><input type="number" id="f-pages" data-ff="pages" min="1" value="${esc(f.pages)}" inputmode="numeric"></div>
   <div class="field"><label>책 유형 <span style="font-size:12px">(선택, 한 번 더 누르면 해제)</span></label><div class="seg" style="grid-template-columns:repeat(4,1fr)">${Object.entries(FORMAT).map(([k,l])=>`<button data-action="fformat" data-v="${k}" aria-pressed="${f.format===k}">${l}</button>`).join('')}</div></div>
   ${f.id?formOptsHTML(f):''}
   ${f.id?'':`<div class="field"><label>추가할 곳</label><div class="seg" style="grid-template-columns:1fr 1fr"><button data-action="fdest" data-v="want" aria-pressed="${f.status==='want'}">Wishlist</button><button data-action="fdest" data-v="shelf" aria-pressed="${f.status!=='want'}">Shelf</button></div>
@@ -1264,7 +1265,7 @@ function renderForm(){const f=S.form;
         <p class="hint" style="margin:6px 0 0">${f.cover?'표지 사진이 서재와 상세 화면에 보여요.':'표지를 찍거나 저장한 이미지를 올리세요. 없으면 왼쪽처럼 책 색 위에 제목으로 표시돼요.'}</p></div></div></div>
   <div class="field"><label>책 색</label><div class="row" style="justify-content:flex-start;gap:10px"><i class="catdot" style="--c:${catColor(formCatPreview(f))}"></i><span style="font-size:14px">${formCatPreview(f)?esc(formCatPreview(f)):'미분류'}</span></div>
     <p class="hint">책 색은 분류를 따라요. 분류별 색은 설정의 분류 관리에서 순서대로 정해지고, 목표 탭 그래프와 문구 카드에 쓰여요.</p></div>
-  <div class="mact"><button class="btn ghost" data-action="fcancel">취소</button><button class="btn" data-action="fsave">${f.id?'변경 저장':'책 추가'}</button></div>`}`)}
+  <div class="mact">${f.picked&&!f.id&&f.results?'<button class="btn ghost" data-action="fback" style="margin-right:auto">‹ 검색 결과로</button>':''}<button class="btn ghost" data-action="fcancel">취소</button><button class="btn" data-action="fsave">${f.id?'변경 저장':'책 추가'}</button></div>`}`)}
 /* new books on the Shelf are owned by default, until the user sets it by hand */
 function autoOwned(f){if(f.id||f.ownedTouched)return;f.owned=f.status!=='want'&&!f.borrowed}
 const daysTo=d=>d?Math.round((new Date(d+'T00:00:00')-new Date(today()+'T00:00:00'))/864e5):99;
@@ -1329,6 +1330,11 @@ const SEARCH_SRC={kakao:'카카오 책',naver:'네이버 책',openlib:'Open Libr
 const srcOn=k=>!(S.settings.srcOff||[]).includes(k);
 const naverOn=()=>S.settings.naverLink!==false;
 const naverUrl=q=>'https://search.shopping.naver.com/book/search?query='+encodeURIComponent(q);
+/* Kakao gives no page count: look the ISBN up in Google Books, then Open Library */
+async function fillPages(f,isbn){f.pagesBusy=true;renderForm();let n=0;
+  try{const g=await searchGoogle('isbn:'+isbn);n=(g.find(r=>r.pages)||{}).pages||0}catch(e){}
+  if(!n){try{const o=await searchOpenLib(isbn,true);n=(o.find(r=>r.pages)||{}).pages||0}catch(e){}}
+  if(S.form!==f)return;f.pagesBusy=false;if(n&&!f.pages){f.pages=n;f.pagesAuto=true}renderForm()}
 async function bookSearch(){const f=S.form;if(!f)return;const q=(f.q||'').trim();if(!q||f.searching)return;f.searching=true;f.results=null;renderForm();
   const isb=cleanIsbn(q);const isIsbn=/^[\d\-\sXx]+$/.test(q)&&(isb.length===13||isb.length===10)&&isbnOk(isb);let res=[];
   const ko=!isIsbn&&/[가-힣]/.test(q);
@@ -1491,14 +1497,15 @@ document.addEventListener('click',e=>{
     case 'fcoverdel':S.form.cover='';renderForm();break;
     case 'fsearch':bookSearch();break;
     case 'fmode':{const m=t.dataset.m;if(m==='file'){closeForm();openImport();break}S.form.mode=m;renderForm();setTimeout(()=>(m==='search'?$('#f-q'):$('#f-title'))?.focus(),30);break}
-    case 'fpick':{const r=S.form.results[+t.dataset.i];Object.assign(S.form,{title:r.title||'',author:r.author||'',pages:r.pages||'',publisher:r.publisher||S.form.publisher,isbn:r.isbn||S.form.isbn,cover:r.cover||S.form.cover,mode:'manual',picked:r.source});renderForm();$('#mbox').scrollTop=0;break}
+    case 'fpick':{const r=S.form.results[+t.dataset.i];if(!S.form.blank)S.form.blank={title:S.form.title,author:S.form.author,pages:S.form.pages,publisher:S.form.publisher,isbn:S.form.isbn,cover:S.form.cover};Object.assign(S.form,{title:r.title||'',author:r.author||'',pages:r.pages||'',publisher:r.publisher||S.form.publisher,isbn:r.isbn||S.form.isbn,cover:r.cover||S.form.cover,mode:'manual',picked:r.source});renderForm();$('#mbox').scrollTop=0;if(!r.pages&&r.isbn)fillPages(S.form,r.isbn);break}
+    case 'fback':{const f=S.form;Object.assign(f,f.blank||{},{mode:'search',picked:'',pagesBusy:false,pagesAuto:false});f.blank=null;renderForm();break}
     case 'fdest':{const v=t.dataset.v;S.form.status=v==='want'?'want':(S.form.status==='want'?'unread':S.form.status);autoOwned(S.form);renderForm();break}
     case 'unborrow':{const b=S.books[S.openId];if(b){b.borrowed=false;b.borrowFrom='';b.borrowDue='';b.borrowAt='';b.returnedAt=today();putBook(b);renderAll();toast(trText('반납함으로 표시했어요'))}break}
     case 'unlend':{const b=S.books[S.openId];if(b){b.lent=false;b.lentTo='';b.lentDue='';b.lentAt='';putBook(b);renderAll();toast(trText('돌려받음으로 표시했어요'))}break}
     case 'fopt':{const k=t.dataset.k;S.form[k]=!S.form[k];if(k==='owned')S.form.ownedTouched=true;if(k==='borrowed')autoOwned(S.form);renderForm();if(LOAN[k]&&S.form[k])setTimeout(()=>$(`.loanin.${LOAN[k].cls} input[type=text]`)?.focus(),30);break}
     case 'fstatus':S.form.status=t.dataset.s;renderForm();break;
     case 'fcolor':S.form.color=t.dataset.c;renderForm();break;
-    case 'fcancel':closeForm();break;
+    case 'fcancel':if(S.form&&S.form.picked&&!S.form.id&&S.form.results){const f=S.form;Object.assign(f,f.blank||{},{mode:'search',picked:'',pagesBusy:false,pagesAuto:false});f.blank=null;renderForm();break}closeForm();break;
     case 'fsave':saveForm();break;
   }
 });
