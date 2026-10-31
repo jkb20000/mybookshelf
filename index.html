@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyBookShelf</title>
-<link rel="manifest" href="manifest.webmanifest?v86">
+<link rel="manifest" href="manifest.webmanifest?v90">
 <meta name="theme-color" content="#2B2F6B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MyBookShelf">
-<link rel="apple-touch-icon" href="icon-180.png?v86">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v86">
+<link rel="apple-touch-icon" href="icon-180.png?v90">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v90">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -619,7 +619,14 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 .lent{--lc:#C2410C}.borrow{--lc:#2563EB}
 .tile .fm.loanb{background:var(--lc)!important;color:#fff!important;border-color:rgba(0,0,0,.2)}
 .lentnote b,.lentnote em,.lentnote .linkbtn{white-space:nowrap;flex:none}.lentnote .ln{flex:1;min-width:0}
-.borrowin{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.borrowin .lentin{flex:1 1 160px}
+.borrowin{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.manualcta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 4px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;background:var(--surface-2)}
+.manualcta>span{font-size:13px;color:var(--muted)}
+.manualcta .btn.act{gap:6px}.manualcta .chev{width:14px!important;height:14px!important;margin-left:2px}
+.naverlink{display:flex;align-items:center;gap:10px;margin:2px 0 8px;padding:10px 12px;border-radius:12px;border:1.5px solid #03C75A;background:color-mix(in srgb,#03C75A 8%,var(--surface));color:var(--ink);text-decoration:none;font-size:14px}
+.naverlink b{flex:none;width:24px;height:24px;border-radius:6px;background:#03C75A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}.naverlink span{flex:1;min-width:0}.naverlink small{display:block;font-size:12px;color:var(--muted)}.naverlink i{font-style:normal;color:#03C75A;font-weight:700}
+.borrowin .srct{display:flex!important;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.srct:last-of-type{border-bottom:0}
+.srct span{display:flex;flex-direction:column}.srct b{font-size:14px}.srct small{font-size:12px;color:var(--muted)}
+.lentin{flex:1 1 160px}
 .duel{display:inline-flex!important;align-items:center;gap:6px;margin:8px 0 0!important;font-size:13px;color:var(--muted)}
 .duel input{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:10px;padding:8px 10px;font-family:var(--sans)}
 .borrownote{background:color-mix(in srgb,#2563EB 12%,var(--surface))!important}.borrownote b{color:#2563EB!important}.borrownote em{font-style:normal;font-weight:600}
@@ -658,7 +665,7 @@ textarea.note{display:block;width:100%;min-height:180px;border:1px solid var(--l
 <script>
 const COLORS=['#7A2E3A','#2F5D50','#3D5A80','#A07C2C','#5B3F6B','#2A7F84','#8A4B2A','#4B5563'];
 /* app version: keep in step with the cache name in sw.js */
-const APP_VERSION='v86',APP_BUILD='웹앱';
+const APP_VERSION='v90',APP_BUILD='웹앱';
 const STATUS={want:'읽고 싶은',reading:'읽는 중',done:'다 읽음',unread:'안 읽음'};
 const FORMAT={paper:'종이북',ebook:'이북',audio:'오디오북',app:'앱북'};
 const CAT_RENAME={Blinkist:'BookSummary'};
@@ -879,7 +886,7 @@ function dashHTML(){let open=false;try{open=localStorage.getItem('mybookshelf.da
   const bk=backupCardHTML();
   return `<section class="dash${open?' open':''}"><button class="dashh" data-action="dash" aria-expanded="${open}"><span class="dmini" style="--p:${Math.round(p*100)}%"></span><span class="dsum"><b>올해 ${doneThisYear().length} / ${S.settings.goal}권</b><i>${v}${u} / ${c.target}${u}</i><i>${st}일 연속</i></span>${bk&&!open?'<em class="dbk">백업 필요</em>':''}<span class="dchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></button>
     ${open?`<div class="dashb">${bk}${todayCardHTML()}${quoteCardHTML()}</div>`:''}</section>`}
-Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','빌려준 사람 (예: 김OO)':'Lent to (e.g. a friend)','돌려받을 날':'Due back',"부터":' since','빌려옴':'Borrowed','빌린 곳 (예: 시립도서관, 김OO)':'Borrowed from (e.g. city library, a friend)','반납일':'Due','반납함':'Returned','반납함으로 표시했어요':'Marked as returned','오늘 반납':'Due today','책 검색':'Book search','카카오 책':'Kakao Books','네이버 책':'Naver Books',' + Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요. 검색 포털은 설정에서 바꿀 수 있어요.':' + Open Library, filling in cover, publisher, pages and ISBN. Change the portal in Settings.','선택한 포털과 Open Library를 항상 함께 검색하고, 결과가 적으면 다른 포털로 보완해요. 한글로 찾으면 국내판이 먼저 나와요.':'Searches the chosen portal together with Open Library and fills gaps from the other portal. Korean queries show Korean editions first.','네이버 책, 알라딘, Amazon은 검색 결과와 책 화면의 서점 링크로 바로 열 수 있어요.':'Naver Books, Aladin and Amazon open directly from the store links in results and book pages.','앱 정보':'About','버전':'Version','웹앱':'Web app','아티팩트':'Artifact','아티팩트와 웹앱이 같은 버전이면 화면도 같아요.':'The artifact and the web app look the same when their versions match.','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
+Object.assign(EN_STR,{'백업 필요':'Backup due','▶ 읽기':'▶ Read','국내 판본, 국내 표지':'Korean editions and covers','해외 책, 쪽수와 설명':'International books, pages and descriptions','옛 판본, 다양한 표지':'Older editions, more covers','네이버 책 링크':'Naver Books link','검색 결과 위에 네이버 책 검색 바로가기':'Shortcut to Naver Books above results','켜 둔 엔진을 동시에 검색해요. 한글로 찾으면 카카오, 영문으로 찾으면 Google 결과가 먼저 나와요.':'Searches all enabled engines at once. Korean queries list Kakao first, English queries Google first.','에서 찾아요. 설정에서 켜고 끌 수 있어요.':'. Turn engines on or off in Settings.','검색 엔진 없음':'No engine','국내':'Korean','해외':'International','에서 찾아요. 검색 엔진은 설정에서 바꿀 수 있어요.':'. Change engines in Settings.','국내 하나, 해외 하나를 함께 검색해요. 한글로 찾으면 국내 결과가, 영문으로 찾으면 해외 결과가 먼저 나와요.':'Searches one Korean and one international engine together. Korean queries list Korean results first, English queries international results first.','네이버 책은 앱에서 직접 검색할 수 없어서, 고르면 검색 결과 맨 위에 네이버 책 검색 링크가 나와요.':'Naver Books cannot be searched from the app, so choosing it puts a Naver Books search link at the top of results.','네이버 책에서 찾기':'Search Naver Books','찾는 책이 없나요?':'Not found?','직접 입력':'Enter manually','빌려준 사람 (예: 김OO)':'Lent to (e.g. a friend)','돌려받을 날':'Due back',"부터":' since','빌려옴':'Borrowed','빌린 곳 (예: 시립도서관, 김OO)':'Borrowed from (e.g. city library, a friend)','반납일':'Due','반납함':'Returned','반납함으로 표시했어요':'Marked as returned','오늘 반납':'Due today','책 검색':'Book search','카카오 책':'Kakao Books','네이버 책':'Naver Books',' + Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요. 검색 포털은 설정에서 바꿀 수 있어요.':' + Open Library, filling in cover, publisher, pages and ISBN. Change the portal in Settings.','선택한 포털과 Open Library를 항상 함께 검색하고, 결과가 적으면 다른 포털로 보완해요. 한글로 찾으면 국내판이 먼저 나와요.':'Searches the chosen portal together with Open Library and fills gaps from the other portal. Korean queries show Korean editions first.','네이버 책, 알라딘, Amazon은 검색 결과와 책 화면의 서점 링크로 바로 열 수 있어요.':'Naver Books, Aladin and Amazon open directly from the store links in results and book pages.','앱 정보':'About','버전':'Version','웹앱':'Web app','아티팩트':'Artifact','아티팩트와 웹앱이 같은 버전이면 화면도 같아요.':'The artifact and the web app look the same when their versions match.','체리 우드':'Cherry wood','자작나무':'Birch','와인 셀러':'Wine cellar','나무 서재':'Wood','밝은 중성':'Light neutral','어두운 서재':'Dark','햇살 열람실':'Sunlit room','클래식 서재':'Classic study','모던 북카페':'Book café','브리티시 서재':'British library','메뉴로':'Menu','뒤로':'Back','요약본':'Summary','빌려줌':'Lent','돌려받음':'Returned','돌려받음으로 표시했어요':'Marked as returned','누구에게 빌려줬나요? (이름, 날짜 등 메모)':'Lent to whom? (name, date, notes)','추가할 곳':'Add to','옵션':'Options','(여러 개 선택 가능)':'(select any)','▶ 계속 읽기':'▶ Resume','시작일 추가':'Add start date','시작일':'Started','완독일':'Finished','날짜를 저장했어요':'Date saved','등록':'Shelve','안 읽음':'Unread','서재에 등록했어요':'Added to your shelf','읽는 중에 추가했어요':'Added to Reading','열기':'Open','Summary (요약본, 북 서머리)':'Summary (book summary)'});
 function vShelf(){
   const all=list(),fs=S.fset,rs=S.rset,sq=S.sq.trim().toLowerCase();
   const f=fs.size?(fs.size===1?[...fs][0]:'multi'):'all';
@@ -1139,8 +1146,10 @@ function vSettings(){return `<header class="top"><div><h1>설정</h1></div></hea
   ${accountHTML()}
   ${storageHTML()}
   ${dangerHTML()}
-  <div class="sec" id="sec-search"><h2>책 검색</h2><div class="seg" style="grid-template-columns:1fr 1fr">${['kakao','google'].map(k=>`<button data-action="searchsrc" data-k="${k}" aria-pressed="${searchSrc()===k}">${SEARCH_SRC[k]}</button>`).join('')}</div>
-    <p class="hint">선택한 포털과 Open Library를 항상 함께 검색하고, 결과가 적으면 다른 포털로 보완해요. 한글로 찾으면 국내판이 먼저 나와요.</p><p class="hint">네이버 책, 알라딘, Amazon은 검색 결과와 책 화면의 서점 링크로 바로 열 수 있어요.</p></div>
+  <div class="sec" id="sec-search"><h2>책 검색</h2>
+    ${[['kakao','국내 판본, 국내 표지'],['google','해외 책, 쪽수와 설명'],['openlib','옛 판본, 다양한 표지']].map(([k,d])=>`<label class="toggle srct"><input type="checkbox" data-action="srctoggle" data-k="${k}" ${srcOn(k)?'checked':''}><span><b>${SEARCH_SRC[k]}</b><small>${d}</small></span></label>`).join('')}
+    <label class="toggle srct"><input type="checkbox" data-action="srctoggle" data-k="naver" ${naverOn()?'checked':''}><span><b>네이버 책 링크</b><small>검색 결과 위에 네이버 책 검색 바로가기</small></span></label>
+    <p class="hint">켜 둔 엔진을 동시에 검색해요. 한글로 찾으면 카카오, 영문으로 찾으면 Google 결과가 먼저 나와요.</p></div>
   <div class="sec"><h2>저장 위치</h2><p style="margin:0;font-size:14px">${S.syncMsg||''}</p></div>
   <div class="sec"><h2>앱 정보</h2><p style="margin:0;font-size:14px">버전 <b>${APP_VERSION}</b> · ${APP_BUILD}</p><p class="hint" style="margin:4px 0 0">아티팩트와 웹앱이 같은 버전이면 화면도 같아요.</p></div>`}
 let lastMain='';
@@ -1298,7 +1307,7 @@ async function searchKakao(q,isIsbn){const c=new AbortController();const t=setTi
     if(!r.ok)throw new Error('http '+r.status);const j=await r.json();
     return (j.documents||[]).map(d=>{const ids=String(d.isbn||'').split(/\s+/).filter(Boolean);const isbn=ids.find(x=>x.length===13&&isbnOk(x))||ids.find(x=>isbnOk(x))||'';
       return {title:d.title||'',author:(d.authors||[]).join(', '),translator:(d.translators||[]).join(', '),publisher:d.publisher||'',year:(d.datetime||'').slice(0,4),pages:0,isbn,
-        cover:httpsify(d.thumbnail||'')||(isbn?`https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg?default=false`:''),source:'Kakao 책',link:httpsify(d.url||'')}}).filter(r=>r.title)}
+        cover:httpsify(d.thumbnail||'')||(isbn?`https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg?default=false`:''),source:'카카오 책',link:httpsify(d.url||'')}}).filter(r=>r.title)}
   finally{clearTimeout(t)}}
 async function searchGoogle(q,lang){const j=await fetchJSON('https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(q)+'&maxResults=10&printType=books'+(lang?'&langRestrict='+lang:''));
   return (j.items||[]).map(it=>{const v=it.volumeInfo||{};const ids=v.industryIdentifiers||[];const i13=(ids.find(x=>x.type==='ISBN_13')||{}).identifier||'';const i10=(ids.find(x=>x.type==='ISBN_10')||{}).identifier||'';
@@ -1315,31 +1324,36 @@ async function claudeSearch(q){const cats=[...new Set(list().map(b=>b.category).
 실제로 존재한다고 확신하는 책만 최대 5권 골라 JSON 배열로만 답하세요. 각 항목: {"title":"정식 제목(부제 제외)","author":"저자","publisher":"출판사 또는 null","year":출판연도 숫자 또는 null,"pages":확신할 때만 쪽수 숫자 아니면 null}.
 ${lang()==='en'?'제목과 저자는 영어로 쓰세요.':'한국어 번역서는 한국어 제목과 한국어 표기 저자명을 쓰세요.'} 확실하지 않은 책은 넣지 말고, 전혀 모르면 빈 배열 []을 답하세요.`,{modelTier:'default',cache:false});
   return (Array.isArray(j)?j:[]).filter(r=>r&&r.title).slice(0,5).map(r=>({title:r.title,author:r.author||'',publisher:r.publisher||'',year:r.year?String(r.year):'',pages:+r.pages||0,isbn:'',cover:'',source:'Claude 지식',link:''}))}
-const SEARCH_SRC={kakao:'카카오 책',google:'Google Books',naver:'네이버 책'};
-const searchSrc=()=>S.settings.searchSrc==='google'?'google':'kakao';
+const SEARCH_SRC={kakao:'카카오 책',naver:'네이버 책',openlib:'Open Library',google:'Google Books'};
+/* three engines, each switchable in Settings (all on by default); Naver Books is only a link */
+const srcOn=k=>!(S.settings.srcOff||[]).includes(k);
+const naverOn=()=>S.settings.naverLink!==false;
+const naverUrl=q=>'https://search.shopping.naver.com/book/search?query='+encodeURIComponent(q);
 async function bookSearch(){const f=S.form;if(!f)return;const q=(f.q||'').trim();if(!q||f.searching)return;f.searching=true;f.results=null;renderForm();
   const isb=cleanIsbn(q);const isIsbn=/^[\d\-\sXx]+$/.test(q)&&(isb.length===13||isb.length===10)&&isbnOk(isb);let res=[];
-  /* the portal chosen in Settings (Kakao or Google) plus Open Library, always together; the other portal only fills in when results are thin */
-  const ko=!isIsbn&&/[\uAC00-\uD7A3]/.test(q),src=searchSrc();
-  const run=k=>(k==='kakao'?searchKakao(isIsbn?isb:q,isIsbn):searchGoogle(isIsbn?'isbn:'+isb:q,ko?'ko':'')).catch(e=>{logError('search-'+k,e.message);return []});
-  const ol=searchOpenLib(isIsbn?isb:q,isIsbn).catch(e=>{logError('search-openlib',e.message);return []});
-  const [pr,olr]=await Promise.all([run(src),ol]);res=mergeRes(pr,olr);
-  if(res.length<3){res=mergeRes(res,await run(src==='kakao'?'google':'kakao'))}
-  if(ko){const h=r=>/[\uAC00-\uD7A3]/.test(r.title+r.author)?0:1;res=res.map((r,i)=>[r,i]).sort((a,b)=>h(a[0])-h(b[0])||a[1]-b[1]).map(x=>x[0])}
+  const ko=!isIsbn&&/[가-힣]/.test(q);
+  const go=(k,fn)=>srcOn(k)?fn().catch(e=>{logError('search-'+k,e.message);return []}):Promise.resolve([]);
+  const [kk,gg,oo]=await Promise.all([go('kakao',()=>searchKakao(isIsbn?isb:q,isIsbn)),go('google',()=>searchGoogle(isIsbn?'isbn:'+isb:q,ko?'ko':'')),go('openlib',()=>searchOpenLib(isIsbn?isb:q,isIsbn))]);
+  /* Korean or ISBN query: Kakao 8, Google 4, Open Library 2; English query: Google 8, Kakao 4, Open Library 2; then the rest */
+  /* Korean query: within Google and Open Library lists, Korean titles go first */
+  const isK=r=>/[가-힣]/.test(r.title+r.author);const hk=l=>ko?[...l.filter(isK),...l.filter(r=>!isK(r))]:l;
+  const order=(ko||isIsbn)?[[kk,8],[hk(gg),4],[hk(oo),2]]:[[gg,8],[kk,4],[oo,2]];
+  for(const [l,n] of order)res=mergeRes(res,l.slice(0,n));for(const [l,n] of order)res=mergeRes(res,l.slice(n));
   if(!res.length&&sample){try{res=await claudeSearch(q)}catch(e){aiFail(e)}}
-  if(S.form!==f)return;f.results=res.slice(0,10);f.searching=false;renderForm()}
+  if(S.form!==f)return;f.results=res.slice(0,14);f.searchedQ=q;f.searching=false;renderForm()}
 /* search stores by title + first author: the ISBN from Google Books/Open Library is often an edition the store does not carry */
 function storeLinks(r){const au=String(r.author||'').split(/[,;·]| and | & /)[0].trim();const q=encodeURIComponent([String(r.title||'').split(/[:(]/)[0].trim(),au].filter(Boolean).join(' '));
   return `<a href="https://search.shopping.naver.com/book/search?query=${q}" target="_blank" rel="noopener">네이버 책</a><a href="https://www.aladin.co.kr/search/wsearchresult.aspx?SearchWord=${q}" target="_blank" rel="noopener">알라딘</a><a href="https://www.amazon.com/s?k=${q}&i=stripbooks" target="_blank" rel="noopener">Amazon</a>`}
-function searchPanelHTML(f){const rs=f.results;
+function searchPanelHTML(f){const rs=f.results;const nv=naverOn()&&f.searchedQ&&!f.searching?`<a class="naverlink" href="${naverUrl(f.searchedQ)}" target="_blank" rel="noopener"><b>N</b><span>네이버 책에서 찾기<small>${esc(f.searchedQ)}</small></span><i>↗</i></a>`:'';
   return `<div class="field"><div class="hbtns" style="flex-wrap:nowrap"><input type="search" id="f-q" data-ff="q" value="${esc(f.q)}" placeholder="제목, 저자, ISBN으로 검색" autocomplete="off" enterkeyhint="search" style="flex:1;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px"><button class="btn small" data-action="fsearch" ${f.searching?'disabled':''}>${f.searching?'찾는 중':'검색'}</button>${sampleImages?`<button class="btn act" data-action="fisbn" aria-label="바코드 사진" ${f.isbnBusy?'disabled':''}><svg viewBox="0 0 24 24"><path d="M4 6v12M7 6v12M10 6v12M14 6v12M17 6v12M20 6v12"/></svg></button>`:''}</div>
-    <p class="hint" style="margin:6px 2px 0">${SEARCH_SRC[searchSrc()]} + Open Library에서 찾아 표지, 출판사, 쪽수, ISBN까지 채워요. 검색 포털은 설정에서 바꿀 수 있어요.</p></div>
+    <p class="hint" style="margin:6px 2px 0">${['kakao','google','openlib'].filter(srcOn).map(k=>SEARCH_SRC[k]).join(' + ')||'검색 엔진 없음'}에서 찾아요. 설정에서 켜고 끌 수 있어요.</p></div>
   ${f.searching?'<p class="hint" style="text-align:center;padding:14px 0">찾는 중...</p>':''}
-  ${rs?rs.length?`<div class="sres">${rs.map((r,i)=>`<div class="srow2"><button class="sthumb" data-action="fpick" data-i="${i}" style="--c:${COLORS[hash(r.title)%COLORS.length]}" aria-label="${esc(r.title)} 선택"><span>${esc(r.title)}</span>${r.cover?`<img src="${esc(r.cover)}" alt="" loading="lazy" onerror="this.remove()">`:''}</button>
+  ${nv}${rs?rs.length?`<div class="sres">${rs.map((r,i)=>`<div class="srow2"><button class="sthumb" data-action="fpick" data-i="${i}" style="--c:${COLORS[hash(r.title)%COLORS.length]}" aria-label="${esc(r.title)} 선택"><span>${esc(r.title)}</span>${r.cover?`<img src="${esc(r.cover)}" alt="" loading="lazy" onerror="this.remove()">`:''}</button>
       <div class="sbody"><button class="stitle" data-action="fpick" data-i="${i}"><b>${esc(r.title)}</b><span>${esc([r.author,r.publisher,r.year,r.pages?r.pages+'쪽':''].filter(Boolean).join(', '))}</span>${r.isbn?`<span class="sisbn">ISBN ${esc(r.isbn)}</span>`:''}</button>
-      <div class="srcrow">${r.link?`<a class="srcbadge" href="${esc(r.link)}" target="_blank" rel="noopener">${esc(r.source)} ↗</a>`:`<em>${esc(r.source)}</em>`}${storeLinks(r)}</div></div></div>`).join('')}</div>`
+      <div class="srcrow">${r.link?`<a class="srcbadge" href="${esc(r.link)}" target="_blank" rel="noopener">${esc(trText(r.source))} ↗</a>`:`<em>${esc(trText(r.source))}</em>`}${storeLinks(r)}</div></div></div>`).join('')}</div>`
     :`<p class="hint" style="text-align:center;padding:10px 0">결과가 없어요. 다른 검색어를 쓰거나 직접 입력해 주세요.</p>`:''}
-  <div class="mact" style="justify-content:space-between"><button class="linkbtn" data-action="fmode" data-m="manual">찾는 책이 없나요? 직접 입력</button><button class="btn ghost" data-action="fcancel">취소</button></div>`}
+  <div class="manualcta"><span>찾는 책이 없나요?</span><button class="btn act" data-action="fmode" data-m="manual"><svg viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M13 7l4 4"/></svg><span>직접 입력</span><svg viewBox="0 0 24 24" class="chev"><path d="M9 6l6 6-6 6"/></svg></button></div>
+  <div class="mact"><button class="btn ghost" data-action="fcancel">취소</button></div>`}
 async function aiSummary(){const b=S.books[S.openId];if(!b||!sample)return;
   const box=$('#sumbox'),btn=$('#aibtn');
   if(b.summary&&b.summary.trim()&&btn.dataset.armed!=='1'){btn.dataset.armed='1';btn.textContent='기존 요약 덮어쓰기';return}
@@ -1416,7 +1430,7 @@ document.addEventListener('click',e=>{
     case 'dnav':{const v=t.dataset.v,a=t.dataset.a;closeDrawer();if(v==='import'){openImport();break}if(S.openId)closeBook();if(S.view!=='settings'&&v==='settings'){S.prevView=S.view;S.prevScroll=window.scrollY;try{history.pushState({mbsView:'settings'},'')}catch(e){}}S.view=v;renderMain();
       const ry=v!=='settings'?(S.prevScroll||0):0;if(v!=='settings'){S.prevView=null;S.prevScroll=0;if(history.state&&history.state.mbsView){try{history.replaceState(null,'')}catch(e){}}}
       setTimeout(()=>{const el=a&&document.getElementById(a);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo(0,ry)},60);break}
-    case 'searchsrc':if(t.dataset.k!=='naver'){S.settings.searchSrc=t.dataset.k;putSettings();renderMain()}break;
+    case 'srctoggle':{const k=t.dataset.k;if(k==='naver')S.settings.naverLink=t.checked;else{const off=new Set(S.settings.srcOff||[]);t.checked?off.delete(k):off.add(k);S.settings.srcOff=[...off]}putSettings();setTimeout(renderMain,0);break}
     case 'skin':S.settings.skin=t.dataset.k;applySkin();putSettings();renderMain();break;
     case 'year':S.year=+t.dataset.y;renderMain();break;
     case 'start':startTimer(t.dataset.id);renderSheet();renderMain();break;
